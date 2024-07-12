@@ -34,7 +34,7 @@ public class Cliente extends Usuario{
     @ManyToMany
     private List<Produto> produtosFavoritos;
 
-    @OneToMany
+    @OneToMany(mappedBy = "cliente")
     private List<Avaliacao> avaliacoes;
 
     @OneToMany(mappedBy = "cliente")
