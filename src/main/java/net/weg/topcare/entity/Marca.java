@@ -20,6 +20,6 @@ public class Marca {
     @Column(nullable = false, length = 30)
     private String nome;
 
-    @OneToMany
+    @OneToMany(mappedBy = "marca")
     private List<Produto> produtos;
 }

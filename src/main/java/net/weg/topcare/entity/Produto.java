@@ -26,11 +26,11 @@ public class Produto {
     @Column(nullable = false, length = 500)
     private String descricao;
 
-    @OneToMany
+    @ManyToMany
     @Column(nullable = false)
     private List<Categoria> categorias;
 
-    @OneToMany
+    @OneToMany(mappedBy = "produto")
     private List<PropriedadeProduto> propriedades;
 
     @OneToMany
@@ -45,7 +45,7 @@ public class Produto {
     @Column(nullable = false)
     private Integer estoque;
 
-    @OneToMany
+    @OneToMany(mappedBy = "produto")
     private List<Avaliacao> avaliacoes;
 
 }

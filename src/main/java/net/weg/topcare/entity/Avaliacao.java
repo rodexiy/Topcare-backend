@@ -20,4 +20,8 @@ public class Avaliacao {
 
     @Column(nullable = false)
     private Integer estrelas;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Produto produto;
 }

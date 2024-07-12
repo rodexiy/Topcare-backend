@@ -19,4 +19,8 @@ public class PropriedadeProduto {
 
     @Column(nullable = false, length = 50)
     private String valor;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Produto produto;
 }
