@@ -1,23 +1,25 @@
 package net.weg.topcare.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class Avaliacao {
+public class Marca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Cliente cliente;
+    @Column(nullable = false, length = 30)
+    private String nome;
 
-    @Column(nullable = false)
-    private Integer estrelas;
+    @OneToMany
+    private List<Produto> produtos;
 }

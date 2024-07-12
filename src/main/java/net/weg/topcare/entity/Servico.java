@@ -4,21 +4,27 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
+import net.weg.topcare.enums.AreaServico;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Categoria {
+public class Servico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+    private AreaServico areaServico;
+
     @Column(nullable = false, length = 20)
     private String nome;
 
-    @ManyToMany
-    private List<Produto> produtosNaCategoria;
+    @Column(nullable = false)
+    private String descricao;
+
+    @Column(nullable = false)
+    private Double preco;
 }

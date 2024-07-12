@@ -18,7 +18,7 @@ public class Endereco {
     @Column(nullable = false, length = 9)
     private String cep;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 4)
     private Integer numero;
 
     @Column(nullable = false, length = 100)

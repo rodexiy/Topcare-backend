@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.weg.topcare.enums.StatusDoPedido;
 
 import java.util.List;
 
@@ -18,7 +19,10 @@ public class Pedido {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Usuario usuario;
+    private Cliente cliente;
+
+    @Enumerated(EnumType.ORDINAL)
+    private StatusDoPedido statusDoPedido;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -29,5 +33,5 @@ public class Pedido {
     private List<ProdutoPedido> produtosNoPedido;
 
     @Column(nullable = false)
-    private Integer total;
+    private Double total;
 }

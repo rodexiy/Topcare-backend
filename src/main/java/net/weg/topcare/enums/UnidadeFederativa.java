@@ -1,8 +1,10 @@
 package net.weg.topcare.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public enum UnidadeFederativa {
     AC("Acre", "AC"),
     AL("Alagoas", "AL"),
@@ -34,10 +36,5 @@ public enum UnidadeFederativa {
 
     private final String nome;
     private final String sigla;
-
-    UnidadeFederativa(String nome, String sigla) {
-        this.nome = nome;
-        this.sigla = sigla;
-    }
 
 }

@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario {
+@MappedSuperclass
+public abstract class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,25 +26,16 @@ public class Usuario {
     @Column(unique = true)
     private String email;
 
-    @Column(length = 13)
+    @Column(length = 14)
     private String telefone;
 
-    @OneToOne
-    private Endereco enderecoPrincipal;
+    @Column(nullable = false, length = 30)
+    private String senha;
 
-    @OneToMany
-    private List<Endereco> enderecos;
+    @ManyToOne
+    private Imagem fotoPerfil;
 
-    @OneToMany
-    private List<Pedido> pedidos;
+    @ManyToOne
+    private Imagem banner;
 
-    @OneToOne
-    @JoinColumn(nullable = false)
-    private Carrinho carrinho;
-
-    @ManyToMany
-    private List<Produto> produtosFavoritos;
-
-    @OneToMany
-    private List<Avaliacao> avaliacoes;
 }

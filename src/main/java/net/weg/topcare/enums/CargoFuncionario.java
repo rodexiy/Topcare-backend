@@ -3,13 +3,11 @@ package net.weg.topcare.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@Getter
 @AllArgsConstructor
-public enum FormaPagamento {
-    PIX("Pix"),
-    BOLETO("Boleto"),
-    CREDITO("Crédito"),
-    DEBITO("Débito");
+@Getter
+public enum CargoFuncionario {
+    FUNCIONARIO("Funcionário"),
+    GERENTE("Gerente");
 
     private final String nome;
 }

@@ -5,19 +5,25 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
+// É utilizada no Agedamento para especificar os servicos selecionado para o pet
+
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class Avaliacao {
+public class PetAgendamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Cliente cliente;
+    private Pet pet;
 
-    @Column(nullable = false)
-    private Integer estrelas;
+    @ManyToMany
+    private List<Servico> servicosSelecionados;
+
+
 }

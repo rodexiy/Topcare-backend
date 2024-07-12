@@ -21,5 +21,5 @@ public class Carrinho {
 
     @OneToOne
     @JoinColumn(nullable = false)
-    private Usuario usuario;
+    private Cliente cliente;
 }

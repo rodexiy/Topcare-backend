@@ -1,33 +1,32 @@
 package net.weg.topcare.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-// Utilizada no pedido para salvar as informações do produto no momento que foi comprado pelo cliente, caso
-// o produto seja editado para outro completamente diferente.
+import net.weg.topcare.enums.TipoAtendimento;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProdutoPedido {
+public class FormularioContato {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String nome;
 
     @Column(nullable = false)
-    private Double precoUnitario;
+    private String email;
+
+    @Enumerated(EnumType.ORDINAL)
+    private TipoAtendimento tipoAtendimento;
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Imagem foto;
+    private Filial filial;
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Pedido pedido;
 }
