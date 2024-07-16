@@ -19,7 +19,6 @@ public class Carrinho {
     @OneToMany(mappedBy = "carrinho")
     private List<ProdutoCarrinho> produtosNoCarrinho;
 
-    @OneToOne
-    @JoinColumn(nullable = false)
+    @OneToOne()
     private Cliente cliente;
 }

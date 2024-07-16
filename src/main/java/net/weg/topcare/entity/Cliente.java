@@ -10,11 +10,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Cliente extends Usuario{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
+public class Cliente extends Usuario{
     @OneToOne
     private Endereco enderecoPrincipal;
 
@@ -27,19 +24,22 @@ public class Cliente extends Usuario{
     @OneToMany(mappedBy = "cliente")
     private List<Agendamento> agendamentos;
 
-    @OneToOne
+    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private Carrinho carrinho;
 
     @ManyToMany
     private List<Produto> produtosFavoritos;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Avaliacao> avaliacoes;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Cartao> cartoes;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente") // cascade = CascadeType.DETACH
     private List<Pet> pets;
+
+    @OneToOne
+    private Imagem banner;
 }

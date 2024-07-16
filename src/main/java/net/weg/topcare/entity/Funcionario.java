@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import net.weg.topcare.enums.CargoFuncionario;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -17,11 +19,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Funcionario extends Usuario {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
+public class Funcionario extends Usuario {
     @Column(nullable = false, length = 5)
     private String cadastro;
 
