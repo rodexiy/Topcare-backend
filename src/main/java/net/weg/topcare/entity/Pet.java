@@ -1,10 +1,12 @@
 package net.weg.topcare.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import net.weg.topcare.enums.GeneroPet;
 import net.weg.topcare.enums.PorteAnimal;
 
@@ -21,6 +23,8 @@ public class Pet {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonIgnore
+    @ToString.Exclude
     private Cliente cliente;
 
     @OneToOne

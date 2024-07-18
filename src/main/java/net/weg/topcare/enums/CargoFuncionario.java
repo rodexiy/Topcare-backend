@@ -6,6 +6,12 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum CargoFuncionario {
+    // MEDICOVETERINARIO
+    // ALMOXARIFE
+    // ADESTRADOR
+    // TOSADOR
+    // 
+
     FUNCIONARIO("Funcionário"),
     GERENTE("Gerente");
 

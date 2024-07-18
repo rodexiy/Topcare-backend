@@ -15,7 +15,7 @@ public class Endereco {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 9)
+    @Column(nullable = false, length = 8)
     private String cep;
 
     @Column(nullable = false, length = 4)
@@ -30,10 +30,11 @@ public class Endereco {
     @Column(nullable = false, length = 100)
     private String cidade;
 
-    @Column(nullable = false, length = 2)
-    @Enumerated(EnumType.ORDINAL)
-    private UnidadeFederativa UF;
+    @Enumerated(EnumType.STRING)
+    private UnidadeFederativa unidadeFederativa;
 
     @Column(length = 100)
     private String complemento;
+
+
 }

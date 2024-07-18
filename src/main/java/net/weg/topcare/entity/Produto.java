@@ -1,6 +1,5 @@
 package net.weg.topcare.entity;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,18 +25,20 @@ public class Produto {
     @Column(nullable = false, length = 500)
     private String descricao;
 
+    private Integer avaliacaoGeral;
+
     @ManyToMany
     @Column(nullable = false)
     private List<Categoria> categorias;
 
     @OneToMany(mappedBy = "produto")
-    private List<PropriedadeProduto> propriedades;
+    private List<EspecificacaoProduto> especificacao;
 
     @OneToMany
     private List<Imagem> imagens;
 
-    @Column(nullable = false)
-    private Integer desconto;
+    @Column
+    private Integer desconto = 0;
 
     @Column(nullable = false)
     private Double preco;
@@ -47,5 +48,7 @@ public class Produto {
 
     @OneToMany(mappedBy = "produto")
     private List<Avaliacao> avaliacoes;
+
+
 
 }

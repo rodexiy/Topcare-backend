@@ -1,10 +1,12 @@
 package net.weg.topcare.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import net.weg.topcare.enums.AreaServico;
 
 import java.time.LocalDateTime;
@@ -32,6 +34,8 @@ public class Agendamento {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonIgnore
+    @ToString.Exclude // fazer DTO
     private Cliente cliente;
 
     @Column(nullable = false)

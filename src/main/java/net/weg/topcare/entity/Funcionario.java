@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import net.weg.topcare.enums.CargoFuncionario;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import org.springframework.context.annotation.Lazy;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -24,12 +24,13 @@ public class Funcionario extends Usuario {
     @Column(nullable = false, length = 5)
     private String cadastro;
 
-    private Boolean ativado;
-
     @Column(nullable = false)
     private LocalDate dataNascimento;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
     private CargoFuncionario cargo;
+
+    @OneToOne
+    private Imagem fotoPerfil;
 }

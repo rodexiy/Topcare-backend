@@ -2,7 +2,15 @@ package net.weg.topcare.entity;
 
 // Efetuar o pagamento
 
-public class Pagamento {
+import jakarta.persistence.*;
 
+@Entity
+public class Pagamento {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    private Cliente cliente;
 
 }
