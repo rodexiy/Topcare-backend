@@ -9,4 +9,5 @@ public interface ClienteServiceInt {
     ClienteGetDTO cadastrar(ClientePostDTO clienteDTO);
     ClienteGetDTO buscarUm(Long id);
     List<ClienteGetDTO> buscarTodos();
+    Boolean existe(String email);
 }

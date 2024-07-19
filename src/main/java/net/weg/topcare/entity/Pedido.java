@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import net.weg.topcare.enums.StatusDoPedido;
+import net.weg.topcare.enums.Status;
 
 import java.util.List;
 
@@ -25,8 +25,8 @@ public class Pedido {
     @ToString.Exclude // fazer DTO
     private Cliente cliente;
 
-    @Enumerated(EnumType.ORDINAL)
-    private StatusDoPedido statusDoPedido;
+    @OneToMany
+    private List<StatusPedido> statusDoPedido;
 
     @ManyToOne
     @JoinColumn(nullable = false)

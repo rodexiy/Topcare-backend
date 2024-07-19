@@ -65,6 +65,7 @@ public class Cliente extends Usuario{
 
     public ClienteGetDTO toGetDTO() {;
         return new ClienteGetDTO(
+                this.getId(),
                 this.getNome(),
                 this.getEmail(),
                 this.getCpf(),
@@ -75,6 +76,7 @@ public class Cliente extends Usuario{
                 this.getProdutosFavoritos(),
                 this.getPets(),
                 this.getBanner(),
-                this.getFotoPerfil());
+                this.getFotoPerfil(),
+                this.getDataNascimento());
     }
 }

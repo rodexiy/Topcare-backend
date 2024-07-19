@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/cliente")
 @AllArgsConstructor
 public class ClienteController {
@@ -18,6 +19,12 @@ public class ClienteController {
     @PostMapping
     public ResponseEntity<ClienteGetDTO> cadastrar(@RequestBody ClientePostDTO cliente) {
         return ResponseEntity.ok(service.cadastrar(cliente));
+    }
+
+    @PostMapping("/existe")
+    public ResponseEntity<Boolean> existe(@RequestBody String email) {
+        System.out.println(email);
+        return ResponseEntity.ok(service.existe(email));
     }
 
     @GetMapping

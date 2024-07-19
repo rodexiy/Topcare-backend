@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 import org.springframework.context.annotation.Lazy;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -35,6 +36,9 @@ public abstract class Usuario {
 
     @Column(nullable = false, length = 30)
     private String senha;
+
+    @Column(nullable = false)
+    private LocalDate dataNascimento;
 
     private Boolean habilitado = true;
 }

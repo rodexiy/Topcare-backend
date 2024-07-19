@@ -2,9 +2,11 @@ package net.weg.topcare.controller.dto.cliente;
 
 import net.weg.topcare.entity.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public record ClienteGetDTO(
+        Long id,
         String nome,
         String email,
         String cpf,
@@ -15,5 +17,6 @@ public record ClienteGetDTO(
         List<Produto> produtosFavoritos,
         List<Pet> pets,
         Imagem banner,
-        Imagem fotoPerfil
+        Imagem fotoPerfil,
+        LocalDate dataNascimento
 ) {}

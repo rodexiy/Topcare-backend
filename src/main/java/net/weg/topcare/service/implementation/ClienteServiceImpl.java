@@ -32,10 +32,16 @@ public class ClienteServiceImpl implements ClienteServiceInt {
         return cliente.toGetDTO();
     };
 
+    public Boolean existe(String email) {
+        return repository.existsByEmail(email);
+    }
+
+    @Override
     public ClienteGetDTO buscarUm(Long id) {
         return repository.findById(id).get().toGetDTO();
     }
 
+    @Override
     public List<ClienteGetDTO> buscarTodos() {
         return repository.findAll().stream().map(Cliente::toGetDTO).toList();
     }
