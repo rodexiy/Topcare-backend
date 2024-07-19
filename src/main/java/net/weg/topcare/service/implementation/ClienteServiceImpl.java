@@ -21,15 +21,15 @@ public class ClienteServiceImpl implements ClienteServiceInt {
     private EnderecoRepository enderecoRepository;
 
     @Override
-    public ClienteGetDTO cadastrar(ClientePostDTO clienteDTO) {
+    public Long cadastrar(ClientePostDTO clienteDTO) {
         Cliente cliente = new Cliente(clienteDTO);
 
         Endereco endereco = enderecoRepository.save(clienteDTO.endereco());
         cliente.getEnderecos().add(endereco);
         cliente.setEnderecoPrincipal(endereco);
 
-        repository.save(cliente);
-        return cliente.toGetDTO();
+        cliente = repository.save(cliente);
+        return cliente.getId();
     };
 
     public Boolean existe(String email) {

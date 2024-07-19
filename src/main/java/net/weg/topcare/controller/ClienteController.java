@@ -17,7 +17,7 @@ public class ClienteController {
     private ClienteServiceImpl service;
 
     @PostMapping
-    public ResponseEntity<ClienteGetDTO> cadastrar(@RequestBody ClientePostDTO cliente) {
+    public ResponseEntity<Long> cadastrar(@RequestBody ClientePostDTO cliente) {
         return ResponseEntity.ok(service.cadastrar(cliente));
     }
 

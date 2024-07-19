@@ -1,7 +1,6 @@
 package net.weg.topcare.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,13 +16,13 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Agendamento {
+public class Scheduling {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true, nullable = false, length = 50)
-    private String numeroAgendamento;
+    private String schedulingNumber;
 
     @Enumerated(EnumType.ORDINAL)
     private AreaServico areaServico;

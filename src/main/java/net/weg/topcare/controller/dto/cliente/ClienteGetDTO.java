@@ -7,16 +7,16 @@ import java.util.List;
 
 public record ClienteGetDTO(
         Long id,
-        String nome,
+        String name,
         String email,
         String cpf,
-        String telefone,
-        Endereco enderecoPrincipal,
-        List<Endereco> enderecos,
-        Carrinho carrinho,
-        List<Produto> produtosFavoritos,
+        String phone,
+        Endereco mainAddress,
+        List<Endereco> address,
+        Carrinho cart,
+        List<Produto> favoriteProducts,
         List<Pet> pets,
         Imagem banner,
-        Imagem fotoPerfil,
-        LocalDate dataNascimento
+        Imagem profilePicture,
+        LocalDate birthDate
 ) {}

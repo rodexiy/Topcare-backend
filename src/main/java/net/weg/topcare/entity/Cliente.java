@@ -26,7 +26,7 @@ public class Cliente extends Usuario{
     private List<Pedido> pedidos = new ArrayList<>();
 
     @OneToMany(mappedBy = "cliente")
-    private List<Agendamento> agendamentos = new ArrayList<>();
+    private List<Scheduling> agendamentos = new ArrayList<>();
 
     @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
