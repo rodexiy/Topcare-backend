@@ -6,30 +6,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import net.weg.topcare.enums.ServiceArea;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-// Entidade para serviço que foi agendado
 @Entity
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Scheduling {
+@NoArgsConstructor
+@Data
+public class CartOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(unique = true, nullable = false, length = 50)
-    private String schedulingNumber;
-
-    @Enumerated(EnumType.ORDINAL)
-    private ServiceArea serviceArea;
-
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Subsidiary subsidiary;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -37,10 +24,17 @@ public class Scheduling {
     @ToString.Exclude // fazer DTO
     private Client client;
 
-    @Column(nullable = false)
-    private LocalDateTime scheduledDate;
+    @OneToMany
+    private List<OrderStatus> orderStatuses;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Address address;
 
     @OneToMany
     @JoinColumn(nullable = false)
-    private List<PetScheduling> pets;
+    private List<ProductOrder> products;
+
+    @Column(nullable = false)
+    private Double total;
 }

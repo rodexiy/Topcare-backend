@@ -1,10 +1,9 @@
 package net.weg.topcare.repository;
 
-import net.weg.topcare.entity.Produto;
-import net.weg.topcare.entity.ProdutoPedido;
+import net.weg.topcare.entity.ProductOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProdutoPedidoRepository extends JpaRepository<ProdutoPedido, Long> {
+public interface ProdutoPedidoRepository extends JpaRepository<ProductOrder, Long> {
 }
