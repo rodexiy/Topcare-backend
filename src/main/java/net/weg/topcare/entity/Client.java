@@ -2,8 +2,8 @@ package net.weg.topcare.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import net.weg.topcare.controller.dto.client.ClienteGetDTO;
-import net.weg.topcare.controller.dto.client.ClientePostDTO;
+import net.weg.topcare.controller.dto.client.ClientGetDTO;
+import net.weg.topcare.controller.dto.client.ClientPostDTO;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class Client extends People {
     @OneToOne
     private Image profilePicture;
 
-    public Client(ClientePostDTO dto) {
+    public Client(ClientPostDTO dto) {
         BeanUtils.copyProperties(dto, this);
 
         Cart cart = new Cart();
@@ -63,8 +63,8 @@ public class Client extends People {
 
     }
 
-    public ClienteGetDTO toGetDTO() {;
-        return new ClienteGetDTO(
+    public ClientGetDTO toGetDTO() {;
+        return new ClientGetDTO(
                 this.getId(),
                 this.getName(),
                 this.getEmail(),

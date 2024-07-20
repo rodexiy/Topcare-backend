@@ -5,7 +5,7 @@ import net.weg.topcare.entity.*;
 import java.time.LocalDate;
 import java.util.List;
 
-public record ClienteGetDTO(
+public record ClientGetDTO(
         Long id,
         String name,
         String email,
