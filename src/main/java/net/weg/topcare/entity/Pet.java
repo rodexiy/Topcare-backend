@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import net.weg.topcare.controller.dto.pet.PetPostRequestDTO;
 import net.weg.topcare.enums.PetGender;
 import net.weg.topcare.enums.AnimalSize;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDate;
 
@@ -43,7 +45,11 @@ public class Pet {
     private PetGender gender;
 
     @Column(nullable = false)
-    private Double peso;
+    private Double weight;
     private LocalDate birthdate;
+
+    public Pet(PetPostRequestDTO dto){
+        BeanUtils.copyProperties(dto, this);
+    }
 
 }
