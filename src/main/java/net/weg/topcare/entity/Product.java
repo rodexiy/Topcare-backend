@@ -4,7 +4,13 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.weg.topcare.controller.dto.product.ProductGetDTO;
+import net.weg.topcare.controller.dto.product.ProductPostDTO;
+import net.weg.topcare.controller.dto.rating.GeneralRatingGetDTO;
+import org.springframework.beans.BeanUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,11 +33,11 @@ public class Product {
 
     private Integer generalRating;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @Column(nullable = false)
     private List<Category> categories;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductSpecification> specifications;
 
     @OneToMany
@@ -48,6 +54,23 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private List<Rating> ratings;
+
+    public Product(ProductPostDTO dto){
+        BeanUtils.copyProperties(dto, this);
+    }
+
+    public ProductGetDTO toGetDTO(){
+        return new ProductGetDTO(
+                this.id,
+                this.name,
+                this.price,
+                new GeneralRatingGetDTO(this.generalRating, (long) this.ratings.size()),
+                this.discount,
+                this.description,
+                this.specifications,
+                this.images.stream().map(Image::toString).toList()
+                );
+    }
 
 
 

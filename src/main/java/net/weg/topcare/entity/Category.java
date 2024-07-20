@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.weg.topcare.controller.dto.category.CategoryPostDTO;
+import org.springframework.beans.BeanUtils;
 
 import java.util.List;
 
@@ -21,4 +23,8 @@ public class Category {
 
     @ManyToMany(mappedBy = "categories")
     private List<Product> productsInCategory;
+
+    public Category(CategoryPostDTO dto){
+        BeanUtils.copyProperties(dto, this);
+    }
 }

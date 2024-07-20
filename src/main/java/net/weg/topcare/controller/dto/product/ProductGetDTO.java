@@ -14,5 +14,5 @@ public record ProductGetDTO(
         Integer discount,
         String description,
         List<ProductSpecification> specifications,
-        List<MultipartFile> images
+        List<String> images
 ){}

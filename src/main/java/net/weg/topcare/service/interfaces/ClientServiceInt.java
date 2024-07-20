@@ -1,13 +1,13 @@
 package net.weg.topcare.service.interfaces;
 
-import net.weg.topcare.controller.dto.client.ClienteGetDTO;
-import net.weg.topcare.controller.dto.client.ClientePostDTO;
+import net.weg.topcare.controller.dto.client.ClientGetDTO;
+import net.weg.topcare.controller.dto.client.ClientPostDTO;
 
 import java.util.List;
 
 public interface ClientServiceInt {
-    Long register(ClientePostDTO clientDTO);
-    ClienteGetDTO findOne(Long id);
-    List<ClienteGetDTO> findAll();
+    Long register(ClientPostDTO clientDTO);
+    ClientGetDTO findOne(Long id);
+    List<ClientGetDTO> findAll();
     Boolean exists(String email);
 }

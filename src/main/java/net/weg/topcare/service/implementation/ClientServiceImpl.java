@@ -1,8 +1,8 @@
 package net.weg.topcare.service.implementation;
 
 import lombok.AllArgsConstructor;
-import net.weg.topcare.controller.dto.client.ClienteGetDTO;
-import net.weg.topcare.controller.dto.client.ClientePostDTO;
+import net.weg.topcare.controller.dto.client.ClientGetDTO;
+import net.weg.topcare.controller.dto.client.ClientPostDTO;
 import net.weg.topcare.entity.Client;
 import net.weg.topcare.entity.Address;
 import net.weg.topcare.repository.ClientRepository;
@@ -19,7 +19,7 @@ public class ClientServiceImpl implements ClientServiceInt {
     private AddressRepository addressRepository;
 
     @Override
-    public Long register(ClientePostDTO clientDTO) {
+    public Long register(ClientPostDTO clientDTO) {
         Client cliente = new Client(clientDTO);
 
         Address endereco = addressRepository.save(clientDTO.address());
@@ -35,12 +35,12 @@ public class ClientServiceImpl implements ClientServiceInt {
     }
 
     @Override
-    public ClienteGetDTO findOne(Long id) {
+    public ClientGetDTO findOne(Long id) {
         return repository.findById(id).get().toGetDTO();
     }
 
     @Override
-    public List<ClienteGetDTO> findAll() {
+    public List<ClientGetDTO> findAll() {
         return repository.findAll().stream().map(Client::toGetDTO).toList();
     }
 
