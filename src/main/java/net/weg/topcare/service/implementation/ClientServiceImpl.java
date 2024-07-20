@@ -1,16 +1,19 @@
 package net.weg.topcare.service.implementation;
 
 import lombok.AllArgsConstructor;
-import net.weg.topcare.controller.dto.client.ClienteGetDTO;
-import net.weg.topcare.controller.dto.client.ClientePostDTO;
+import net.weg.topcare.controller.dto.client.ClientGetDTO;
+import net.weg.topcare.controller.dto.client.ClientPostDTO;
+import net.weg.topcare.controller.dto.client.LoginDTO;
 import net.weg.topcare.entity.Client;
 import net.weg.topcare.entity.Address;
+import net.weg.topcare.entity.People;
 import net.weg.topcare.repository.ClientRepository;
 import net.weg.topcare.repository.AddressRepository;
 import net.weg.topcare.service.interfaces.ClientServiceInt;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -19,7 +22,7 @@ public class ClientServiceImpl implements ClientServiceInt {
     private AddressRepository addressRepository;
 
     @Override
-    public Long register(ClientePostDTO clientDTO) {
+    public Long register(ClientPostDTO clientDTO) {
         Client cliente = new Client(clientDTO);
 
         Address endereco = addressRepository.save(clientDTO.address());
@@ -30,17 +33,19 @@ public class ClientServiceImpl implements ClientServiceInt {
         return cliente.getId();
     };
 
+    @Override
     public Boolean exists(String email) {
         return repository.existsByEmail(email);
     }
 
     @Override
-    public ClienteGetDTO findOne(Long id) {
-        return repository.findById(id).get().toGetDTO();
+    public ClientGetDTO findOne(Long id) {
+        Optional<Client> client = repository.findById(id);
+        return client.map(Client::toGetDTO).orElse(null);
     }
 
     @Override
-    public List<ClienteGetDTO> findAll() {
+    public List<ClientGetDTO> findAll() {
         return repository.findAll().stream().map(Client::toGetDTO).toList();
     }
 

@@ -4,7 +4,7 @@ import net.weg.topcare.entity.Address;
 
 import java.time.LocalDate;
 
-public record ClientePostDTO (
+public record ClientPostDTO(
         String name,
         String email,
         String password,
