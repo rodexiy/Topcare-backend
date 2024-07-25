@@ -2,10 +2,8 @@ package net.weg.topcare.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import net.weg.topcare.controller.dto.pet.PetGetRequestDTO;
 import net.weg.topcare.controller.dto.pet.PetPostRequestDTO;
 import net.weg.topcare.enums.PetGender;
 import net.weg.topcare.enums.AnimalSize;
@@ -15,6 +13,7 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Pet {
@@ -50,6 +49,16 @@ public class Pet {
 
     public Pet(PetPostRequestDTO dto){
         BeanUtils.copyProperties(dto, this);
+    }
+    public PetGetRequestDTO toDto(){
+        return new PetGetRequestDTO(
+                this.name,
+                this.breed,
+                this.size,
+                this.gender,
+                this.weight,
+                this.birthdate
+        );
     }
 
 }
