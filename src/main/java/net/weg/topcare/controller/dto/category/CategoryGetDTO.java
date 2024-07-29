@@ -4,8 +4,9 @@ import net.weg.topcare.entity.Product;
 
 import java.util.List;
 
-public record CategoryPostDTO(
+public record CategoryGetDTO(
+        Long id,
         String name,
-        List<Long> productsInCategory
+        List<Product> products
 ) {
 }

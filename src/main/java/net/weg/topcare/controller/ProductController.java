@@ -1,7 +1,9 @@
 package net.weg.topcare.controller;
 
 import lombok.AllArgsConstructor;
+import net.weg.topcare.controller.dto.product.ProductGetDTO;
 import net.weg.topcare.controller.dto.product.ProductPostDTO;
+import net.weg.topcare.controller.dto.product.ProductPutDTO;
 import net.weg.topcare.entity.Product;
 import net.weg.topcare.service.implementation.ProductServiceImpl;
 import org.springframework.http.HttpStatus;
@@ -20,8 +22,15 @@ public class ProductController {
         return new ResponseEntity<>(service.postProduct(dto), HttpStatus.OK);
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductGetDTO> getProduct(@PathVariable Long id){
         return new ResponseEntity<>(service.getProduct(id), HttpStatus.OK);
     }
+
+    @PutMapping
+    public ResponseEntity<Product> updateProduct(@RequestBody ProductPutDTO dto){
+        return new ResponseEntity<>(service.putProduct(dto), HttpStatus.OK);
+    }
+
+    @PatchMapping
 }

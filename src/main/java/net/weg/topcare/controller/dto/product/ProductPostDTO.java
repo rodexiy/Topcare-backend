@@ -11,9 +11,7 @@ import java.util.List;
 public record ProductPostDTO(
         String name,
         String description,
-        List<CategoryPostDTO> categories,
         List<ProductSpecificationPostDTO> specifications,
-//        List<MultipartFile> images,
         Integer discount,
         Double price,
         Integer stock

@@ -33,8 +33,7 @@ public class Product {
 
     private Integer generalRating;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @Column(nullable = false)
+    @ManyToMany
     private List<Category> categories;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
@@ -64,6 +63,7 @@ public class Product {
                 this.id,
                 this.name,
                 this.price,
+                this.categories,
                 new GeneralRatingGetDTO(this.generalRating, (long) this.ratings.size()),
                 this.discount,
                 this.description,

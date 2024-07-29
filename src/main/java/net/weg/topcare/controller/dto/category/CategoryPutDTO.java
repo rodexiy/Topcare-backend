@@ -1,10 +1,9 @@
 package net.weg.topcare.controller.dto.category;
 
-import net.weg.topcare.entity.Product;
-
 import java.util.List;
 
-public record CategoryPostDTO(
+public record CategoryPutDTO(
+        Long id,
         String name,
         List<Long> productsInCategory
 ) {
