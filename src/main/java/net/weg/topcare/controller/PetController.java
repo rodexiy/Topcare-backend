@@ -3,6 +3,7 @@ package net.weg.topcare.controller;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import net.weg.topcare.controller.dto.pet.PetGetRequestDTO;
+import net.weg.topcare.controller.dto.pet.PetPatchRequestDTO;
 import net.weg.topcare.controller.dto.pet.PetPostRequestDTO;
 import net.weg.topcare.entity.Pet;
 import net.weg.topcare.service.implementation.PetServiceImpl;
@@ -30,5 +31,13 @@ public class PetController {
     @GetMapping
     public ResponseEntity<List<PetGetRequestDTO>> getPets(){
         return ResponseEntity.ok(service.getPets());
+    }
+    @PatchMapping
+    public ResponseEntity<Pet> patchPet(@RequestBody PetPatchRequestDTO dto){
+        return ResponseEntity.ok(service.patchPet(dto));
+    }
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deletePet(@PathVariable Long id){
+        return ResponseEntity.ok(service.deletePet(id));
     }
 }
