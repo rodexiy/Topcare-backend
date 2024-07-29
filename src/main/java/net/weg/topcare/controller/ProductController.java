@@ -31,6 +31,4 @@ public class ProductController {
     public ResponseEntity<Product> updateProduct(@RequestBody ProductPutDTO dto){
         return new ResponseEntity<>(service.putProduct(dto), HttpStatus.OK);
     }
-
-    @PatchMapping
 }
