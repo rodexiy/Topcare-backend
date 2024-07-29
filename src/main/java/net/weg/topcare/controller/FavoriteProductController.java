@@ -31,8 +31,22 @@ public class FavoriteProductController {
     public void addProductFavorite(@RequestBody FavoritePostRequestDTO dto) {
         /**
          * Chama o método addProductFavorite do serviço de produtos favoritos,
-         * passando o ID do cliente e o ID do produto como parâmetros.
+         * passando a dto que contem o ID do cliente e o ID do produto como parâmetros.
          */
         favoriteProductService.addProductFavorite(dto);
+    }
+
+    /**
+     * Remove um produto à lista de produtos favoritos de um cliente.
+     *
+     * @param dto - dto onde busca o clientId e o productId.
+     */
+    @DeleteMapping
+    public void removeProductFromFavorites(@RequestBody FavoritePostRequestDTO dto) {
+        /**
+         * Chama o método removeProductFavorite do serviço de produtos favoritos,
+         * passando a dto que contem o ID cliente e o ID do produto como parâmetros.
+         */
+        favoriteProductService.removeProductFavorite(dto);
     }
 }

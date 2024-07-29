@@ -91,4 +91,7 @@ public class Client extends People {
             productsFavorite.add(produto);
         }
     }
+    public void removeProductFavorite(Product produto) {
+            productsFavorite.remove(produto);
+    }
 }
