@@ -3,7 +3,7 @@ package net.weg.topcare.service.implementation;
 import lombok.AllArgsConstructor;
 import net.weg.topcare.controller.dto.pet.PetGetRequestDTO;
 import net.weg.topcare.controller.dto.pet.PetPostRequestDTO;
-import net.weg.topcare.entity.Client;
+import net.weg.topcare.controller.dto.pet.PetPatchRequestDTO;
 import net.weg.topcare.entity.Pet;
 import net.weg.topcare.repository.ClientRepository;
 import net.weg.topcare.repository.PetRepository;
@@ -30,12 +30,42 @@ public class PetServiceImpl implements PetServiceInt {
     @Override
     public PetGetRequestDTO getOnePet(Long id) {
         Optional<Pet> pet = repository.findById(id);
-        return pet.map(Pet::toDto).orElse(null);
+        if(pet.get().getAble()){
+            return pet.map(Pet::toDto).orElse(null);
+
+        }
+        throw new RuntimeException("Pet não existe");
     }
 
     @Override
     public List<PetGetRequestDTO> getPets() {
         List<Pet> pet = repository.findAll();
-        return pet.stream().map(Pet::toDto).toList();
+        return pet.stream().filter(pet1 -> pet1.getAble() == true).map(Pet::toDto).toList();
+    }
+
+    @Override
+    public Pet patchPet(PetPatchRequestDTO dto) {
+        if(repository.existsById(dto.idPet())){
+            Pet pet = repository.findById(dto.idPet()).get();
+
+            if(pet.getAble()){
+                pet.setName(dto.name());
+                pet.setSize(dto.size());
+                pet.setBirthdate(dto.birthdate());
+                pet.setWeight(dto.weight());
+                return repository.save(pet);
+            }
+            throw new RuntimeException("Pet deletado");
+        }
+        throw new RuntimeException("Pet não existe");
+
+    }
+
+    @Override
+    public String deletePet(Long id) {
+        Pet pet = repository.findById(id).get();
+        pet.setAble(false);
+        repository.save(pet);
+        return "Pet deletado";
     }
 }

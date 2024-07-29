@@ -46,10 +46,14 @@ public class Pet {
     @Column(nullable = false)
     private Double weight;
     private LocalDate birthdate;
+    @Column(nullable = false)
+    private Boolean able;
 
     public Pet(PetPostRequestDTO dto){
         BeanUtils.copyProperties(dto, this);
+        this.able = true;
     }
+
     public PetGetRequestDTO toDto(){
         return new PetGetRequestDTO(
                 this.name,
