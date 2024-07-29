@@ -63,6 +63,7 @@ public class Client extends People {
 
     }
 
+
     public ClientGetDTO toGetDTO() {;
         return new ClientGetDTO(
                 this.getId(),
@@ -78,5 +79,16 @@ public class Client extends People {
                 this.getBanner(),
                 this.getProfilePicture(),
                 this.getBirthdate());
+    }
+
+    /**
+     * Adiciona um produto à lista de produtos favoritos do cliente.
+     *
+     * @param produto - Produto a ser adicionado.
+     */
+    public void addProductFavorite(Product produto) {
+        if (!productsFavorite.contains(produto)) {
+            productsFavorite.add(produto);
+        }
     }
 }
