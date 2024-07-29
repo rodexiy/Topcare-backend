@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.weg.topcare.controller.dto.productSpecification.ProductSpecificationPostDTO;
+import org.springframework.beans.BeanUtils;
 
 @Entity
 @Data
