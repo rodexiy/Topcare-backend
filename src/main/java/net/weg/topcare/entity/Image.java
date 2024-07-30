@@ -19,4 +19,5 @@ public class Image {
     @Column(columnDefinition = "BLOB", nullable = false)
     @Lob
     private byte[] bytes;
+
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.weg.topcare.controller.dto.rating.GeneralRatingGetDTO;
 
 @Entity
 @AllArgsConstructor
@@ -25,3 +26,4 @@ public class Rating {
     @JoinColumn(nullable = false)
     private Product product;
 }
+
