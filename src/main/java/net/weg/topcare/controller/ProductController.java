@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/product")
 @AllArgsConstructor
@@ -30,5 +32,10 @@ public class ProductController {
     @PutMapping
     public ResponseEntity<Product> updateProduct(@RequestBody ProductPutDTO dto){
         return new ResponseEntity<>(service.putProduct(dto), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Product>> getAllProductsByRating(){
+        return new ResponseEntity<>(service.orderAllByRating(), HttpStatus.OK);
     }
 }

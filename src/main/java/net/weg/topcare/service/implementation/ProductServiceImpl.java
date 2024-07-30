@@ -5,10 +5,13 @@ import net.weg.topcare.controller.dto.product.ProductGetDTO;
 import net.weg.topcare.controller.dto.product.ProductPostDTO;
 import net.weg.topcare.controller.dto.product.ProductPutDTO;
 import net.weg.topcare.entity.Product;
+import net.weg.topcare.entity.Rating;
 import net.weg.topcare.repository.ProductRepository;
 import net.weg.topcare.service.interfaces.ProductServiceInt;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -38,6 +41,15 @@ public class ProductServiceImpl implements ProductServiceInt {
         Product product = repository.findById(dto.id()).get();
         BeanUtils.copyProperties(dto, product);
         return repository.save(product);
+    }
+
+    @Override
+    public List<Product> orderAllByRating() {
+        List<Product> products = repository.findAll();
+        for (Product product : products){
+            return repository.getTopByRatings(product.getRatings());
+        }
+        return null;
     }
 
     @Override
