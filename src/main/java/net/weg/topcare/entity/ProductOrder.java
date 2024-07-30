@@ -1,9 +1,11 @@
 package net.weg.topcare.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 // Utilizada no pedido para salvar as informações do produto no momento que foi comprado pelo cliente, caso
 // o produto seja editado para outro completamente diferente.
@@ -29,5 +31,7 @@ public class ProductOrder {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @ToString.Exclude
+    @JsonIgnore
     private CartOrder order;
 }

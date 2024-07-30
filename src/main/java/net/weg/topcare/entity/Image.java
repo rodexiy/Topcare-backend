@@ -16,6 +16,7 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private UUID path;
+    @Column(columnDefinition = "BLOB", nullable = false)
+    @Lob
+    private byte[] bytes;
 }

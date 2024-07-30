@@ -63,7 +63,6 @@ public class Client extends People {
 
     }
 
-
     public ClientGetDTO toGetDTO() {;
         return new ClientGetDTO(
                 this.getId(),
@@ -91,7 +90,22 @@ public class Client extends People {
             productsFavorite.add(produto);
         }
     }
+
+    /**
+     * Remove um produto à lista de produtos favoritos do cliente.
+     *
+     * @param produto - Produto a ser adicionado.
+     */
     public void removeProductFavorite(Product produto) {
             productsFavorite.remove(produto);
+    }
+
+    /**
+     * Remove um produto à lista de pedidos do cliente.
+     *
+     * @param cartOrder - Pedido a ser adicionado.
+     */
+    public void addCartOrderToOrders(CartOrder cartOrder) {
+        orders.add(cartOrder);
     }
 }
