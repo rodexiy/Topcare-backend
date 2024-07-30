@@ -6,6 +6,10 @@ import net.weg.topcare.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+<<<<<<< HEAD
+=======
+import net.weg.topcare.entity.Rating;
+>>>>>>> 00364167a70c64871018c2e96f7d45ee524bbf9d
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -18,4 +22,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 //    Page<ProductMinimalGetDTO> search(String searchTerm, Pageable pageable);
 
     List<Product> findAllByNameContainingIgnoreCase(String searchTerm, PageRequest pageRequest);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 00364167a70c64871018c2e96f7d45ee524bbf9d
 }

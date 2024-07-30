@@ -13,6 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Pageable;
+<<<<<<< HEAD
+=======
+import java.util.List;
+>>>>>>> 00364167a70c64871018c2e96f7d45ee524bbf9d
 
 @RestController
 @RequestMapping("api/product")
@@ -41,4 +45,12 @@ public class ProductController {
     public ResponseEntity<Product> updateProduct(@RequestBody ProductPutDTO dto){
         return new ResponseEntity<>(service.putProduct(dto), HttpStatus.OK);
     }
+<<<<<<< HEAD
+=======
+
+    @GetMapping
+    public ResponseEntity<List<Product>> getAllProductsByRating(){
+        return new ResponseEntity<>(service.orderAllByRating(), HttpStatus.OK);
+    }
+>>>>>>> 00364167a70c64871018c2e96f7d45ee524bbf9d
 }
