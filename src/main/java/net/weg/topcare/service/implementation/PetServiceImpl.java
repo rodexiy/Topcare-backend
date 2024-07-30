@@ -68,4 +68,8 @@ public class PetServiceImpl implements PetServiceInt {
         repository.save(pet);
         return "Pet deletado";
     }
+
+    public List<Pet> getAllPetsByClient(Long client_id){
+        return repository.findPetsByClient_Id(client_id);
+    }
 }
