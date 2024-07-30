@@ -18,5 +18,5 @@ public class Image {
 
     @Column(nullable = false)
     @Lob
-    private byte[] path;
+    private byte[] bytes;
 }
