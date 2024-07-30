@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.weg.topcare.controller.dto.product.ProductGetDTO;
+import net.weg.topcare.controller.dto.product.ProductMinimalGetDTO;
 import net.weg.topcare.controller.dto.product.ProductPostDTO;
 import net.weg.topcare.controller.dto.rating.GeneralRatingGetDTO;
 import org.springframework.beans.BeanUtils;
@@ -72,6 +73,18 @@ public class Product {
                 );
     }
 
-
-
+    public ProductMinimalGetDTO toMinimalGetDTO(){
+        String image = "";
+        if (!this.images.isEmpty()) {
+            image = this.images.get(1).toString();
+        }
+        return new ProductMinimalGetDTO(
+            this.id,
+            this.name,
+            this.price,
+            this.discount,
+            image,
+            new GeneralRatingGetDTO(this.generalRating, (long) this.ratings.size())
+        );
+    }
 }

@@ -59,10 +59,7 @@ public class Client extends People {
         Cart cart = new Cart();
         cart.setClient(this);
         this.setCart(cart);
-
-
     }
-
 
     public ClientGetDTO toGetDTO() {;
         return new ClientGetDTO(

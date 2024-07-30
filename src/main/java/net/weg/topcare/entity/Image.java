@@ -17,5 +17,6 @@ public class Image {
     private Long id;
 
     @Column(nullable = false)
-    private UUID path;
+    @Lob
+    private byte[] path;
 }
