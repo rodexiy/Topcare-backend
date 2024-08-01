@@ -6,10 +6,7 @@ import net.weg.topcare.controller.dto.product.ProductMinimalGetDTO;
 import net.weg.topcare.controller.dto.product.ProductPostDTO;
 import net.weg.topcare.controller.dto.product.ProductPutDTO;
 import net.weg.topcare.entity.Product;
-<<<<<<< HEAD
-=======
-import net.weg.topcare.entity.Rating;
->>>>>>> 00364167a70c64871018c2e96f7d45ee524bbf9d
+
 import net.weg.topcare.repository.ProductRepository;
 import net.weg.topcare.service.interfaces.ProductServiceInt;
 import org.springframework.beans.BeanUtils;
@@ -18,11 +15,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-<<<<<<< HEAD
-=======
 
-import java.util.ArrayList;
->>>>>>> 00364167a70c64871018c2e96f7d45ee524bbf9d
 import java.util.List;
 
 @Service
@@ -55,8 +48,7 @@ public class ProductServiceImpl implements ProductServiceInt {
     }
 
     @Override
-<<<<<<< HEAD
-=======
+
     public List<Product> orderAllByRating() {
         List<Product> products = repository.findAll();
         for (Product product : products){
@@ -66,7 +58,6 @@ public class ProductServiceImpl implements ProductServiceInt {
     }
 
     @Override
->>>>>>> 00364167a70c64871018c2e96f7d45ee524bbf9d
     public ProductGetDTO getProduct(Long id) {
         Product product = repository.findById(id).get();
         return product.toGetDTO();
@@ -75,13 +66,11 @@ public class ProductServiceImpl implements ProductServiceInt {
     public Page<ProductMinimalGetDTO> searchProduct(String query, int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
 
-        // Buscar os produtos com base no nome contendo o termo da query (ignorando case)
         List<Product> products = repository.findAllByNameContainingIgnoreCase(query, pageRequest);
 
-        // Mapear os produtos para DTOs mínimos e criar uma página paginada
         List<ProductMinimalGetDTO> dtos = products.stream()
                 .map(Product::toMinimalGetDTO)
-                .toList(); // ou .collect(Collectors.toList()) se não estiver usando Java 16+
+                .toList();
 
         return new PageImpl<>(dtos, pageRequest, products.size());
     }
