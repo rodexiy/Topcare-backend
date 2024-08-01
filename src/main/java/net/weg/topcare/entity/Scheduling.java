@@ -6,10 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import net.weg.topcare.controller.dto.cartorder.CartOrderMinimalGetDTO;
+import net.weg.topcare.controller.dto.query.QueryMinimalGetDTO;
 import net.weg.topcare.enums.ServiceArea;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 // Entidade para serviço que foi agendado
 @Entity
@@ -43,4 +46,6 @@ public class Scheduling {
     @OneToMany
     @JoinColumn(nullable = false)
     private List<PetScheduling> pets;
+
+
 }
