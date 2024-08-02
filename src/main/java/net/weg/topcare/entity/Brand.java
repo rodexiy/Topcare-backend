@@ -23,6 +23,7 @@ public class Brand {
     private String name;
 
     @OneToMany(mappedBy = "brand")
+    @JsonIgnore
     @ToString.Exclude
     private List<Product> products;
 

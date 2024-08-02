@@ -1,8 +1,6 @@
 package net.weg.topcare.service.interfaces;
 
-import net.weg.topcare.controller.dto.product.ProductGetDTO;
-import net.weg.topcare.controller.dto.product.ProductPostDTO;
-import net.weg.topcare.controller.dto.product.ProductPutDTO;
+import net.weg.topcare.controller.dto.product.*;
 import net.weg.topcare.entity.Product;
 import net.weg.topcare.entity.Rating;
 import net.weg.topcare.exceptions.ProductNotFoundException;
@@ -18,4 +16,6 @@ public interface ProductServiceInt {
     List<Product> findByIds(List<Long> ids);
     Product putProduct(ProductPutDTO dto) throws ProductNotFoundException;
     List<Product> orderAllByRating();
+    List<Product> getAllByBrandId(Long brand_id);
+    Product putProductRating(Long id, ProductPatchRatingDTO dto) throws ProductNotFoundException;
 }

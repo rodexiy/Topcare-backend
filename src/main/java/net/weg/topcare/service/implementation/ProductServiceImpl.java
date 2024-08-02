@@ -1,9 +1,7 @@
 package net.weg.topcare.service.implementation;
 
 import lombok.AllArgsConstructor;
-import net.weg.topcare.controller.dto.product.ProductGetDTO;
-import net.weg.topcare.controller.dto.product.ProductPostDTO;
-import net.weg.topcare.controller.dto.product.ProductPutDTO;
+import net.weg.topcare.controller.dto.product.*;
 import net.weg.topcare.entity.Brand;
 import net.weg.topcare.entity.Product;
 import net.weg.topcare.entity.Rating;
@@ -47,11 +45,19 @@ public class ProductServiceImpl implements ProductServiceInt {
 
     @Override
     public List<Product> orderAllByRating() {
-        List<Product> products = repository.findAll();
-        for (Product product : products){
-            return repository.getTopByRatings(product.getRatings());
-        }
-        return null;
+        return repository.findAllByOrderByRatingsDesc();
+    }
+
+    @Override
+    public List<Product> getAllByBrandId(Long brand_id) {
+        return repository.getProductsByBrand_Id(brand_id);
+    }
+
+    @Override
+    public Product putProductRating(Long id, ProductPatchRatingDTO dto) throws ProductNotFoundException {
+        Product product = repository.findById(id).orElseThrow(ProductNotFoundException::new);
+        product.setGeneralRating(dto.rating());
+        return repository.save(product);
     }
 
     @Override

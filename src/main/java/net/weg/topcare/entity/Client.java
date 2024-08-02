@@ -1,5 +1,6 @@
 package net.weg.topcare.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import net.weg.topcare.controller.dto.client.ClientGetDTO;
@@ -39,6 +40,8 @@ public class Client extends People {
     private List<Product> productsFavorite = new ArrayList<>();
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ToString.Exclude
     private List<Rating> ratings = new ArrayList<>();
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
@@ -61,6 +64,10 @@ public class Client extends People {
         this.setCart(cart);
 
 
+    }
+
+    public Client(Long id){
+        this.setId(id);
     }
 
 

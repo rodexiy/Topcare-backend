@@ -43,7 +43,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping
+    @GetMapping("orderByRating")
     public ResponseEntity<List<Product>> getAllProductsByRating(){
         return new ResponseEntity<>(service.orderAllByRating(), HttpStatus.OK);
     }

@@ -1,5 +1,6 @@
 package net.weg.topcare.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,5 +25,10 @@ public class ProductSpecification {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonIgnore
     private Product product;
+
+    public ProductSpecification(ProductSpecificationPostDTO dto){
+        BeanUtils.copyProperties(dto, this);
+    }
 }

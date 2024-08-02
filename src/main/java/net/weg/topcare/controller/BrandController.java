@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/brand")
+@CrossOrigin("*")
 public class BrandController {
     private final BrandServiceImpl service;
     @GetMapping
@@ -33,5 +34,10 @@ public class BrandController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/topRated")
+    public ResponseEntity<List<Brand>> getTopRatedBrands(){
+        return new ResponseEntity<>(service.getTopRatedBrands(), HttpStatus.OK);
     }
 }

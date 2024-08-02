@@ -1,9 +1,10 @@
 package net.weg.topcare.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import net.weg.topcare.controller.dto.rating.GeneralRatingPostDTO;
+import org.springframework.beans.BeanUtils;
 
 @Entity
 @AllArgsConstructor
@@ -16,12 +17,19 @@ public class Rating {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonIgnore
+    @ToString.Exclude
     private Client client;
 
     @Column(nullable = false)
-    private Integer stars;
+    private Integer rating;
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonIgnore
     private Product product;
+
+    public Rating(GeneralRatingPostDTO dto){
+        BeanUtils.copyProperties(dto, this);
+    }
 }

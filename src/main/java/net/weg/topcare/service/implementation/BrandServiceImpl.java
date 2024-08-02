@@ -16,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BrandServiceImpl implements BrandServiceInt {
     private final BrandRepository repository;
+    private final ProductServiceImpl productService;
     @Override
     public Brand getBrand(Long id) throws BrandNotFoundException {
         return repository.findById(id).orElseThrow(BrandNotFoundException::new);
@@ -29,10 +30,20 @@ public class BrandServiceImpl implements BrandServiceInt {
     @Override
     public Brand addBrand(BrandPostDTO dto) {
         Brand brand = new Brand(dto);
-        Product product = new Product(dto.product().id());
-        List<Product> products = new ArrayList<>();
-        products.add(product);
+        List<Product> products = productService.getAllByBrandId(brand.getId());
         brand.setProducts(products);
+        for(Product product : products){
+            product.setBrand(brand);
+        }
         return repository.save(brand);
+    }
+
+    @Override
+    public List<Brand> getTopRatedBrands() {
+        List<Brand> topRatedBrands = new ArrayList<>();
+        for (Product product : productService.orderAllByRating()){
+            topRatedBrands.add(product.getBrand());
+        }
+        return topRatedBrands;
     }
 }
