@@ -1,38 +1,83 @@
 package net.weg.topcare.service.implementation;
 
 import lombok.AllArgsConstructor;
-import net.weg.topcare.controller.dto.query.QueryMinimalGetDTO;
 import net.weg.topcare.controller.dto.query.QueryPostDTO;
 import net.weg.topcare.entity.Client;
 import net.weg.topcare.entity.Scheduling;
 import net.weg.topcare.repository.ClientRepository;
 import net.weg.topcare.repository.SchedulingRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
+/**
+ * Serviço de implementação de consultas.
+ *
+ * @author Kaue Correa Colling
+ */
 @Service
 @AllArgsConstructor
 public class QueryServiceImpl {
 
+    /**
+     * Repositório de agendamentos.
+     */
     private SchedulingRepository schedulingRepository;
+
+    /**
+     * Repositório de clientes.
+     */
     private ClientRepository clientRepository;
 
-    public void addQuery(@RequestBody QueryPostDTO dto) {
-        Optional<Scheduling> query = schedulingRepository.findById(dto.clientId());
-        Optional<Client> client = clientRepository.findById(dto.clientId());
+    /**
+     * Adiciona uma nova consulta.
+     *
+     * @param dto Objeto de transferência de dados da consulta.
+     */
+    public void addQuery(QueryPostDTO dto) {
+        Optional<Client> clientOptional = clientRepository.findById(dto.clientId());
 
-        if (client.isPresent() && query.isPresent()) {
-            Client cliente = client.get();
-            Scheduling scheduling = query.get();
+        if (clientOptional.isPresent()) {
+            Client client = clientOptional.get();
 
-            cliente.addQuery(scheduling);
-            clientRepository.save(cliente);
+            Scheduling scheduling = new Scheduling();
+            scheduling.setSchedulingNumber(dto.schedulingNumber());
+            scheduling.setServiceArea(dto.serviceArea());
+            scheduling.setSubsidiary(dto.subsidiary());
+            scheduling.setScheduledDate(dto.scheduledDate());
+            scheduling.setClient(client);
+            scheduling.setPets(dto.pets());
+
+            schedulingRepository.save(scheduling);
         }
     }
 
+    /**
+     * Retorna as próximas consultas agendadas.
+     *
+     * @return Lista de agendamentos.
+     */
+    public List<Scheduling> getNextQueries() {
+        LocalDateTime now = LocalDateTime.now();
+        return schedulingRepository.findByScheduledDateAfter(now);
+    }
 
+    /**
+     * Retorna todas as consultas agendadas.
+     *
+     * @return Lista de agendamentos.
+     */
+    public List<Scheduling> getAllQueries() {
+        return schedulingRepository.findAll();
+    }
+
+    /**
+     * Retorna a consulta agendada que foi buscada pelo ID.
+     *
+     * @return consulta.
+     */
+    public Optional<Scheduling> getQueryByID(Long id) {
+        return schedulingRepository.findById(id);
+    }
 }

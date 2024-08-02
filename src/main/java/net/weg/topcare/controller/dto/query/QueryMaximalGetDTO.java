@@ -1,6 +1,5 @@
 package net.weg.topcare.controller.dto.query;
 
-import net.weg.topcare.entity.Client;
 import net.weg.topcare.entity.PetScheduling;
 import net.weg.topcare.entity.Subsidiary;
 import net.weg.topcare.enums.ServiceArea;
@@ -8,12 +7,12 @@ import net.weg.topcare.enums.ServiceArea;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record QueryMinimalGetDTO(
+public record QueryMaximalGetDTO(
         String nameClient,
         String schedulingNumber,
-        List<PetScheduling> pets,
+        ServiceArea serviceArea,
+        Subsidiary subsidiary,
         LocalDateTime scheduledDate,
-        ServiceArea serviceArea
-
-){
+        List<PetScheduling> pets
+) {
 }
