@@ -12,6 +12,7 @@ import net.weg.topcare.enums.ServiceArea;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 // Entidade para serviço que foi agendado
@@ -48,14 +49,12 @@ public class Scheduling {
     private List<PetScheduling> pets = new ArrayList<>();
 
     public QueryMinimalGetDTO convertToQueryMinimalGetDTO() {
+
         return new QueryMinimalGetDTO(
-//                this.getId(),
-//                this.getClient().getName(),
                 this.getSchedulingNumber(),
                 this.getPets(),
                 this.getScheduledDate(),
                 this.getServiceArea()
-
         );
     }
 

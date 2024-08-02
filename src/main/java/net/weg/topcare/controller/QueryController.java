@@ -28,7 +28,7 @@ public class QueryController {
     /**
      * Serviço de implementação de consultas.
      */
-    private QueryServiceImpl queryService;
+    private final QueryServiceImpl queryService;
 
     /**
      * Adiciona uma nova consulta.
@@ -59,11 +59,8 @@ public class QueryController {
      * @return Lista de objetos de transferência de dados das consultas.
      */
     @GetMapping("/allQuery")
-    public List<QueryMinimalGetDTO> getAllQueries() {
-        List<Scheduling> allQueries = queryService.getAllQueries();
-        return allQueries.stream()
-                .map(Scheduling::convertToQueryMinimalGetDTO)
-                .collect(Collectors.toList());
+    public ResponseEntity<List<Scheduling>> getAllQueries() {
+        return ResponseEntity.ok(queryService.getAllQueries());
     }
 
     /**
@@ -73,12 +70,8 @@ public class QueryController {
      */
     @GetMapping("/{queryID}")
     public ResponseEntity<QueryMaximalGetDTO> getQueryByID(@PathVariable Long queryID) {
-        Optional<Scheduling> query = queryService.getQueryByID(queryID);
-        if (query.isPresent()) {
-            return ResponseEntity.ok(query.get().convertToQueryMaximalGetDTO());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        Scheduling query = queryService.getQueryByID(queryID);
+        return ResponseEntity.ok(query.convertToQueryMaximalGetDTO());
     }
 
 

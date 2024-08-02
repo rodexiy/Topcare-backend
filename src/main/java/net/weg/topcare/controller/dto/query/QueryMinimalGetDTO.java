@@ -1,8 +1,7 @@
 package net.weg.topcare.controller.dto.query;
 
-import net.weg.topcare.entity.Client;
+import net.weg.topcare.entity.Pet;
 import net.weg.topcare.entity.PetScheduling;
-import net.weg.topcare.entity.Subsidiary;
 import net.weg.topcare.enums.ServiceArea;
 
 import java.time.LocalDateTime;

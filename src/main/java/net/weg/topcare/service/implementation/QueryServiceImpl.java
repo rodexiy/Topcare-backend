@@ -1,6 +1,7 @@
 package net.weg.topcare.service.implementation;
 
 import lombok.AllArgsConstructor;
+import net.weg.topcare.controller.dto.query.QueryMinimalGetDTO;
 import net.weg.topcare.controller.dto.query.QueryPostDTO;
 import net.weg.topcare.entity.Client;
 import net.weg.topcare.entity.Scheduling;
@@ -77,8 +78,8 @@ public class QueryServiceImpl {
      *
      * @return consulta.
      */
-    public Optional<Scheduling> getQueryByID(Long id) {
-        return schedulingRepository.findById(id);
+    public Scheduling getQueryByID(Long id) {
+        return schedulingRepository.findById(id).get();
     }
 
 
