@@ -9,6 +9,7 @@ import lombok.ToString;
 import net.weg.topcare.enums.ServiceArea;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 // Entidade para serviço que foi agendado
@@ -42,5 +43,5 @@ public class Scheduling {
 
     @OneToMany
     @JoinColumn(nullable = false)
-    private List<PetScheduling> pets;
+    private List<PetScheduling> pets = new ArrayList<>();
 }

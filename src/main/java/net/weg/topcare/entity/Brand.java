@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,5 +25,5 @@ public class Brand {
     @OneToMany(mappedBy = "brand")
     @JsonIgnore
     @ToString.Exclude
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
 }

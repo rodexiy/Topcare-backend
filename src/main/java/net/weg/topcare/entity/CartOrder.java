@@ -10,6 +10,7 @@ import net.weg.topcare.controller.dto.cartorder.CartOrderMaximalGetDTO;
 import net.weg.topcare.controller.dto.cartorder.CartOrderMinimalGetDTO;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,7 @@ public class CartOrder {
     private Client client;
 
     @OneToMany
-    private List<OrderStatus> orderStatuses;
+    private List<OrderStatus> orderStatuses = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -37,7 +38,7 @@ public class CartOrder {
 
     @OneToMany
     @JoinColumn(nullable = false)
-    private List<ProductOrder> products;
+    private List<ProductOrder> products = new ArrayList<>();
 
     @Column(nullable = false)
     private Double productsTotal;

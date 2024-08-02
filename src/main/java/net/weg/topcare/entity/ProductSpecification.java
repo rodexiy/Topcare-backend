@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.weg.topcare.controller.dto.productSpecification.ProductSpecificationGetDTO;
 import net.weg.topcare.controller.dto.productSpecification.ProductSpecificationPostDTO;
 import org.springframework.beans.BeanUtils;
 
@@ -25,4 +26,8 @@ public class ProductSpecification {
     @ManyToOne
     @JoinColumn(nullable = false)
     private Product product;
+
+    public ProductSpecificationGetDTO toGetDTO() {
+        return new ProductSpecificationGetDTO(this.id, this.name, this.value);
+    }
 }

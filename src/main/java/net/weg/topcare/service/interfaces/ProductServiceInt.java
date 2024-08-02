@@ -9,11 +9,11 @@ import java.util.List;
 
 public interface ProductServiceInt {
 
-    Product postProduct(ProductPostDTO dto);
+    Product register(ProductPostDTO dto);
 
-    ProductGetDTO getProduct(Long id);
-    List<Product> getAll();
+    ProductGetDTO findOne(Long id);
+    List<Product> findAll();
     List<Product> findByIds(List<Long> ids);
-    Product putProduct(ProductPutDTO dto);
+    Product update(ProductPutDTO dto);
     List<Product> orderAllByRating();
 }

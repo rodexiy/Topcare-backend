@@ -25,13 +25,16 @@ public class ProductServiceImpl implements ProductServiceInt {
     private ProductRepository repository;
 
     @Override
-    public Product postProduct(ProductPostDTO dto) {
+    public Product register(ProductPostDTO dto) {
         Product product = new Product(dto);
-        return repository.save(product);
+        Product saved = repository.save(product);
+        saved.setGeneralRating(5);
+        return repository.save(saved);
+
     }
 
     @Override
-    public List<Product> getAll(){
+    public List<Product> findAll(){
         return repository.findAll();
     }
 
@@ -41,7 +44,7 @@ public class ProductServiceImpl implements ProductServiceInt {
     }
 
     @Override
-    public Product putProduct(ProductPutDTO dto) {
+    public Product update(ProductPutDTO dto) {
         Product product = repository.findById(dto.id()).get();
         BeanUtils.copyProperties(dto, product);
         return repository.save(product);
@@ -58,7 +61,7 @@ public class ProductServiceImpl implements ProductServiceInt {
     }
 
     @Override
-    public ProductGetDTO getProduct(Long id) {
+    public ProductGetDTO findOne(Long id) {
         Product product = repository.findById(id).get();
         return product.toGetDTO();
     }
@@ -66,12 +69,14 @@ public class ProductServiceImpl implements ProductServiceInt {
     public Page<ProductMinimalGetDTO> searchProduct(String query, int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
 
-        List<Product> products = repository.findAllByNameContainingIgnoreCase(query, pageRequest);
+        System.out.println("Query: " + query);
 
-        List<ProductMinimalGetDTO> dtos = products.stream()
+        Page<Product> productPage = repository.findAllByNameContainingIgnoreCase(query, pageRequest);
+
+        List<ProductMinimalGetDTO> dtos = productPage.stream()
                 .map(Product::toMinimalGetDTO)
                 .toList();
 
-        return new PageImpl<>(dtos, pageRequest, products.size());
+        return new PageImpl<>(dtos, pageRequest, productPage.getTotalElements());
     }
 }
