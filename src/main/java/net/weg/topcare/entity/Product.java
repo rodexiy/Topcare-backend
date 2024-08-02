@@ -1,9 +1,7 @@
 package net.weg.topcare.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import net.weg.topcare.controller.dto.product.ProductGetDTO;
 import net.weg.topcare.controller.dto.product.ProductPostDTO;
 import net.weg.topcare.controller.dto.rating.GeneralRatingGetDTO;
@@ -16,13 +14,15 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Data
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NonNull
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Brand brand;
 
     @Column(nullable = false)
@@ -61,6 +61,7 @@ public class Product {
     public ProductGetDTO toGetDTO(){
         return new ProductGetDTO(
                 this.id,
+                this.brand,
                 this.name,
                 this.price,
                 this.categories,

@@ -2,10 +2,9 @@ package net.weg.topcare.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import net.weg.topcare.controller.dto.brand.BrandPostDTO;
+import org.springframework.beans.BeanUtils;
 
 import java.util.List;
 
@@ -13,16 +12,21 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NonNull
     private Long id;
 
     @Column(nullable = false, length = 30)
     private String name;
 
     @OneToMany(mappedBy = "brand")
-    @JsonIgnore
     @ToString.Exclude
     private List<Product> products;
+
+    public Brand(BrandPostDTO dto){
+        BeanUtils.copyProperties(dto, this);
+    }
 }

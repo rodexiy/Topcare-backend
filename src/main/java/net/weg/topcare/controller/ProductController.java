@@ -5,6 +5,7 @@ import net.weg.topcare.controller.dto.product.ProductGetDTO;
 import net.weg.topcare.controller.dto.product.ProductPostDTO;
 import net.weg.topcare.controller.dto.product.ProductPutDTO;
 import net.weg.topcare.entity.Product;
+import net.weg.topcare.exceptions.ProductNotFoundException;
 import net.weg.topcare.service.implementation.ProductServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +27,20 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductGetDTO> getProduct(@PathVariable Long id){
-        return new ResponseEntity<>(service.getProduct(id), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(service.getProduct(id), HttpStatus.OK);
+        } catch (ProductNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PutMapping
     public ResponseEntity<Product> updateProduct(@RequestBody ProductPutDTO dto){
-        return new ResponseEntity<>(service.putProduct(dto), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(service.putProduct(dto), HttpStatus.OK);
+        } catch (ProductNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping

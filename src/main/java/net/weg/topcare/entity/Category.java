@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.weg.topcare.controller.dto.category.CategoryGetDTO;
 import net.weg.topcare.controller.dto.category.CategoryPostDTO;
+import net.weg.topcare.controller.dto.product.ProductGetDTO;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;

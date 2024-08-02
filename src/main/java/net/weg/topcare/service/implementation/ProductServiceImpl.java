@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import net.weg.topcare.controller.dto.product.ProductGetDTO;
 import net.weg.topcare.controller.dto.product.ProductPostDTO;
 import net.weg.topcare.controller.dto.product.ProductPutDTO;
+import net.weg.topcare.entity.Brand;
 import net.weg.topcare.entity.Product;
 import net.weg.topcare.entity.Rating;
+import net.weg.topcare.exceptions.ProductNotFoundException;
 import net.weg.topcare.repository.ProductRepository;
 import net.weg.topcare.service.interfaces.ProductServiceInt;
 import org.springframework.beans.BeanUtils;
@@ -37,8 +39,8 @@ public class ProductServiceImpl implements ProductServiceInt {
     }
 
     @Override
-    public Product putProduct(ProductPutDTO dto) {
-        Product product = repository.findById(dto.id()).get();
+    public Product putProduct(ProductPutDTO dto) throws ProductNotFoundException {
+        Product product = repository.findById(dto.id()).orElseThrow(ProductNotFoundException::new);
         BeanUtils.copyProperties(dto, product);
         return repository.save(product);
     }
@@ -53,8 +55,8 @@ public class ProductServiceImpl implements ProductServiceInt {
     }
 
     @Override
-    public ProductGetDTO getProduct(Long id) {
-        Product product = repository.findById(id).get();
+    public ProductGetDTO getProduct(Long id) throws ProductNotFoundException {
+        Product product = repository.findById(id).orElseThrow(ProductNotFoundException::new);
        return product.toGetDTO();
     }
 }
