@@ -8,6 +8,7 @@ import net.weg.topcare.entity.Scheduling;
 import net.weg.topcare.service.implementation.QueryServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -72,6 +73,7 @@ public class QueryController {
     @GetMapping("/{queryID}")
     public List<QueryMaximalGetDTO> getQueryByID(Long queryID) {
         // Fazer proxima aula
+        return new ArrayList<>();
     }
 
     /**
