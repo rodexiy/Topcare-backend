@@ -9,7 +9,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record QueryMinimalGetDTO(
-        String nameClient,
+//        Long id,
+//        String nameClient,
         String schedulingNumber,
         List<PetScheduling> pets,
         LocalDateTime scheduledDate,

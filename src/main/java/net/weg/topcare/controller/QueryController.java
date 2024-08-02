@@ -6,6 +6,8 @@ import net.weg.topcare.controller.dto.query.QueryMinimalGetDTO;
 import net.weg.topcare.controller.dto.query.QueryPostDTO;
 import net.weg.topcare.entity.Scheduling;
 import net.weg.topcare.service.implementation.QueryServiceImpl;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,7 +49,7 @@ public class QueryController {
     public List<QueryMinimalGetDTO> getNextQueries() {
         List<Scheduling> nextQueries = queryService.getNextQueries();
         return nextQueries.stream()
-                .map(this::convertToQueryMinimalGetDTO)
+                .map(Scheduling::convertToQueryMinimalGetDTO)
                 .collect(Collectors.toList());
     }
 
@@ -60,7 +62,7 @@ public class QueryController {
     public List<QueryMinimalGetDTO> getAllQueries() {
         List<Scheduling> allQueries = queryService.getAllQueries();
         return allQueries.stream()
-                .map(this::convertToQueryMinimalGetDTO)
+                .map(Scheduling::convertToQueryMinimalGetDTO)
                 .collect(Collectors.toList());
     }
 
@@ -70,41 +72,14 @@ public class QueryController {
      * @return Lista de objetos de transferência de dados das consultas.
      */
     @GetMapping("/{queryID}")
-    public List<QueryMaximalGetDTO> getQueryByID(Long queryID) {
-        // Fazer proxima aula
+    public ResponseEntity<QueryMaximalGetDTO> getQueryByID(@PathVariable Long queryID) {
+        Optional<Scheduling> query = queryService.getQueryByID(queryID);
+        if (query.isPresent()) {
+            return ResponseEntity.ok(query.get().convertToQueryMaximalGetDTO());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
-    /**
-     * Converte um objeto de agendamento em um objeto de transferência de dados de consulta.
-     *
-     * @param scheduling Objeto de agendamento.
-     * @return Objeto de transferência de dados da consulta.
-     */
-    private QueryMinimalGetDTO convertToQueryMinimalGetDTO(Scheduling scheduling) {
-        return new QueryMinimalGetDTO(
-                scheduling.getClient().getName(),
-                scheduling.getSchedulingNumber(),
-                scheduling.getPets(),
-                scheduling.getScheduledDate(),
-                scheduling.getServiceArea()
 
-        );
-    }
-
-    /**
-     * Converte um objeto de agendamento em um objeto de transferência de dados de consulta.
-     *
-     * @param scheduling Objeto de agendamento.
-     * @return Objeto de transferência de dados da consulta.
-     */
-    private QueryMaximalGetDTO convertToQueryMaximalGetDTO(Scheduling scheduling) {
-        return new QueryMaximalGetDTO(
-                scheduling.getClient().getName(),
-                scheduling.getSchedulingNumber(),
-                scheduling.getServiceArea(),
-                scheduling.getSubsidiary(),
-                scheduling.getScheduledDate(),
-                scheduling.getPets()
-        );
-    }
 }

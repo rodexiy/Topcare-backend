@@ -80,4 +80,6 @@ public class QueryServiceImpl {
     public Optional<Scheduling> getQueryByID(Long id) {
         return schedulingRepository.findById(id);
     }
+
+
 }
