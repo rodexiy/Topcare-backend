@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/api/pet")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class PetController {
     private final PetServiceImpl service; //todios os fnals é required
     @PostMapping
-    public ResponseEntity<Pet> postPet(@RequestBody PetPostRequestDTO dto){
+    public ResponseEntity<PetGetRequestDTO> postPet(@RequestBody PetPostRequestDTO dto){
         return ResponseEntity.ok(service.postPet(dto));
 
     }
@@ -33,9 +33,9 @@ public class PetController {
     public ResponseEntity<List<PetGetRequestDTO>> getPets(){
         return ResponseEntity.ok(service.getPets());
     }
-    @PatchMapping
-    public ResponseEntity<Pet> patchPet(@RequestBody PetPatchRequestDTO dto){
-        return ResponseEntity.ok(service.patchPet(dto));
+    @PatchMapping("{id}")
+    public ResponseEntity<Pet> patchPet(@RequestBody PetPatchRequestDTO dto, @PathVariable Long id){
+        return ResponseEntity.ok(service.patchPet(dto, id));
     }
     @DeleteMapping("{id}")
     public ResponseEntity<String> deletePet(@PathVariable Long id){

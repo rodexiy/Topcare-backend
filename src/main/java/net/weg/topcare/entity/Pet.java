@@ -58,10 +58,11 @@ public class Pet {
         return new PetGetRequestDTO(
                 this.name,
                 this.breed,
-                this.size,
-                this.gender,
+                this.size.getNome(),
+                this.gender.getNome(),
                 this.weight,
-                this.birthdate
+                this.birthdate,
+                this.picture
         );
     }
 
