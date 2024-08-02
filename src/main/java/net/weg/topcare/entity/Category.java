@@ -10,6 +10,7 @@ import net.weg.topcare.controller.dto.category.CategoryPostDTO;
 import net.weg.topcare.controller.dto.product.ProductGetDTO;
 import org.springframework.beans.BeanUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,7 +27,7 @@ public class Category {
 
     @ManyToMany(mappedBy = "categories")
     @JsonIgnore
-    private List<Product> productsInCategory;
+    private List<Product> productsInCategory = new ArrayList<>();
 
     public Category(CategoryPostDTO dto){
         BeanUtils.copyProperties(dto, this);

@@ -8,6 +8,6 @@ public record ProductMinimalGetDTO(
         String name,
         Double price,
         Integer discount,
-        Image image,
+        String image,
         GeneralRatingGetDTO generalRating
 ) {}

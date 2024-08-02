@@ -5,6 +5,11 @@ import jakarta.persistence.*;
 import lombok.*;
 import net.weg.topcare.controller.dto.rating.GeneralRatingPostDTO;
 import org.springframework.beans.BeanUtils;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import net.weg.topcare.controller.dto.rating.GeneralRatingGetDTO;
+
 
 @Entity
 @AllArgsConstructor
@@ -33,3 +38,4 @@ public class Rating {
         BeanUtils.copyProperties(dto, this);
     }
 }
+

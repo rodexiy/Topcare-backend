@@ -1,5 +1,4 @@
 package net.weg.topcare.controller.dto.product;
-
 import net.weg.topcare.controller.dto.category.CategoryGetDTO;
 import net.weg.topcare.controller.dto.productSpecification.ProductSpecificationGetDTO;
 import net.weg.topcare.controller.dto.rating.GeneralRatingGetDTO;
@@ -19,6 +18,7 @@ public record ProductGetDTO(
         GeneralRatingGetDTO generalRating,
         Integer discount,
         String description,
-        List<ProductSpecification> specifications,
-        List<String> images
+        List<ProductSpecificationGetDTO> specifications,
+        List<String> images,
+        Integer stock
 ){}

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // É utilizada no Agedamento para especificar os servicos selecionado para o pet
@@ -23,7 +24,7 @@ public class PetScheduling {
     private Pet pet;
 
     @ManyToMany
-    private List<Service> servicesSelected;
+    private List<Service> servicesSelected = new ArrayList<>();
 
 
 }

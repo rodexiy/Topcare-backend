@@ -16,7 +16,7 @@ public class Service {
     private Long id;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private ServiceArea area;
 
     @Column(nullable = false, length = 20)

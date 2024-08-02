@@ -20,9 +20,6 @@ public class Employee extends People {
     @Column(nullable = false, length = 5)
     private String register;
 
-    @Column(nullable = false)
-    private LocalDate birthdate;
-
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
     private EmployeeRole role;

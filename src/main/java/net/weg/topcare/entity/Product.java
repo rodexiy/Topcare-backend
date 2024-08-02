@@ -3,6 +3,7 @@ package net.weg.topcare.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import net.weg.topcare.controller.dto.product.ProductGetDTO;
+import net.weg.topcare.controller.dto.product.ProductMinimalGetDTO;
 import net.weg.topcare.controller.dto.product.ProductPostDTO;
 import net.weg.topcare.controller.dto.rating.GeneralRatingGetDTO;
 import org.springframework.beans.BeanUtils;
@@ -34,13 +35,13 @@ public class Product {
     private Integer generalRating;
 
     @ManyToMany
-    private List<Category> categories;
+    private List<Category> categories = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<ProductSpecification> specifications;
+    private List<ProductSpecification> specifications = new ArrayList<>();
 
     @OneToMany
-    private List<Image> images;
+    private List<Image> images = new ArrayList<>();
 
     @Column
     private Integer discount = 0;
@@ -68,11 +69,24 @@ public class Product {
                 new GeneralRatingGetDTO(this.generalRating, (long) this.ratings.size()),
                 this.discount,
                 this.description,
-                this.specifications,
-                this.images.stream().map(Image::toString).toList()
-                );
+                this.specifications.stream().map(ProductSpecification::toGetDTO).toList(),
+                this.images.stream().map(Image::toString).toList(),
+                this.stock
+        );
     }
 
-
-
+    public ProductMinimalGetDTO toMinimalGetDTO(){
+        String image = "";
+        if (!this.images.isEmpty()) {
+            image = this.images.get(1).toString();
+        }
+        return new ProductMinimalGetDTO(
+            this.id,
+            this.name,
+            this.price,
+            this.discount,
+            image,
+            new GeneralRatingGetDTO(this.generalRating, (long) this.ratings.size())
+        );
+    }
 }

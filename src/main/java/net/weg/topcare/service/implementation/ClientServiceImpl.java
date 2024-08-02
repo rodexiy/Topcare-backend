@@ -11,6 +11,7 @@ import net.weg.topcare.repository.ClientRepository;
 import net.weg.topcare.repository.AddressRepository;
 import net.weg.topcare.service.interfaces.ClientServiceInt;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -48,6 +49,4 @@ public class ClientServiceImpl implements ClientServiceInt {
     public List<ClientGetDTO> findAll() {
         return repository.findAll().stream().map(Client::toGetDTO).toList();
     }
-
-
 }
