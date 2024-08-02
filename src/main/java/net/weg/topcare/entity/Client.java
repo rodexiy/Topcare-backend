@@ -106,4 +106,8 @@ public class Client extends People {
     public void addCartOrderToOrders(CartOrder cartOrder) {
         orders.add(cartOrder);
     }
+
+    public void addQuery(Scheduling scheduling) {
+        schedules.add(scheduling);
+    }
 }
