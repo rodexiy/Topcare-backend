@@ -1,8 +1,7 @@
 package net.weg.topcare.service.implementation;
 
 import lombok.AllArgsConstructor;
-import net.weg.topcare.controller.dto.query.QueryMinimalGetDTO;
-import net.weg.topcare.controller.dto.query.QueryPostDTO;
+import net.weg.topcare.controller.dto.exam.ExamPostDTO;
 import net.weg.topcare.entity.Client;
 import net.weg.topcare.entity.Scheduling;
 import net.weg.topcare.repository.ClientRepository;
@@ -19,7 +18,7 @@ import java.util.Optional;
  */
 @Service
 @AllArgsConstructor
-public class QueryServiceImpl {
+public class ExamServiceImpl {
 
     /**
      * Repositório de agendamentos.
@@ -36,7 +35,7 @@ public class QueryServiceImpl {
      *
      * @param dto Objeto de transferência de dados da consulta.
      */
-    public void addQuery(QueryPostDTO dto) {
+    public void addExam(ExamPostDTO dto) {
         Optional<Client> clientOptional = clientRepository.findById(dto.clientId());
 
         if (clientOptional.isPresent()) {
@@ -59,7 +58,7 @@ public class QueryServiceImpl {
      *
      * @return Lista de agendamentos.
      */
-    public List<Scheduling> getNextQueries() {
+    public List<Scheduling> getNextExam() {
         LocalDateTime now = LocalDateTime.now();
         return schedulingRepository.findByScheduledDateAfter(now);
     }
@@ -69,7 +68,7 @@ public class QueryServiceImpl {
      *
      * @return Lista de agendamentos.
      */
-    public List<Scheduling> getAllQueries() {
+    public List<Scheduling> getAllExam() {
         return schedulingRepository.findAll();
     }
 
@@ -78,7 +77,7 @@ public class QueryServiceImpl {
      *
      * @return consulta.
      */
-    public Scheduling getQueryByID(Long id) {
+    public Scheduling getExamByID(Long id) {
         return schedulingRepository.findById(id).get();
     }
 

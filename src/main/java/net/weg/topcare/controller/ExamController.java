@@ -1,17 +1,15 @@
 package net.weg.topcare.controller;
 
 import lombok.AllArgsConstructor;
-import net.weg.topcare.controller.dto.query.QueryMaximalGetDTO;
-import net.weg.topcare.controller.dto.query.QueryMinimalGetDTO;
-import net.weg.topcare.controller.dto.query.QueryPostDTO;
+import net.weg.topcare.controller.dto.exam.ExamMaximalGetDTO;
+import net.weg.topcare.controller.dto.exam.ExamMinimalGetDTO;
+import net.weg.topcare.controller.dto.exam.ExamPostDTO;
 import net.weg.topcare.entity.Scheduling;
-import net.weg.topcare.service.implementation.QueryServiceImpl;
-import org.springframework.http.HttpStatus;
+import net.weg.topcare.service.implementation.ExamServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -21,14 +19,14 @@ import java.util.stream.Collectors;
  */
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/query")
+@RequestMapping("/api/exam")
 @AllArgsConstructor
-public class QueryController {
+public class ExamController {
 
     /**
      * Serviço de implementação de consultas.
      */
-    private final QueryServiceImpl queryService;
+    private final ExamServiceImpl queryService;
 
     /**
      * Adiciona uma nova consulta.
@@ -36,8 +34,8 @@ public class QueryController {
      * @param dto Objeto de transferência de dados da consulta.
      */
     @PostMapping
-    public void addQuery(@RequestBody QueryPostDTO dto) {
-        queryService.addQuery(dto);
+    public void addExam(@RequestBody ExamPostDTO dto) {
+        queryService.addExam(dto);
     }
 
     /**
@@ -45,9 +43,9 @@ public class QueryController {
      *
      * @return Lista de objetos de transferência de dados das consultas.
      */
-    @GetMapping("/next")
-    public List<QueryMinimalGetDTO> getNextQueries() {
-        List<Scheduling> nextQueries = queryService.getNextQueries();
+    @GetMapping("/nextExam")
+    public List<ExamMinimalGetDTO> getNextExam() {
+        List<Scheduling> nextQueries = queryService.getNextExam();
         return nextQueries.stream()
                 .map(Scheduling::convertToQueryMinimalGetDTO)
                 .collect(Collectors.toList());
@@ -58,9 +56,9 @@ public class QueryController {
      *
      * @return Lista de objetos de transferência de dados das consultas.
      */
-    @GetMapping("/allQuery")
-    public ResponseEntity<List<Scheduling>> getAllQueries() {
-        return ResponseEntity.ok(queryService.getAllQueries());
+    @GetMapping("/allExam")
+    public ResponseEntity<List<Scheduling>> getAllExam() {
+        return ResponseEntity.ok(queryService.getAllExam());
     }
 
     /**
@@ -68,9 +66,9 @@ public class QueryController {
      *
      * @return Lista de objetos de transferência de dados das consultas.
      */
-    @GetMapping("/{queryID}")
-    public ResponseEntity<QueryMaximalGetDTO> getQueryByID(@PathVariable Long queryID) {
-        Scheduling query = queryService.getQueryByID(queryID);
+    @GetMapping("/{examID}")
+    public ResponseEntity<ExamMaximalGetDTO> getExamByID(@PathVariable Long examID) {
+        Scheduling query = queryService.getExamByID(examID);
         return ResponseEntity.ok(query.convertToQueryMaximalGetDTO());
     }
 

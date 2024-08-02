@@ -6,13 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import net.weg.topcare.controller.dto.query.QueryMaximalGetDTO;
-import net.weg.topcare.controller.dto.query.QueryMinimalGetDTO;
+import net.weg.topcare.controller.dto.exam.ExamMaximalGetDTO;
+import net.weg.topcare.controller.dto.exam.ExamMinimalGetDTO;
 import net.weg.topcare.enums.ServiceArea;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 // Entidade para serviço que foi agendado
@@ -48,18 +47,18 @@ public class Scheduling {
     @JoinColumn(nullable = false)
     private List<PetScheduling> pets = new ArrayList<>();
 
-    public QueryMinimalGetDTO convertToQueryMinimalGetDTO() {
+    public ExamMinimalGetDTO convertToQueryMinimalGetDTO() {
 
-        return new QueryMinimalGetDTO(
+        return new ExamMinimalGetDTO(
                 this.getSchedulingNumber(),
-                this.getPets(),
+                this.getPets().stream().map(petScheduling -> petScheduling.getPet().getName()).toList(),
                 this.getScheduledDate(),
                 this.getServiceArea()
         );
     }
 
-    public QueryMaximalGetDTO convertToQueryMaximalGetDTO() {
-        return new QueryMaximalGetDTO(
+    public ExamMaximalGetDTO convertToQueryMaximalGetDTO() {
+        return new ExamMaximalGetDTO(
                 this.getClient().getName(),
                 this.getSchedulingNumber(),
                 this.getServiceArea(),
