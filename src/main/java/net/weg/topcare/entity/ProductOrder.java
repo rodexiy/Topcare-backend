@@ -30,6 +30,10 @@ public class ProductOrder {
     private Image picture;
 
     @ManyToOne
+    @JsonIgnore
+    private Product product;
+
+    @ManyToOne
     @JoinColumn(nullable = false)
     @ToString.Exclude
     @JsonIgnore

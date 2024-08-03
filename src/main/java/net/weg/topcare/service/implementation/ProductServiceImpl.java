@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import net.weg.topcare.controller.dto.product.*;
 import net.weg.topcare.entity.Product;
 
+import net.weg.topcare.entity.ProductOrder;
 import net.weg.topcare.exceptions.ProductNotFoundException;
 import net.weg.topcare.repository.ProductRepository;
 import net.weg.topcare.service.interfaces.ProductServiceInt;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,6 +24,7 @@ import java.util.List;
 public class ProductServiceImpl implements ProductServiceInt {
 
     private ProductRepository repository;
+    private ProductOrderServiceImpl productOrderService;
 
     @Override
     public Product register(ProductPostDTO dto) {
@@ -30,6 +33,16 @@ public class ProductServiceImpl implements ProductServiceInt {
         saved.setGeneralRating(5);
         return repository.save(saved);
 
+    }
+
+    @Override
+    public List<Product> findAllProductBySale() {
+       List<ProductOrder> productOrders = productOrderService.getAllByProductOrder();
+       List<Product> products = new ArrayList<>();
+       for (ProductOrder productOrder : productOrders){
+           products.add(productOrder.getProduct());
+       }
+       return products;
     }
 
     @Override
