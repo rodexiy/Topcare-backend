@@ -33,7 +33,7 @@ public class PetServiceImpl implements PetServiceInt {
     public PetGetRequestDTO getOnePet(Long id) {
         Optional<Pet> pet = repository.findById(id);
         if(pet.get().getAble()){
-            return pet.map(Pet::toDto).orElse(null);
+            return pet.map(Pet::toDto).get();
 
         }
         throw new RuntimeException("Pet não existe");
