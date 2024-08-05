@@ -25,9 +25,8 @@ public class PetController {
 
     }
     @GetMapping("{id}")
-    public ResponseEntity<PetGetRequestDTO> getOnePet(@PathVariable Long id){
-        return ResponseEntity.ok(service.getOnePet(id));
-
+    public ResponseEntity<List<Pet>> getPetsByClient(@PathVariable Long id){
+        return new ResponseEntity<>(service.getAllPetsByClient(id), HttpStatus.OK);
     }
     @GetMapping
     public ResponseEntity<List<PetGetRequestDTO>> getPets(){
@@ -41,4 +40,6 @@ public class PetController {
     public ResponseEntity<String> deletePet(@PathVariable Long id){
         return ResponseEntity.ok(service.deletePet(id));
     }
+
+
 }

@@ -6,8 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import net.weg.topcare.controller.dto.cartorder.CartOrderMaximalGetDTO;
+import net.weg.topcare.controller.dto.cartorder.CartOrderMinimalGetDTO;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @AllArgsConstructor
@@ -25,7 +30,7 @@ public class CartOrder {
     private Client client;
 
     @OneToMany
-    private List<OrderStatus> orderStatuses;
+    private List<OrderStatus> orderStatuses = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -33,8 +38,40 @@ public class CartOrder {
 
     @OneToMany
     @JoinColumn(nullable = false)
-    private List<ProductOrder> products;
+    private List<ProductOrder> products = new ArrayList<>();
 
     @Column(nullable = false)
-    private Double total;
+    private Double productsTotal;
+
+    @Column(nullable = false)
+    private int numberOrder;
+
+    @Column(nullable = false)
+    private Double freight;
+
+    @Column(nullable = false)
+    private Double discount;
+
+    private LocalDate dateOrderFinished;
+
+    public CartOrderMinimalGetDTO convertToMinimalGetDTO() {
+        return new CartOrderMinimalGetDTO(
+                this.getClient().getName(),
+                this.getOrderStatuses().stream().map(status -> status.getOrderStatus().getNome()).collect(Collectors.joining(", ")),
+                (long) this.getNumberOrder(),
+                this.getDateOrderFinished()
+        );
+    }
+
+    public CartOrderMaximalGetDTO convertToMaximalGetDTO() {
+        return new CartOrderMaximalGetDTO(
+                this.getClient(),
+                this.getAddress(),
+                this.getOrderStatuses().stream().map(status -> status.getOrderStatus().getNome()).collect(Collectors.joining(", ")),
+                (long) this.getNumberOrder(),
+                this.getDateOrderFinished(),
+                this.getProducts()
+        );
+    }
+
 }

@@ -1,5 +1,6 @@
 package net.weg.topcare.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import net.weg.topcare.controller.dto.client.ClientGetDTO;
@@ -39,6 +40,8 @@ public class Client extends People {
     private List<Product> productsFavorite = new ArrayList<>();
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ToString.Exclude
     private List<Rating> ratings = new ArrayList<>();
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
@@ -59,10 +62,11 @@ public class Client extends People {
         Cart cart = new Cart();
         cart.setClient(this);
         this.setCart(cart);
-
-
     }
 
+    public Client(Long id){
+        this.setId(id);
+    }
     public ClientGetDTO toGetDTO() {;
         return new ClientGetDTO(
                 this.getId(),
@@ -78,5 +82,38 @@ public class Client extends People {
                 this.getBanner(),
                 this.getProfilePicture(),
                 this.getBirthdate());
+    }
+
+    /**
+     * Adiciona um produto à lista de produtos favoritos do cliente.
+     *
+     * @param produto - Produto a ser adicionado.
+     */
+    public void addProductFavorite(Product produto) {
+        if (!productsFavorite.contains(produto)) {
+            productsFavorite.add(produto);
+        }
+    }
+
+    /**
+     * Remove um produto à lista de produtos favoritos do cliente.
+     *
+     * @param produto - Produto a ser adicionado.
+     */
+    public void removeProductFavorite(Product produto) {
+            productsFavorite.remove(produto);
+    }
+
+    /**
+     * Remove um produto à lista de pedidos do cliente.
+     *
+     * @param cartOrder - Pedido a ser adicionado.
+     */
+    public void addCartOrderToOrders(CartOrder cartOrder) {
+        orders.add(cartOrder);
+    }
+
+    public void addQuery(Scheduling scheduling) {
+        schedules.add(scheduling);
     }
 }
