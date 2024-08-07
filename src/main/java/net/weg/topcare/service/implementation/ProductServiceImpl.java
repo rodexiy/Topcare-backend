@@ -26,9 +26,17 @@ public class ProductServiceImpl implements ProductServiceInt {
     @Override
     public Product register(ProductPostDTO dto) {
         Product product = new Product(dto);
-        Product saved = repository.save(product);
-        saved.setGeneralRating(5);
-        return repository.save(saved);
+        product.setGeneralRating(5);
+        return repository.save(product);
+//        Product product = new Product(dto);
+//        product.setGeneralRating(5);
+//        repository.save(product);
+//
+//        Product productCloned = product.clone();
+//        productCloned.setGeneralRating(5);
+//
+//        return repository.save(productCloned);
+
 
     }
 
@@ -60,6 +68,7 @@ public class ProductServiceImpl implements ProductServiceInt {
         product.setGeneralRating(dto.rating());
         return repository.save(product);
     }
+
 
     @Override
     public ProductGetDTO getProduct(Long id) throws ProductNotFoundException {
