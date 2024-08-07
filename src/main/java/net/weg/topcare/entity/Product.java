@@ -74,7 +74,7 @@ public class Product {
                 this.discount,
                 this.description,
                 this.specifications.stream().map(ProductSpecification::toGetDTO).toList(),
-                this.productVarietions.stream().map(ProductVarietions::toGetDTO).toList(),
+//                this.productVarietions.stream().map(ProductVarietions::toGetDTO).toList(),
                 this.images.stream().map(Image::toString).toList(),
                 this.stock
         );

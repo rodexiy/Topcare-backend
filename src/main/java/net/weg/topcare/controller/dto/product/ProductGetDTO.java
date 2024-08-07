@@ -20,7 +20,7 @@ public record ProductGetDTO(
         Integer discount,
         String description,
         List<ProductSpecificationGetDTO> specifications,
-        List<PVGetDTO> productVarietions,
+//        List<PVGetDTO> productVarietions,
         List<String> images,
         Integer stock
 ){}
