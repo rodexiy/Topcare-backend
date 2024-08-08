@@ -78,6 +78,7 @@ public class Client extends People {
                 this.getAddress(),
                 this.getCart(),
                 this.getProductsFavorite(),
+                this.getSchedules(),
                 this.getPets(),
                 this.getBanner(),
                 this.getProfilePicture(),
