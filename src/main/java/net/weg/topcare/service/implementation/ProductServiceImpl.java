@@ -26,9 +26,8 @@ public class ProductServiceImpl implements ProductServiceInt {
     @Override
     public Product register(ProductPostDTO dto) {
         Product product = new Product(dto);
-        Product saved = repository.save(product);
-        saved.setGeneralRating(5);
-        return repository.save(saved);
+        product.setGeneralRating(5);
+        return repository.save(product);
 
     }
 
