@@ -25,7 +25,7 @@ public class Category {
     @Column(nullable = false, length = 20)
     private String name;
 
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany(mappedBy = "categories", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Product> productsInCategory = new ArrayList<>();
 

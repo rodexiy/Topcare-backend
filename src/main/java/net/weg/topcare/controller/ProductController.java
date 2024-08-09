@@ -55,4 +55,9 @@ public class ProductController {
     public ResponseEntity<List<Product>> getAllProductsByRating(){
         return new ResponseEntity<>(service.orderAllByRating(), HttpStatus.OK);
     }
+
+    @GetMapping("orderBySale")
+    public ResponseEntity<List<Product>> getAllBySale(){
+        return new ResponseEntity<>(service.findAllProductBySale(), HttpStatus.OK);
+    }
 }

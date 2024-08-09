@@ -3,10 +3,13 @@ package net.weg.topcare.service.implementation;
 import lombok.AllArgsConstructor;
 
 import net.weg.topcare.controller.dto.product.*;
+import net.weg.topcare.entity.Category;
 import net.weg.topcare.entity.Product;
 
 import net.weg.topcare.entity.ProductOrder;
+import net.weg.topcare.entity.ProductSpecification;
 import net.weg.topcare.exceptions.ProductNotFoundException;
+import net.weg.topcare.repository.CategoryRepository;
 import net.weg.topcare.repository.ProductRepository;
 import net.weg.topcare.service.interfaces.ProductServiceInt;
 import org.springframework.beans.BeanUtils;
@@ -18,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 @Service
 @AllArgsConstructor
@@ -25,12 +29,28 @@ public class ProductServiceImpl implements ProductServiceInt {
 
     private ProductRepository repository;
     private ProductOrderServiceImpl productOrderService;
+    private CategoryRepository categoryRepository;
 
     @Override
     public Product register(ProductPostDTO dto) {
         Product product = new Product(dto);
         Product saved = repository.save(product);
         saved.setGeneralRating(5);
+        List<ProductSpecification> specifications = new ArrayList<>();
+        dto.specifications().forEach(specification -> {
+            ProductSpecification productSpecification = new ProductSpecification(specification);
+            productSpecification.setProduct(saved);
+            specifications.add(productSpecification);
+        });
+        saved.setSpecifications(specifications);
+        List<Category> categories = new ArrayList<>();
+        dto.categories().forEach(category -> {
+            Category category1 = new Category(category);
+            category1.getProductsInCategory().add(saved);
+            categories.add(category1);
+            categoryRepository.save(category1);
+        });
+        saved.setCategories(categories);
         return repository.save(saved);
 
     }
@@ -39,9 +59,10 @@ public class ProductServiceImpl implements ProductServiceInt {
     public List<Product> findAllProductBySale() {
        List<ProductOrder> productOrders = productOrderService.getAllByProductOrder();
        List<Product> products = new ArrayList<>();
-       for (ProductOrder productOrder : productOrders){
-           products.add(productOrder.getProduct());
-       }
+        ListIterator<ProductOrder> iterator = productOrders.listIterator();
+        iterator.forEachRemaining(productOrder -> {
+            products.add(productOrder.getProduct());
+        });
        return products;
     }
 
