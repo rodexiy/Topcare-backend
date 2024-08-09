@@ -52,7 +52,6 @@ public class ProductServiceImpl implements ProductServiceInt {
         });
         saved.setCategories(categories);
         return repository.save(saved);
-
     }
 
     @Override
