@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Data
-public class Product implements CloneProductInt {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NonNull

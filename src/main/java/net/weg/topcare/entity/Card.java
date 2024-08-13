@@ -28,4 +28,6 @@ public class Card {
 
     @Column(nullable = false)
     private LocalDate expiration;
+    @Column(nullable = false)
+    private boolean standard;
 }
