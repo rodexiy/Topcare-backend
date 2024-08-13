@@ -8,6 +8,5 @@ public record PetPatchRequestDTO(
         String name,
         AnimalSize size,
         Double weight,
-        LocalDate birthdate,
-        Long idPet
+        LocalDate birthdate
 ) {}

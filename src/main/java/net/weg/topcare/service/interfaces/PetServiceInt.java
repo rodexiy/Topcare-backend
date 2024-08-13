@@ -8,10 +8,10 @@ import net.weg.topcare.entity.Pet;
 import java.util.List;
 
 public interface PetServiceInt {
-    Pet postPet(PetPostRequestDTO dto);
+    PetGetRequestDTO postPet(PetPostRequestDTO dto);
     PetGetRequestDTO getOnePet(Long id);
     List<PetGetRequestDTO> getPets();
-    Pet patchPet(PetPatchRequestDTO dto);
+    Pet patchPet(PetPatchRequestDTO dto, Long id);
     String deletePet(Long id);
 
 }
