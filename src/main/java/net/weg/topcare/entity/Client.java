@@ -79,6 +79,7 @@ public class Client extends People {
                 this.getCart(),
                 this.getProductsFavorite(),
                 this.getPets().stream().filter(pet1 -> pet1.getAble() == true).toList(),
+                this.getSchedules(),
                 this.getBanner(),
                 this.getProfilePicture(),
                 this.getBirthdate());

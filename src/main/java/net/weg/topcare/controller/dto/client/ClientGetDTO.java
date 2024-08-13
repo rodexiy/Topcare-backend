@@ -15,6 +15,7 @@ public record ClientGetDTO(
         List<Address> address,
         Cart cart,
         List<Product> favoriteProducts,
+        List<Scheduling> schedulings,
         List<Pet> pets,
         Image banner,
         Image profilePicture,

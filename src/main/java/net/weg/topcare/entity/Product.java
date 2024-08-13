@@ -41,6 +41,9 @@ public class Product implements CloneProductInt {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductSpecification> specifications = new ArrayList<>();
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductVarietions> productVarietions = new ArrayList<>();
+
     @OneToMany
     private List<Image> images = new ArrayList<>();
 
@@ -55,6 +58,7 @@ public class Product implements CloneProductInt {
 
     @OneToMany(mappedBy = "product")
     private List<Rating> ratings;
+
 
     public Product(ProductPostDTO dto){
         BeanUtils.copyProperties(dto, this);
@@ -71,6 +75,7 @@ public class Product implements CloneProductInt {
                 this.discount,
                 this.description,
                 this.specifications.stream().map(ProductSpecification::toGetDTO).toList(),
+//                this.productVarietions.stream().map(ProductVarietions::toGetDTO).toList(),
                 this.images.stream().map(Image::toString).toList(),
                 this.stock
         );
@@ -104,10 +109,5 @@ public class Product implements CloneProductInt {
             image,
             new GeneralRatingGetDTO(this.generalRating, (long) this.ratings.size())
         );
-    }
-
-    @Override
-    public Product clone() {
-        return new Product(this);
     }
 }

@@ -28,15 +28,6 @@ public class ProductServiceImpl implements ProductServiceInt {
         Product product = new Product(dto);
         product.setGeneralRating(5);
         return repository.save(product);
-//        Product product = new Product(dto);
-//        product.setGeneralRating(5);
-//        repository.save(product);
-//
-//        Product productCloned = product.clone();
-//        productCloned.setGeneralRating(5);
-//
-//        return repository.save(productCloned);
-
 
     }
 
