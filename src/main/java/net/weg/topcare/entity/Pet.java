@@ -62,7 +62,8 @@ public class Pet {
                 this.gender.getNome(),
                 this.weight,
                 this.birthdate,
-                this.picture
+                this.picture,
+                this.id
         );
     }
 

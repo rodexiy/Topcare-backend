@@ -14,6 +14,7 @@ public record PetGetRequestDTO(
         String gender,
         Double weight,
         LocalDate birthdate,
-        Image picture
+        Image picture,
+        Long id
 
 ) {}
