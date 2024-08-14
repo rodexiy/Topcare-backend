@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin("*")
 public class PetController {
-    private final PetServiceImpl service; //todios os fnals é required
+    private final PetServiceImpl service; //todos os finals é required
     @PostMapping
     public ResponseEntity<PetGetRequestDTO> postPet(@RequestBody PetPostRequestDTO dto){
         return ResponseEntity.ok(service.postPet(dto));

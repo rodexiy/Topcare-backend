@@ -2,8 +2,11 @@ package net.weg.topcare.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.weg.topcare.controller.dto.card.CardGetRequestDTO;
+import net.weg.topcare.controller.dto.card.CardPostRequestDTO;
 
 import java.time.LocalDate;
 
@@ -11,6 +14,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,4 +34,20 @@ public class Card {
     private LocalDate expiration;
     @Column(nullable = false)
     private boolean standard;
+
+    public CardPostRequestDTO toPostDto(){
+        return new CardPostRequestDTO(
+                this.cardName,
+                this.numbers,
+                this.expiration,
+                this.client.getId());
+    }
+    public CardGetRequestDTO toGetDTO(){
+        return new CardGetRequestDTO(
+                this.cardName,
+                this.numbers,
+                this.expiration,
+                this.standard,
+                this.id);
+    }
 }
