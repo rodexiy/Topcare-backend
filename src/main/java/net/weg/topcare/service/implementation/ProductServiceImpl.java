@@ -67,17 +67,5 @@ public class ProductServiceImpl implements ProductServiceInt {
         return product.toGetDTO();
     }
 
-    public Page<ProductMinimalGetDTO> searchProduct(String query, int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
 
-        System.out.println("Query: " + query);
-
-        Page<Product> productPage = repository.findAllByNameContainingIgnoreCase(query, pageRequest);
-
-        List<ProductMinimalGetDTO> dtos = productPage.stream()
-                .map(Product::toMinimalGetDTO)
-                .toList();
-
-        return new PageImpl<>(dtos, pageRequest, productPage.getTotalElements());
-    }
 }

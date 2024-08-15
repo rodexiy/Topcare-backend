@@ -6,10 +6,15 @@
  */
 package net.weg.topcare.controller;
 
+import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import net.weg.topcare.controller.dto.favorite.FavoritePostRequestDTO;
+import net.weg.topcare.controller.dto.product.ProductMinimalGetDTO;
 import net.weg.topcare.service.implementation.FavoriteProductServiceImpl;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -25,28 +30,41 @@ public class FavoriteProductController {
     /**
      * Adiciona um produto à lista de produtos favoritos de um cliente.
      *
-     * @param dto - dto onde busca o clientId e o productId.
+     * @param clientId - id do cliente.
+     * @param productId - id do produto.
      */
-    @PostMapping
-    public void addProductFavorite(@RequestBody FavoritePostRequestDTO dto) {
+    @PostMapping("/{clientId}/{productId}")
+    public void addProductFavorite(@PathVariable Long clientId, @PathVariable Long productId) {
         /**
          * Chama o método addProductFavorite do serviço de produtos favoritos,
          * passando a dto que contem o ID do cliente e o ID do produto como parâmetros.
          */
-        favoriteProductService.addProductFavorite(dto);
+        favoriteProductService.addProductFavorite(clientId, productId);
     }
 
     /**
      * Remove um produto à lista de produtos favoritos de um cliente.
      *
-     * @param dto - dto onde busca o clientId e o productId.
+     * @param clientId - id do cliente.
+     * @param productId - id do produto.
      */
-    @DeleteMapping
-    public void removeProductFromFavorites(@RequestBody FavoritePostRequestDTO dto) {
+    @DeleteMapping("/{clientId}/{productId}")
+    public void removeProductFromFavorites(@PathVariable Long clientId, @PathVariable Long productId) {
         /**
          * Chama o método removeProductFavorite do serviço de produtos favoritos,
          * passando a dto que contem o ID cliente e o ID do produto como parâmetros.
          */
-        favoriteProductService.removeProductFavorite(dto);
+        favoriteProductService.removeProductFavorite(clientId, productId);
+    }
+
+
+    @GetMapping("/{clientId}")
+    public ResponseEntity<List<ProductMinimalGetDTO>> findClientFavoriteProducts(@PathVariable Long clientId) {
+        return ResponseEntity.ok(favoriteProductService.findClientFavoriteProducts(clientId));
+    }
+
+    @GetMapping("/{clientId}/{productId}")
+    public ResponseEntity<Boolean> isProductFavorited(@PathVariable Long clientId, @PathVariable Long productId) {
+        return ResponseEntity.ok(favoriteProductService.isProductFavorited(clientId, productId));
     }
 }

@@ -23,11 +23,6 @@ import java.util.List;
 public class ProductController {
     private ProductServiceImpl service;
 
-    @GetMapping("/search")
-    public ResponseEntity<Page<ProductMinimalGetDTO>> search(@RequestParam String q, @RequestParam int page, @RequestParam int size) {
-        return new ResponseEntity<>(service.searchProduct(q, page, size), HttpStatus.OK);
-    }
-
     @PostMapping
     public ResponseEntity<Product> register(@RequestBody ProductPostDTO dto) {
         return new ResponseEntity<>(service.register(dto), HttpStatus.OK);
