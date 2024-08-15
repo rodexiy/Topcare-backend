@@ -1,10 +1,8 @@
 package net.weg.topcare.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import net.weg.topcare.controller.dto.card.CardGetRequestDTO;
 import net.weg.topcare.controller.dto.card.CardPostRequestDTO;
 
@@ -22,12 +20,14 @@ public class Card {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @ToString.Exclude
+    @JsonIgnore
     private Client client;
 
     @Column(nullable = false, length = 100)
     private String cardName;
 
-    @Column(nullable = false, length = 16)
+    @Column(nullable = false, length = 19)
     private String numbers;
 
     @Column(nullable = false)
