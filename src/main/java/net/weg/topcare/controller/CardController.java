@@ -17,25 +17,28 @@ import java.util.List;
 @CrossOrigin("*")
 public class CardController {
     private final CardServiceImpl service;
+
     @PostMapping
-    public ResponseEntity<CardPostRequestDTO> addCard(@RequestBody CardPostRequestDTO dto){
+    public ResponseEntity<CardPostRequestDTO> addCard(@RequestBody CardPostRequestDTO dto) {
         return ResponseEntity.ok(service.addCard(dto));
     }
+
     @GetMapping("{id}")
-    public ResponseEntity<List<CardGetRequestDTO>> getAllCard(@PathVariable Long id){
+    public ResponseEntity<List<CardGetRequestDTO>> getAllCard(@PathVariable Long id) {
         return ResponseEntity.ok(service.getAllCardByClientId(id));
     }
+
     @PatchMapping("{id}/{cardId}")
-    public ResponseEntity<Boolean> patchCardStandard(@PathVariable Long id,@PathVariable Long cardId){
-        try{
-//            return ResponseEntity.ok(service.patchCardStandard(id, cardId));
-              return new ResponseEntity<>(service.patchCardStandard(id, cardId), HttpStatus.OK);
+    public ResponseEntity<Boolean> patchCardStandard(@PathVariable Long id, @PathVariable Long cardId) {
+        try {
+            return new ResponseEntity<>(service.patchCardStandard(id, cardId), HttpStatus.OK);
         } catch (CardNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @DeleteMapping("{id}")
-    public ResponseEntity<Boolean> deleteCard(@PathVariable  Long id,@RequestBody Long cardId){
+
+    @DeleteMapping("{id}/{cardId}")
+    public ResponseEntity<Boolean> deleteCard(@PathVariable Long id, @PathVariable Long cardId) {
         return ResponseEntity.ok(service.deleteCard(id, cardId));
     }
 }

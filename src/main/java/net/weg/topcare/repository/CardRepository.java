@@ -11,5 +11,4 @@ import java.util.Optional;
 @Repository
 public interface CardRepository extends JpaRepository<Card, Long> {
     List<Card> findAllByClient_Id(Long id);
-    Optional<Card> findCardByClient_Id(Long id);
 }

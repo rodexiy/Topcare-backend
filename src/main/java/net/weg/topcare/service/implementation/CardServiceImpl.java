@@ -66,6 +66,15 @@ public class CardServiceImpl implements CardServiceInt {
 
     @Override
     public boolean deleteCard(Long id, Long cardId) {
+        List<Card> card = repository.findAllByClient_Id(id);
+
+        for(Card c : card){
+            if(c.getId().equals(cardId)){
+                repository.deleteById(cardId);
+                return true;
+            }
+        }
+
         return false;
     }
 }
