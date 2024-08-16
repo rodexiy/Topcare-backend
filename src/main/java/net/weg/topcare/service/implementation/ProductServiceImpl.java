@@ -3,13 +3,11 @@ package net.weg.topcare.service.implementation;
 import lombok.AllArgsConstructor;
 
 import net.weg.topcare.controller.dto.product.*;
-import net.weg.topcare.entity.Category;
-import net.weg.topcare.entity.Product;
+import net.weg.topcare.entity.*;
 
-import net.weg.topcare.entity.ProductOrder;
-import net.weg.topcare.entity.ProductSpecification;
 import net.weg.topcare.exceptions.ProductNotFoundException;
 import net.weg.topcare.repository.CategoryRepository;
+import net.weg.topcare.repository.ImageRepository;
 import net.weg.topcare.repository.ProductRepository;
 import net.weg.topcare.service.interfaces.ProductServiceInt;
 import org.springframework.beans.BeanUtils;
@@ -19,6 +17,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -30,6 +31,7 @@ public class ProductServiceImpl implements ProductServiceInt {
     private ProductRepository repository;
     private ProductOrderServiceImpl productOrderService;
     private CategoryRepository categoryRepository;
+    private ImageRepository imageRepository;
 
     @Override
     public Product register(ProductPostDTO dto) {
@@ -50,7 +52,17 @@ public class ProductServiceImpl implements ProductServiceInt {
             categories.add(category1);
             categoryRepository.save(category1);
         });
+        List<Image> images = new ArrayList<>();
+        dto.images().forEach(image -> {
+                Image image1 = new Image();
+                images.add(image1);
+                byte[] bytes = image.getBytes();
+                image1.setBytes(bytes);
+                image1.setProduct(saved);
+                imageRepository.save(image1);
+        });
         saved.setCategories(categories);
+        saved.setImages(images);
         return repository.save(saved);
     }
 

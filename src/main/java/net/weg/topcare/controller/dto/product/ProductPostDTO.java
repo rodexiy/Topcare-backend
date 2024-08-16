@@ -2,7 +2,8 @@ package net.weg.topcare.controller.dto.product;
 
 import net.weg.topcare.controller.dto.category.CategoryPostDTO;
 import net.weg.topcare.controller.dto.productSpecification.ProductSpecificationPostDTO;
-import net.weg.topcare.controller.dto.productVarietions.PVPostDTO;
+import net.weg.topcare.entity.Image;
+
 
 import java.util.List;
 
@@ -11,8 +12,7 @@ public record ProductPostDTO(
         String description,
         List<ProductSpecificationPostDTO> specifications,
         List<CategoryPostDTO> categories,
-        List<PVPostDTO> productsVariations,
-
+        List<Image> images,
         Integer discount,
         Double price,
         Integer stock

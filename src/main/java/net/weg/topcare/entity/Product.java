@@ -40,10 +40,9 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductSpecification> specifications = new ArrayList<>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<ProductVarietions> productVarietions = new ArrayList<>();
-
-    @OneToMany
+    @OneToMany(mappedBy = "product")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Image> images = new ArrayList<>();
 
     @Column
@@ -81,16 +80,12 @@ public class Product {
     }
 
     public ProductMinimalGetDTO toMinimalGetDTO(){
-        String image = "";
-        if (!this.images.isEmpty()) {
-            image = this.images.get(1).toString();
-        }
         return new ProductMinimalGetDTO(
             this.id,
             this.name,
             this.price,
             this.discount,
-            image,
+            this.images,
             new GeneralRatingGetDTO(this.generalRating, (long) this.ratings.size())
         );
     }
