@@ -35,6 +35,10 @@ public class Address {
 
     @Column(length = 100)
     private String complement;
+    @Column(length = 50)
+    private String identification;
+    @Column
+    private Boolean standard;
 
 
 }
