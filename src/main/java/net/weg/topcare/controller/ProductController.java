@@ -8,10 +8,12 @@ import net.weg.topcare.controller.dto.product.ProductPutDTO;
 import net.weg.topcare.entity.Product;
 import net.weg.topcare.exceptions.ProductNotFoundException;
 import net.weg.topcare.service.implementation.ProductServiceImpl;
+import org.hibernate.annotations.Parameter;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.print.Pageable;
 import java.util.List;
@@ -28,9 +30,9 @@ public class ProductController {
         return new ResponseEntity<>(service.searchProduct(q, page, size), HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<Product> register(@RequestBody ProductPostDTO dto) {
-        return new ResponseEntity<>(service.register(dto), HttpStatus.OK);
+    @PostMapping(consumes = {"multipart/form-data"})
+    public ResponseEntity<Product> register(@RequestPart ProductPostDTO product, @RequestPart MultipartFile image) {
+        return new ResponseEntity<>(service.register(product, image), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

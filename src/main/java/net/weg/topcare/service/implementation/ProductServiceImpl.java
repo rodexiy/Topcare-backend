@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class ProductServiceImpl implements ProductServiceInt {
     private ImageRepository imageRepository;
 
     @Override
-    public Product register(ProductPostDTO dto) {
+    public Product register(ProductPostDTO dto, MultipartFile image) {
         Product product = new Product(dto);
         Product saved = repository.save(product);
         saved.setGeneralRating(5);
@@ -52,17 +53,16 @@ public class ProductServiceImpl implements ProductServiceInt {
             categories.add(category1);
             categoryRepository.save(category1);
         });
-        List<Image> images = new ArrayList<>();
-        dto.images().forEach(image -> {
-                Image image1 = new Image();
-                images.add(image1);
-                byte[] bytes = image.getBytes();
-                image1.setBytes(bytes);
-                image1.setProduct(saved);
+        List<Image> imageArrayList = new ArrayList<>();
+            try {
+                Image image1 = new Image(image);
+                imageArrayList.add(image1);
                 imageRepository.save(image1);
-        });
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         saved.setCategories(categories);
-        saved.setImages(images);
+        saved.setImages(imageArrayList);
         return repository.save(saved);
     }
 
