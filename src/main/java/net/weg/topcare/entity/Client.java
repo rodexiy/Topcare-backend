@@ -67,6 +67,7 @@ public class Client extends People {
     public Client(Long id){
         this.setId(id);
     }
+
     public ClientGetDTO toGetDTO() {;
         return new ClientGetDTO(
                 this.getId(),

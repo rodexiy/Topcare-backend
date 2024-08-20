@@ -58,8 +58,11 @@ public class ExamController {
      * @return Lista de objetos de transferência de dados das consultas.
      */
     @GetMapping("/allExam")
-    public ResponseEntity<List<Scheduling>> getAllExam() {
-        return ResponseEntity.ok(queryService.getAllExam());
+    public List<ExamMinimalGetDTO> getAllExam() {
+        List<Scheduling> exams = queryService.getAllExam();
+        return exams.stream()
+                .map(Scheduling::convertToQueryMinimalGetDTO)
+                .collect(Collectors.toList());
     }
 
     /**
