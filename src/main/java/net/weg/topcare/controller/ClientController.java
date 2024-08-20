@@ -1,9 +1,8 @@
 package net.weg.topcare.controller;
 
 import lombok.AllArgsConstructor;
-import net.weg.topcare.controller.dto.client.ClientGetDTO;
-import net.weg.topcare.controller.dto.client.ClientPostDTO;
-import net.weg.topcare.controller.dto.client.LoginDTO;
+import net.weg.topcare.controller.dto.client.*;
+import net.weg.topcare.entity.Client;
 import net.weg.topcare.service.implementation.ClientServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +37,17 @@ public class ClientController {
     public ResponseEntity<ClientGetDTO> findOne(@PathVariable Long id) {
         return ResponseEntity.ok(service.findOne(id));
     }
-
+    @PutMapping("/{id}")
+    public ResponseEntity<Client> putClient(@RequestBody ClientPutDTO clientPutDTO, @PathVariable Long id){
+        return ResponseEntity.ok(service.putClient(clientPutDTO, id));
+    }
+    @PatchMapping("/{id}")
+    public ResponseEntity<Boolean> patchClient(@RequestBody ClientPatchDTO dto, @PathVariable Long id){
+        return ResponseEntity.ok(service.changePassword(dto, id));
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> deleteAccount(@PathVariable Long id){
+        return ResponseEntity.ok(service.deleteAccount(id));
+    }
 
 }
