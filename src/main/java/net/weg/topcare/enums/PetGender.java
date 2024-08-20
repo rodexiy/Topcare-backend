@@ -6,8 +6,8 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum PetGender {
-    MACHO("Macho"),
-    FEMEA("Fêmea");
+    MALE("Macho"),
+    FEMALE("Fêmea");
 
     private final String nome;
 
