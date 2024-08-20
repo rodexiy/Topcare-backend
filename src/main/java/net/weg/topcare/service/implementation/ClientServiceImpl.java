@@ -42,7 +42,7 @@ public class ClientServiceImpl implements ClientServiceInt {
         Client client = findOneClient(id);
         client.setEmail(clientPutDTO.email());
         client.setName(clientPutDTO.name());
-        client.setPassword(clientPutDTO.password());
+        client.setPhone(clientPutDTO.phone());
         client.setBirthdate(clientPutDTO.birthdate());
         return repository.save(client);
     }
