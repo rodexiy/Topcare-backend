@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
+import java.util.stream.IntStream;
 
 @Service
 @AllArgsConstructor
@@ -65,6 +67,18 @@ public class ClientServiceImpl implements ClientServiceInt {
         client.setEnabled(false);
         repository.save(client);
         return true;
+    }
+
+    @Override
+    public Integer checkEmailAndCreateToken(String email, Long id) {
+        Client client = findOneClient(id);
+        if(client.getEmail() == email){
+            Random random = new Random();
+            int token = random.nextInt(5000 - 1000)+1000;
+            System.out.println(token);
+            return token;
+        }
+        return null;
     }
 
     @Override

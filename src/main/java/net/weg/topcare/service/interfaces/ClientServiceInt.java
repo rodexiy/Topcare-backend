@@ -14,4 +14,5 @@ public interface ClientServiceInt {
     Client putClient(ClientPutDTO clientPutDTO, Long id);
     Boolean changePassword(ClientPatchDTO dto, Long id);
     Boolean deleteAccount(Long id);
+    Integer checkEmailAndCreateToken(String email, Long id);
 }

@@ -49,5 +49,9 @@ public class ClientController {
     public ResponseEntity<Boolean> deleteAccount(@PathVariable Long id){
         return ResponseEntity.ok(service.deleteAccount(id));
     }
+    @GetMapping("/checkEmail/{id}")
+    public ResponseEntity<Integer> checkEmailAndCreateToken(@RequestBody String email, @PathVariable Long id){
+        return ResponseEntity.ok(service.checkEmailAndCreateToken(email, id));
+    }
 
 }
