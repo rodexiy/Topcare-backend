@@ -1,6 +1,7 @@
 package net.weg.topcare.controller;
 
 import lombok.AllArgsConstructor;
+import net.weg.topcare.controller.dto.client.ClientGetIdDTO;
 import net.weg.topcare.controller.dto.exam.ExamMaximalGetDTO;
 import net.weg.topcare.controller.dto.exam.ExamMinimalGetDTO;
 import net.weg.topcare.controller.dto.exam.ExamPostDTO;
@@ -44,9 +45,10 @@ public class ExamController {
      *
      * @return Lista de objetos de transferência de dados das consultas.
      */
-    @GetMapping("/nextExam")
-    public List<ExamMinimalGetDTO> getNextExam() {
-        List<Scheduling> nextQueries = queryService.getNextExam();
+    @GetMapping("/nextExam/{clientId}")
+    public List<ExamMinimalGetDTO> getNextExam(@PathVariable Long clientId) {
+        ClientGetIdDTO clientGetIdDTO = new ClientGetIdDTO(clientId);
+        List<Scheduling> nextQueries = queryService.getNextExam(clientGetIdDTO);
         return nextQueries.stream()
                 .map(Scheduling::convertToQueryMinimalGetDTO)
                 .collect(Collectors.toList());
@@ -65,6 +67,8 @@ public class ExamController {
                 .collect(Collectors.toList());
     }
 
+
+
     /**
      * Retorna todas as consultas agendadas.
      *
@@ -76,5 +80,19 @@ public class ExamController {
         return ResponseEntity.ok(query.convertToQueryMaximalGetDTO());
     }
 
+    /**
+     * Retorna todas as consultas de um cliente específico.
+     *
+     * @param clientId ID do cliente.
+     * @return Lista de objetos de transferência de dados das consultas.
+     */
+    @GetMapping("/allExam/{clientId}")
+    public List<ExamMinimalGetDTO> getExamsByClientId(@PathVariable Long clientId) {
+        ClientGetIdDTO clientGetIdDTO = new ClientGetIdDTO(clientId);
+        List<Scheduling> exams = queryService.getExamsByClientId(clientGetIdDTO);
+        return exams.stream()
+                .map(Scheduling::convertToQueryMinimalGetDTO)
+                .collect(Collectors.toList());
+    }
 
 }

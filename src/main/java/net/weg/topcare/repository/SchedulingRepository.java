@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface SchedulingRepository extends JpaRepository<Scheduling, Long> {
@@ -16,4 +17,10 @@ public interface SchedulingRepository extends JpaRepository<Scheduling, Long> {
      * @return Lista de agendamentos.
      */
     List<Scheduling> findByScheduledDateAfter(LocalDateTime date);
+
+
+    List<Scheduling> findByClientId(Long clientId);
+
+
+    List<Scheduling> findByClientIdAndScheduledDateAfter(Long id, LocalDateTime now);
 }
