@@ -70,15 +70,18 @@ public class ClientServiceImpl implements ClientServiceInt {
     }
 
     @Override
-    public Integer checkEmailAndCreateToken(String email, Long id) {
+    public Integer checkEmailAndCreateToken(ClientEmailDTO email, Long id) {
         Client client = findOneClient(id);
-        if(client.getEmail() == email){
+        String emailClient = email.email();
+        System.out.println("Email: "+emailClient);
+        System.out.println(" outro Email: "+email);
+        if(client.getEmail().equals(emailClient)){
             Random random = new Random();
             int token = random.nextInt(5000 - 1000)+1000;
             System.out.println(token);
             return token;
         }
-        return null;
+        return 0;
     }
 
     @Override
