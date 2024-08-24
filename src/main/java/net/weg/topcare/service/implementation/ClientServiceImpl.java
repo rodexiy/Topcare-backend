@@ -52,7 +52,7 @@ public class ClientServiceImpl implements ClientServiceInt {
     @Override
     public Boolean changePassword(ClientPatchDTO dto, Long id) {
         Client client = findOneClient(id);
-        if (client.getPassword().equals(dto.oldPassword())) {
+        if (client.getPassword().equals(dto.confirmPassword())) {
             client.setPassword(dto.newPassword());
             repository.save(client);
             return true;
@@ -82,6 +82,11 @@ public class ClientServiceImpl implements ClientServiceInt {
             return token;
         }
         return 0;
+    }
+
+    @Override
+    public Boolean checkToken(ClientTokenDTO dto) {
+        return dto.token().equals(dto.clientToken());
     }
 
     @Override

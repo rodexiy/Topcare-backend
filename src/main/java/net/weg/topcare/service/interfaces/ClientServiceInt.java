@@ -15,4 +15,5 @@ public interface ClientServiceInt {
     Boolean changePassword(ClientPatchDTO dto, Long id);
     Boolean deleteAccount(Long id);
     Integer checkEmailAndCreateToken(ClientEmailDTO email, Long id);
+    Boolean checkToken(ClientTokenDTO dto);
 }
