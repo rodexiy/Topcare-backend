@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class SearchController {
     private final SearchServiceImpl service;
     @GetMapping("/product")
-    public ResponseEntity<Page<ProductMinimalGetDTO>> search(@RequestParam String q, @RequestParam int page, @RequestParam int size) {
-        return new ResponseEntity<>(service.searchProduct(q, page, size), HttpStatus.OK);
+    public ResponseEntity<Page<ProductMinimalGetDTO>> search(@RequestParam String q, @RequestParam int page, @RequestParam int size, @RequestParam String sort) {
+        return new ResponseEntity<>(service.searchProduct(q, page, size, sort), HttpStatus.OK);
     }
 }

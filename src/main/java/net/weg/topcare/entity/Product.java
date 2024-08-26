@@ -35,14 +35,15 @@ public class Product {
 
     private Integer generalRating;
 
-    @ManyToMany
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     private List<Category> categories = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductSpecification> specifications = new ArrayList<>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<ProductVarietions> productVarietions = new ArrayList<>();
 
     @OneToMany
     private List<Image> images = new ArrayList<>();
@@ -75,7 +76,6 @@ public class Product {
                 this.discount,
                 this.description,
                 this.specifications.stream().map(ProductSpecification::toGetDTO).toList(),
-//                this.productVarietions.stream().map(ProductVarietions::toGetDTO).toList(),
                 this.images.stream().map(Image::toString).toList(),
                 this.stock
         );
