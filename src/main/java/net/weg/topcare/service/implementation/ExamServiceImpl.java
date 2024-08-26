@@ -90,5 +90,9 @@ public class ExamServiceImpl {
         return schedulingRepository.findByClientId(clientGetIdDTO.id());
     }
 
+    public Scheduling getExamBySchedulingNumber(String schedulingNumber) {
+        return schedulingRepository.findBySchedulingNumber(schedulingNumber);
+    }
+
 
 }

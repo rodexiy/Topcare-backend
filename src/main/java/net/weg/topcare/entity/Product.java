@@ -41,9 +41,6 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductSpecification> specifications = new ArrayList<>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<ProductVarietions> productVarietions = new ArrayList<>();
-
     @OneToMany
     private List<Image> images = new ArrayList<>();
 

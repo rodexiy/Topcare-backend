@@ -95,4 +95,16 @@ public class ExamController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/SchedulingNumber/{schedulingNumber}")
+    public ResponseEntity<ExamMaximalGetDTO> getExamBySchedulingNumber(@PathVariable String schedulingNumber) {
+        Scheduling query = queryService.getExamBySchedulingNumber(schedulingNumber);
+        return ResponseEntity.ok(query.convertToQueryMaximalGetDTO());
+    }
+
+    @GetMapping("/SchedulingNumberMinimal/{schedulingNumber}")
+    public ResponseEntity<ExamMinimalGetDTO> getExamBySchedulingNumberMinimal(@PathVariable String schedulingNumber) {
+        Scheduling query = queryService.getExamBySchedulingNumber(schedulingNumber);
+        return ResponseEntity.ok(query.convertToQueryMinimalGetDTO());
+    }
+
 }
