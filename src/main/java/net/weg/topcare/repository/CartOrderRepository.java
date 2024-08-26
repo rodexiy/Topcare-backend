@@ -9,5 +9,4 @@ import java.util.List;
 
 @Repository
 public interface CartOrderRepository extends JpaRepository<CartOrder, Long> {
-    List<CartOrder> countCartOrdersByOrderByProducts();
 }

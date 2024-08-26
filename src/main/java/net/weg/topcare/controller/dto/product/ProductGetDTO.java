@@ -4,6 +4,7 @@ import net.weg.topcare.controller.dto.productSpecification.ProductSpecificationG
 import net.weg.topcare.controller.dto.rating.GeneralRatingGetDTO;
 import net.weg.topcare.entity.Brand;
 import net.weg.topcare.entity.Category;
+import net.weg.topcare.entity.Image;
 import net.weg.topcare.entity.ProductSpecification;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +20,6 @@ public record ProductGetDTO(
         Integer discount,
         String description,
         List<ProductSpecificationGetDTO> specifications,
-        List<String> images,
+        List<Image> images,
         Integer stock
 ){}
