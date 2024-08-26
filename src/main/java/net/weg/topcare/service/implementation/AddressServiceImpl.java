@@ -36,14 +36,13 @@ public class AddressServiceImpl implements AddressInterface {
 
     @Override
     public Address postAddress(AddressPostDTO addressPostDTO) {
+        System.out.println("id ->" + addressPostDTO.idClient());
         Client client = clientService.findOneClient(addressPostDTO.idClient());
+        System.out.println("Client : " + client);
         Address address = new Address(addressPostDTO);
         List<Address> listaDeEnderecosDoCliente = client.getAddress();
-        if(listaDeEnderecosDoCliente.isEmpty()){
-            address.setStandard(true);
-        }else{
-            address.setStandard(false);
-        }
+
+        address.setStandard(listaDeEnderecosDoCliente.isEmpty());
 
         listaDeEnderecosDoCliente.add(address);
         client.setAddress(listaDeEnderecosDoCliente);
