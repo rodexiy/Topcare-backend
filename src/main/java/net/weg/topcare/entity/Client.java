@@ -64,10 +64,11 @@ public class Client extends People {
         this.setCart(cart);
     }
 
-    public Client(Long id){
+    public Client(Long id) {
         this.setId(id);
     }
-    public ClientGetDTO toGetDTO() {;
+
+    public ClientGetDTO toGetDTO() {
         return new ClientGetDTO(
                 this.getId(),
                 this.getName(),
@@ -79,7 +80,7 @@ public class Client extends People {
                 this.getCart(),
                 this.getProductsFavorite(),
                 this.getSchedules(),
-                this.getPets(),
+                this.getPets().stream().filter(Pet::getAble).toList(),
                 this.getBanner(),
                 this.getProfilePicture(),
                 this.getBirthdate());
@@ -102,7 +103,7 @@ public class Client extends People {
      * @param produto - Produto a ser adicionado.
      */
     public void removeProductFavorite(Product produto) {
-            productsFavorite.remove(produto);
+        productsFavorite.remove(produto);
     }
 
     /**

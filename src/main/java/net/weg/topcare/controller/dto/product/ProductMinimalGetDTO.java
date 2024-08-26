@@ -10,6 +10,7 @@ public record ProductMinimalGetDTO(
         String name,
         Double price,
         Integer discount,
-        List<Image> images,
-        GeneralRatingGetDTO generalRating
+        Image image,
+        GeneralRatingGetDTO generalRating,
+        List<String> categories
 ) {}

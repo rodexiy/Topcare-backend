@@ -1,6 +1,7 @@
 package net.weg.topcare.service.implementation;
 
 import lombok.AllArgsConstructor;
+import net.weg.topcare.controller.dto.client.ClientGetIdDTO;
 import net.weg.topcare.controller.dto.exam.ExamPostDTO;
 import net.weg.topcare.entity.Client;
 import net.weg.topcare.entity.Scheduling;
@@ -8,6 +9,7 @@ import net.weg.topcare.repository.ClientRepository;
 import net.weg.topcare.repository.SchedulingRepository;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,9 +60,9 @@ public class ExamServiceImpl {
      *
      * @return Lista de agendamentos.
      */
-    public List<Scheduling> getNextExam() {
+    public List<Scheduling> getNextExam(ClientGetIdDTO clientGetIdDTO) {
         LocalDateTime now = LocalDateTime.now();
-        return schedulingRepository.findByScheduledDateAfter(now);
+        return schedulingRepository.findByClientIdAndScheduledDateAfter(clientGetIdDTO.id(), now);
     }
 
     /**
@@ -72,6 +74,8 @@ public class ExamServiceImpl {
         return schedulingRepository.findAll();
     }
 
+
+
     /**
      * Retorna a consulta agendada que foi buscada pelo ID.
      *
@@ -79,6 +83,11 @@ public class ExamServiceImpl {
      */
     public Scheduling getExamByID(Long id) {
         return schedulingRepository.findById(id).get();
+    }
+
+    // New method to get all exams by client ID
+    public List<Scheduling> getExamsByClientId(ClientGetIdDTO clientGetIdDTO) {
+        return schedulingRepository.findByClientId(clientGetIdDTO.id());
     }
 
 

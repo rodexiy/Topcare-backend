@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import net.weg.topcare.controller.dto.pet.PetGetRequestDTO;
 import net.weg.topcare.controller.dto.pet.PetPostRequestDTO;
 import net.weg.topcare.controller.dto.pet.PetPatchRequestDTO;
+import net.weg.topcare.entity.Client;
 import net.weg.topcare.entity.Pet;
 import net.weg.topcare.repository.ClientRepository;
 import net.weg.topcare.repository.PetRepository;
@@ -17,21 +18,22 @@ import java.util.Optional;
 @AllArgsConstructor
 public class PetServiceImpl implements PetServiceInt {
     private final PetRepository repository;
-    private final ClientRepository clientRepository;
     @Override
-    public Pet postPet(PetPostRequestDTO dto) {
+    public PetGetRequestDTO postPet(PetPostRequestDTO dto) {
         System.out.printf("dto: " + dto);
         Pet pet = new Pet(dto);
-        pet.setClient(clientRepository.findById(dto.idClient()).get());
+        Client client = new Client();
+        client.setId(dto.idClient());
+        pet.setClient(client);
         System.out.println("Pet: " + pet);
-        return repository.save(pet);
+        return repository.save(pet).toDto();
     }
 
     @Override
     public PetGetRequestDTO getOnePet(Long id) {
         Optional<Pet> pet = repository.findById(id);
         if(pet.get().getAble()){
-            return pet.map(Pet::toDto).orElse(null);
+            return pet.map(Pet::toDto).get();
 
         }
         throw new RuntimeException("Pet não existe");
@@ -44,9 +46,9 @@ public class PetServiceImpl implements PetServiceInt {
     }
 
     @Override
-    public Pet patchPet(PetPatchRequestDTO dto) {
-        if(repository.existsById(dto.idPet())){
-            Pet pet = repository.findById(dto.idPet()).get();
+    public Pet patchPet(PetPatchRequestDTO dto, Long id) {
+        if(repository.existsById(id)){
+            Pet pet = repository.findById(id).get();
 
             if(pet.getAble()){
                 pet.setName(dto.name());
@@ -64,8 +66,10 @@ public class PetServiceImpl implements PetServiceInt {
     @Override
     public String deletePet(Long id) {
         Pet pet = repository.findById(id).get();
-        pet.setAble(false);
-        repository.save(pet);
+        if(pet.getAble()){
+            pet.setAble(false);
+            repository.save(pet);
+        }
         return "Pet deletado";
     }
 

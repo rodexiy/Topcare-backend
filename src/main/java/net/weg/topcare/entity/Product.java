@@ -6,6 +6,7 @@ import net.weg.topcare.controller.dto.product.ProductGetDTO;
 import net.weg.topcare.controller.dto.product.ProductMinimalGetDTO;
 import net.weg.topcare.controller.dto.product.ProductPostDTO;
 import net.weg.topcare.controller.dto.rating.GeneralRatingGetDTO;
+import net.weg.topcare.service.interfaces.CloneProductInt;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,11 +35,15 @@ public class Product {
 
     private Integer generalRating;
 
-    @ManyToMany
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     private List<Category> categories = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductSpecification> specifications = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "product")
     @ToString.Exclude
@@ -73,10 +78,24 @@ public class Product {
                 this.discount,
                 this.description,
                 this.specifications.stream().map(ProductSpecification::toGetDTO).toList(),
-//                this.productVarietions.stream().map(ProductVarietions::toGetDTO).toList(),
                 this.images.stream().map(Image::toString).toList(),
                 this.stock
         );
+    }
+    public Product(Product product){
+//        this.id = product.id;
+//        this.brand = product.brand;
+//        this.name = product.name;
+//        this.description = product.description;
+//        this.generalRating = product.generalRating;
+//        this.categories = product.categories;
+//        this.specifications = product.specifications;
+//        this.images = product.images;
+//        this.discount = product.discount;
+//        this.price = product.price;
+//        this.stock = product.stock;
+//        this.ratings = product.ratings;
+        BeanUtils.copyProperties(product, this);
     }
 
     public ProductMinimalGetDTO toMinimalGetDTO(){
@@ -85,9 +104,9 @@ public class Product {
             this.name,
             this.price,
             this.discount,
-            this.images,
-            new GeneralRatingGetDTO(this.generalRating, (long) this.ratings.size())
+            this.images.get(0),
+            new GeneralRatingGetDTO(this.generalRating, (long) this.ratings.size()),
+                this.categories.stream().map(Category::getName).toList()
         );
     }
-
 }
