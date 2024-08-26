@@ -24,12 +24,37 @@ public class AddressServiceImpl implements AddressInterface {
     public List<AddressGetDTO> getAllAddresses(Long id) {
         Client client = clientService.findOneClient(id);
         List<Address> addresses = client.getAddress();
+        System.out.println("Endereço : " + addresses);
         return addresses.stream().map(Address::toGetDTO).toList();
     }
 
     @Override
     public Address putAddress(AddressPutDTO addressPutDTO) {
-        Address address = new Address(addressPutDTO);
+        System.out.println("id ->" + addressPutDTO.id());
+        System.out.println("idClient ->" + addressPutDTO.idClient());
+        System.out.println("Objeto : " +  addressPutDTO);
+        Address address = repository.findById(addressPutDTO.id()).get();
+        System.out.println("Address : " + address);
+        address.setCep(addressPutDTO.cep());
+        address.setCity(addressPutDTO.city());
+        address.setComplement(addressPutDTO.complement());
+        address.setDistrict(addressPutDTO.district());
+        address.setFederativeUnit(addressPutDTO.federativeUnit());
+        address.setIdentification(addressPutDTO.identification());
+        address.setNumber(addressPutDTO.number());
+        address.setStreet(addressPutDTO.street());
+        Client client = clientService.findOneClient(addressPutDTO.idClient());
+        List<Address> listaDeEnderecosDoCliente = client.getAddress();
+        address.setStandard(listaDeEnderecosDoCliente.isEmpty());
+        for(Address a : listaDeEnderecosDoCliente){
+            if(a.getId().equals(address.getId())){
+                listaDeEnderecosDoCliente.remove(a);
+                break;
+            }
+        }
+        listaDeEnderecosDoCliente.add(address);
+        client.setAddress(listaDeEnderecosDoCliente);
+        clientRepository.save(client);
         repository.save(address);
         return address;
     }
