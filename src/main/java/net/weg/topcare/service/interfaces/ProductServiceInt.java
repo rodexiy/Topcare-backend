@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface ProductServiceInt {
 
-    Product register(ProductPostDTO dto, MultipartFile image);
+    Product register(ProductPostDTO dto, List<MultipartFile> images);
     List<Product> findAllProductBySale();
     ProductGetDTO getProduct(Long id) throws ProductNotFoundException;
     Product putProduct(ProductPutDTO dto) throws ProductNotFoundException;

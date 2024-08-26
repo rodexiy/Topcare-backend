@@ -11,6 +11,7 @@ import net.weg.topcare.service.implementation.ProductServiceImpl;
 import org.hibernate.annotations.Parameter;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,8 +31,9 @@ public class ProductController {
         return new ResponseEntity<>(service.searchProduct(q, page, size), HttpStatus.OK);
     }
 
-    @PostMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<Product> register(@RequestPart ProductPostDTO product, @RequestPart MultipartFile image) {
+    @PostMapping(consumes = {"multipart/form-data", "application/json"})
+    public ResponseEntity<Product> register(@RequestPart ProductPostDTO product, @RequestPart List<MultipartFile> image) {
+        System.out.println(image);
         return new ResponseEntity<>(service.register(product, image), HttpStatus.OK);
     }
 

@@ -34,7 +34,7 @@ public class Image {
 
     public Image(MultipartFile file) throws IOException {
         this.bytes = file.getBytes();
-        this.contentType = "data:image/" + file.getContentType() + ";base64," + file.getOriginalFilename();
+        this.contentType = file.getContentType();
         this.originalFileName = file.getOriginalFilename();
 
     }

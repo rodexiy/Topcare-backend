@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductServiceInt {
     private ImageRepository imageRepository;
 
     @Override
-    public Product register(ProductPostDTO dto, MultipartFile image) {
+    public Product register(ProductPostDTO dto, List<MultipartFile> images) {
         Product product = new Product(dto);
         Product saved = repository.save(product);
         saved.setGeneralRating(5);
@@ -54,12 +54,15 @@ public class ProductServiceImpl implements ProductServiceInt {
             categoryRepository.save(category1);
         });
         List<Image> imageArrayList = new ArrayList<>();
-            try {
-                Image image1 = new Image(image);
-                imageArrayList.add(image1);
-                imageRepository.save(image1);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            for (MultipartFile file : images){
+                try {
+                    Image image = new Image(file);
+                    image.setProduct(saved);
+                    imageArrayList.add(image);
+                    imageRepository.save(image);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         saved.setCategories(categories);
         saved.setImages(imageArrayList);

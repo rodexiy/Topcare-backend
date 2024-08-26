@@ -12,7 +12,6 @@ public record ProductPostDTO(
         String description,
         List<ProductSpecificationPostDTO> specifications,
         List<CategoryPostDTO> categories,
-        List<Image> images,
         Integer discount,
         Double price,
         Integer stock
