@@ -107,7 +107,8 @@ public class Product {
             this.price,
             this.discount,
             image,
-            new GeneralRatingGetDTO(this.generalRating, (long) this.ratings.size())
+            new GeneralRatingGetDTO(this.generalRating, (long) this.ratings.size()),
+                this.categories.stream().map(Category::getName).toList()
         );
     }
 }

@@ -35,4 +35,20 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             + ")")
     Page<Product> findProductsByCategoriesOrNameLike(@Param("query") String query, @Param("categories") List<Category> categories, @Param("categoriesSize") int categoriesSize, Pageable pageable);
 
+    @Query("SELECT p FROM Product p "
+            + "JOIN p.categories c "
+            + "WHERE c IN (:categories) "
+            + "GROUP BY p.id "
+            + "HAVING COUNT(DISTINCT c) <= :categoriesSize")
+    Page<Product> findProductsByCategories(@Param("categories") List<Category> categories,
+                                           @Param("categoriesSize") int categoriesSize,
+                                           Pageable pageable);
+
+    @Query("SELECT p FROM Product p "
+            + "JOIN p.categories c "
+            + "WHERE c IN (:categories) "
+            + "GROUP BY p.id "
+            + "HAVING COUNT(DISTINCT c) = :categoriesSize")
+    List<Product> findProductsByCategories(@Param("categories") List<Category> categories,
+                                           @Param("categoriesSize") int categoriesSize);
 }
