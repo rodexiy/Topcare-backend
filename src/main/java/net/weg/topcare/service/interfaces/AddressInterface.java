@@ -13,5 +13,6 @@ public interface AddressInterface {
     Address putAddress(AddressPutDTO addressPutDTO);
     Address postAddress(AddressPostDTO addressPostDTO);
     AddressPatchDTO patchAddress(AddressPatchDTO addressPatchDTO, Long id);
+    Boolean deleteAddress(Long idClient, Long id);
 
 }

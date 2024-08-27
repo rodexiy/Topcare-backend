@@ -87,4 +87,22 @@ public class AddressServiceImpl implements AddressInterface {
         repository.save(address);
         return address.toPatchDTO();
     }
+
+    @Override
+    public Boolean deleteAddress(Long idClient, Long id) {
+        Client client = clientService.findOneClient(idClient);
+        List<Address> listaDeEnderecosDoCliente = client.getAddress();
+        Address address = repository.findById(id).get();
+        for(Address a : listaDeEnderecosDoCliente){
+            if(a.getId().equals(address.getId())){
+                listaDeEnderecosDoCliente.remove(a);
+                break;
+            }
+        }
+        client.setAddress(listaDeEnderecosDoCliente);
+        clientRepository.save(client);
+        repository.deleteById(id);
+        return true;
+
+    }
 }

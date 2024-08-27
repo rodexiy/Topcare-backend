@@ -35,4 +35,8 @@ public class AddressController {
     public ResponseEntity<AddressPatchDTO> patchAddress(@RequestBody AddressPatchDTO dto, @PathVariable Long id){
         return new ResponseEntity<>(service.patchAddress(dto, id), HttpStatus.OK);
     }
+    @DeleteMapping("/{idClient}/{id}")
+    public ResponseEntity<Boolean> deleteAddress(@PathVariable Long idClient, @PathVariable Long id){
+        return new ResponseEntity<>(service.deleteAddress(idClient, id), HttpStatus.OK);
+    }
 }
