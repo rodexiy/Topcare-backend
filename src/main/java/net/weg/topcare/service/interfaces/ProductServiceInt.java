@@ -14,7 +14,7 @@ public interface ProductServiceInt {
     Product register(ProductPostDTO dto, List<MultipartFile> images);
     List<Product> findAllProductBySale();
     ProductGetDTO getProduct(Long id) throws ProductNotFoundException;
-    Product putProduct(ProductPutDTO dto) throws ProductNotFoundException;
+    Product putProduct(ProductPutDTO dto, List<MultipartFile> images, Long id) throws ProductNotFoundException;
     List<Product> findByIds(List<Long> ids);
     List<Product> orderAllByRating();
     List<Product> getAllByBrandId(Long brand_id);

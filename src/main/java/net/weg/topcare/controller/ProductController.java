@@ -41,10 +41,10 @@ public class ProductController {
         }
     }
 
-    @PutMapping
-    public ResponseEntity<Product> updateProduct(@RequestBody ProductPutDTO dto){
+    @PutMapping(name = "/{id}",consumes = {"multipart/form-data", "application/json"})
+    public ResponseEntity<Product> updateProduct(@RequestPart ProductPutDTO productPutDTO, @RequestPart List<MultipartFile> images, @RequestParam Long id){
         try {
-            return new ResponseEntity<>(service.putProduct(dto), HttpStatus.OK);
+            return new ResponseEntity<>(service.putProduct(productPutDTO, images, id), HttpStatus.OK);
         } catch (ProductNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

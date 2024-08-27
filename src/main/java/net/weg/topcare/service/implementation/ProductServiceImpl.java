@@ -54,16 +54,7 @@ public class ProductServiceImpl implements ProductServiceInt {
             categoryRepository.save(category1);
         });
         List<Image> imageArrayList = new ArrayList<>();
-            for (MultipartFile file : images){
-                try {
-                    Image image = new Image(file);
-                    image.setProduct(saved);
-                    imageArrayList.add(image);
-                    imageRepository.save(image);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+        constructImage(images, saved, imageArrayList);
         saved.setCategories(categories);
         saved.setImages(imageArrayList);
         return repository.save(saved);
@@ -86,10 +77,26 @@ public class ProductServiceImpl implements ProductServiceInt {
     }
 
     @Override
-    public Product putProduct(ProductPutDTO dto) throws ProductNotFoundException {
-        Product product = repository.findById(dto.id()).orElseThrow(ProductNotFoundException::new);
+    public Product putProduct(ProductPutDTO dto, List<MultipartFile> images, Long id) throws ProductNotFoundException {
+        Product product = repository.findById(id).orElseThrow(ProductNotFoundException::new);
         BeanUtils.copyProperties(dto, product);
+        List<Image> imagesList = imageRepository.getAllByProduct_Id(product.getId());
+        constructImage(images, product, imagesList);
+        product.setImages(imagesList);
         return repository.save(product);
+    }
+
+    private void constructImage(List<MultipartFile> images, Product product, List<Image> imagesList) {
+        for (MultipartFile file : images){
+            try {
+                Image image = new Image(file);
+                image.setProduct(product);
+                imagesList.add(image);
+                imageRepository.save(image);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @Override

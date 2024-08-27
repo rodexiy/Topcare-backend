@@ -7,14 +7,12 @@ import net.weg.topcare.entity.*;
 import java.util.List;
 
 public record ProductPutDTO(
-        Long id,
         Brand brand,
         String name,
         String description,
         Integer generalRating,
         List<CategoryGetDTO> categories,
         List<ProductSpecificationGetDTO> specifications,
-        List<Image> images,
         Integer discount,
         Double price,
         Integer stock,
