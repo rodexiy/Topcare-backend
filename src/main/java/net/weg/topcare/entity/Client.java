@@ -69,7 +69,6 @@ public class Client extends People {
     }
 
     public ClientGetDTO toGetDTO() {
-        ;
         return new ClientGetDTO(
                 this.getId(),
                 this.getName(),
@@ -81,7 +80,7 @@ public class Client extends People {
                 this.getCart(),
                 this.getProductsFavorite(),
                 this.getSchedules(),
-                this.getPets().stream().filter(pet1 -> pet1.getAble() == true).toList(),
+                this.getPets().stream().filter(Pet::getAble).toList(),
                 this.getBanner(),
                 this.getProfilePicture(),
                 this.getBirthdate());

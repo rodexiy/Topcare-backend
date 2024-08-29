@@ -3,8 +3,14 @@ package net.weg.topcare.controller;
 import lombok.AllArgsConstructor;
 import net.weg.topcare.controller.dto.client.*;
 import net.weg.topcare.entity.Client;
+import net.weg.topcare.controller.dto.client.ClientGetDTO;
+import net.weg.topcare.controller.dto.client.ClientPostDTO;
+import net.weg.topcare.controller.dto.client.LoginDTO;
+import net.weg.topcare.exceptions.CPFAlreadyBeingUsedException;
 import net.weg.topcare.service.implementation.ClientServiceImpl;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +24,12 @@ public class ClientController {
 
     @PostMapping
     public ResponseEntity<Long> register(@RequestBody ClientPostDTO client) {
-        return ResponseEntity.ok(service.register(client));
+        try {
+            return ResponseEntity.ok(service.register(client));
+
+        }catch (CPFAlreadyBeingUsedException e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 
 

@@ -2,10 +2,7 @@ package net.weg.topcare.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import net.weg.topcare.controller.dto.cartorder.CartOrderMaximalGetDTO;
 import net.weg.topcare.controller.dto.cartorder.CartOrderMinimalGetDTO;
 
@@ -17,10 +14,12 @@ import java.util.stream.Collectors;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Data
 public class CartOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NonNull
     private Long id;
 
     @ManyToOne
@@ -36,8 +35,7 @@ public class CartOrder {
     @JoinColumn(nullable = false)
     private Address address;
 
-    @OneToMany
-    @JoinColumn(nullable = false)
+    @OneToMany(mappedBy = "cartOrder")
     private List<ProductOrder> products = new ArrayList<>();
 
     @Column(nullable = false)

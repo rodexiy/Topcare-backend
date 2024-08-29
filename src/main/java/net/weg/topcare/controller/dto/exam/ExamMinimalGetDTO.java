@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record ExamMinimalGetDTO(
-//        Long id,
+        Long id,
 //        String nameClient,
         String schedulingNumber,
         List<String> pets,

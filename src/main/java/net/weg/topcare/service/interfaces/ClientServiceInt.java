@@ -2,11 +2,15 @@ package net.weg.topcare.service.interfaces;
 
 import net.weg.topcare.controller.dto.client.*;
 import net.weg.topcare.entity.Client;
+import net.weg.topcare.controller.dto.client.ClientGetDTO;
+import net.weg.topcare.controller.dto.client.ClientPostDTO;
+import net.weg.topcare.controller.dto.client.LoginDTO;
+import net.weg.topcare.exceptions.CPFAlreadyBeingUsedException;
 
 import java.util.List;
 
 public interface ClientServiceInt {
-    Long register(ClientPostDTO clientDTO);
+    Long register(ClientPostDTO clientDTO) throws CPFAlreadyBeingUsedException;
     ClientGetDTO findOne(Long id);
     Client findOneClient(Long id);
     List<ClientGetDTO> findAll();

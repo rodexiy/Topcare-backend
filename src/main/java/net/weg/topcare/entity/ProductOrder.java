@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import net.weg.topcare.controller.dto.productOrder.ProductOrderPostDTO;
+import org.springframework.beans.BeanUtils;
 
 // Utilizada no pedido para salvar as informações do produto no momento que foi comprado pelo cliente, caso
 // o produto seja editado para outro completamente diferente.
@@ -26,12 +28,20 @@ public class ProductOrder {
     private Double unitPrice;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn()
     private Image picture;
+
+    @ManyToOne
+    @JsonIgnore
+    private Product product;
 
     @ManyToOne
     @JoinColumn(nullable = false)
     @ToString.Exclude
     @JsonIgnore
-    private CartOrder order;
+    private CartOrder cartOrder;
+
+    public ProductOrder(ProductOrderPostDTO dto){
+        BeanUtils.copyProperties(dto, this);
+    }
 }

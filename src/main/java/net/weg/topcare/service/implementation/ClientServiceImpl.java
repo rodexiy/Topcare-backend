@@ -5,6 +5,7 @@ import net.weg.topcare.controller.dto.client.*;
 import net.weg.topcare.entity.Client;
 import net.weg.topcare.entity.Address;
 import net.weg.topcare.entity.People;
+import net.weg.topcare.exceptions.CPFAlreadyBeingUsedException;
 import net.weg.topcare.repository.ClientRepository;
 import net.weg.topcare.repository.AddressRepository;
 import net.weg.topcare.service.interfaces.ClientServiceInt;
@@ -23,8 +24,12 @@ public class ClientServiceImpl implements ClientServiceInt {
     private AddressRepository addressRepository;
 
     @Override
-    public Long register(ClientPostDTO clientDTO) {
+    public Long register(ClientPostDTO clientDTO) throws CPFAlreadyBeingUsedException {
         Client cliente = new Client(clientDTO);
+
+        if (repository.existsClientByCpf(cliente.getCpf())) {
+            throw new CPFAlreadyBeingUsedException();
+        }
 
         Address endereco = addressRepository.save(clientDTO.address());
         cliente.getAddress().add(endereco);

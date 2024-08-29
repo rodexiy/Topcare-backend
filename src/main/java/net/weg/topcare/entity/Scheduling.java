@@ -50,6 +50,7 @@ public class Scheduling {
     public ExamMinimalGetDTO convertToQueryMinimalGetDTO() {
 
         return new ExamMinimalGetDTO(
+                this.getId(),
                 this.getSchedulingNumber(),
                 this.getPets().stream().map(petScheduling -> petScheduling.getPet().getName()).toList(),
                 this.getScheduledDate(),
@@ -59,6 +60,7 @@ public class Scheduling {
 
     public ExamMaximalGetDTO convertToQueryMaximalGetDTO() {
         return new ExamMaximalGetDTO(
+                this.getId(),
                 this.getClient().getName(),
                 this.getSchedulingNumber(),
                 this.getServiceArea(),
