@@ -1,5 +1,6 @@
 package net.weg.topcare.controller.dto.exam;
 
+import net.weg.topcare.entity.Pet;
 import net.weg.topcare.entity.PetScheduling;
 import net.weg.topcare.entity.Subsidiary;
 import net.weg.topcare.enums.ServiceArea;

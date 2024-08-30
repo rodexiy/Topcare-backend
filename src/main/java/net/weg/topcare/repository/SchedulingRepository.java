@@ -10,12 +10,7 @@ import java.util.Map;
 
 @Repository
 public interface SchedulingRepository extends JpaRepository<Scheduling, Long> {
-    /**
-     * Retorna os agendamentos com data agendada posterior à data informada.
-     *
-     * @param date Data de referência.
-     * @return Lista de agendamentos.
-     */
+
     List<Scheduling> findByScheduledDateAfter(LocalDateTime date);
 
 
@@ -23,4 +18,7 @@ public interface SchedulingRepository extends JpaRepository<Scheduling, Long> {
 
 
     List<Scheduling> findByClientIdAndScheduledDateAfter(Long id, LocalDateTime now);
+
+
+    Scheduling findBySchedulingNumber(String schedulingNumber);
 }

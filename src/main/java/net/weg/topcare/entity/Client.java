@@ -23,6 +23,8 @@ public class Client extends People {
     @OneToMany
     private List<Address> address = new ArrayList<>();
 
+
+
     @OneToMany(mappedBy = "client")
     private List<CartOrder> orders = new ArrayList<>();
 
