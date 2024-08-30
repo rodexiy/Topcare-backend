@@ -19,7 +19,7 @@ public class CardController {
     private final CardServiceImpl service;
 
     @PostMapping
-    public ResponseEntity<CardPostRequestDTO> addCard(@RequestBody CardPostRequestDTO dto) {
+    public ResponseEntity<CardGetRequestDTO> addCard(@RequestBody CardPostRequestDTO dto) {
         return ResponseEntity.ok(service.addCard(dto));
     }
 
@@ -29,7 +29,7 @@ public class CardController {
     }
 
     @PatchMapping("{id}/{cardId}")
-    public ResponseEntity<Boolean> patchCardStandard(@PathVariable Long id, @PathVariable Long cardId) {
+    public ResponseEntity<List<CardGetRequestDTO>> patchCardStandard(@PathVariable Long id, @PathVariable Long cardId) {
         try {
             return new ResponseEntity<>(service.patchCardStandard(id, cardId), HttpStatus.OK);
         } catch (CardNotFoundException e) {

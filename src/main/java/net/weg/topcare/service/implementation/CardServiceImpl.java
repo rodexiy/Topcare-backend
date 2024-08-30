@@ -21,7 +21,7 @@ public class CardServiceImpl implements CardServiceInt {
     private final CardRepository repository;
     private final ClientServiceImpl clientService;
     @Override
-    public CardPostRequestDTO addCard(CardPostRequestDTO dto) {
+    public CardGetRequestDTO addCard(CardPostRequestDTO dto) {
         ClientGetDTO clientDTO = clientService.findOne(dto.idClient());
         Client client = new Client(clientDTO.id());
         List<Card> cards = repository.findAllByClient_Id(dto.idClient());
@@ -35,7 +35,7 @@ public class CardServiceImpl implements CardServiceInt {
         }
 
         repository.save(card);
-        return card.toPostDto();
+        return card.toGetDTO();
     }
 
     @Override
@@ -44,7 +44,7 @@ public class CardServiceImpl implements CardServiceInt {
     }
 
     @Override
-    public boolean patchCardStandard(Long id, Long cardId) throws CardNotFoundException {
+    public List<CardGetRequestDTO> patchCardStandard(Long id, Long cardId) throws CardNotFoundException {
 //        Card card = repository.findById(cardId).orElseThrow(() -> new CardNotFoundException());
           List<Card> card = repository.findAllByClient_Id(id);
           if(card.isEmpty()){
@@ -55,13 +55,16 @@ public class CardServiceImpl implements CardServiceInt {
                   if(c.isStandard()){
                       c.setStandard(false);
                   }else{
+                      for(Card card1 : card){
+                          card1.setStandard(false);
+                          repository.save(card1);
+                      }
                       c.setStandard(true);
                   }
                   repository.save(c);
-                  return true;
               }
           }
-          return false;
+          return card.stream().map(Card::toGetDTO).toList();
     }
 
     @Override
