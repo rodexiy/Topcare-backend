@@ -41,10 +41,10 @@ public class ProductController {
         }
     }
 
-    @PutMapping(name = "/{id}",consumes = {"multipart/form-data", "application/json"})
-    public ResponseEntity<Product> updateProduct(@RequestPart ProductPutDTO productPutDTO, @RequestPart List<MultipartFile> images, @RequestParam Long id){
+    @PutMapping(value = "/{id}",consumes = {"multipart/form-data", "application/json"})
+    public ResponseEntity<Product> updateProduct(@RequestPart ProductPutDTO product, @RequestPart List<MultipartFile> image, @PathVariable Long id){
         try {
-            return new ResponseEntity<>(service.putProduct(productPutDTO, images, id), HttpStatus.OK);
+            return new ResponseEntity<>(service.putProduct(product, image, id), HttpStatus.OK);
         } catch (ProductNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -58,5 +58,14 @@ public class ProductController {
     @GetMapping("orderBySale")
     public ResponseEntity<List<Product>> getAllBySale(){
         return new ResponseEntity<>(service.findAllProductBySale(), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> deleteProduct(@PathVariable Long id){
+        try {
+            return new ResponseEntity<>(service.deleteProduct(id), HttpStatus.OK);
+        } catch (ProductNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

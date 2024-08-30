@@ -77,12 +77,41 @@ public class ProductServiceImpl implements ProductServiceInt {
     }
 
     @Override
+    public Boolean deleteProduct(Long id) throws ProductNotFoundException {
+        Product product = repository.findById(id).orElseThrow(ProductNotFoundException::new);
+        repository.delete(product);
+        return true;
+    }
+
+    @Override
     public Product putProduct(ProductPutDTO dto, List<MultipartFile> images, Long id) throws ProductNotFoundException {
         Product product = repository.findById(id).orElseThrow(ProductNotFoundException::new);
         BeanUtils.copyProperties(dto, product);
         List<Image> imagesList = imageRepository.getAllByProduct_Id(product.getId());
         constructImage(images, product, imagesList);
+        List<Category> categories = product.getCategories();
+        List<ProductSpecification> specifications = product.getSpecifications();
+        for (Category category : categories){
+            dto.categories().forEach(categoryDTO -> {
+                if (categoryDTO.name().equals(category.getName())) {
+                    return;
+                } else {
+                    Category category1 = new Category(categoryDTO);
+                    category1.getProductsInCategory().add(product);
+                    categoryRepository.save(category1);
+                    categories.add(category1);
+                }
+            });
+        }
+        dto.specifications().forEach(specification -> {
+            ProductSpecification productSpecification = new ProductSpecification(specification);
+            productSpecification.setProduct(product);
+            specifications.add(productSpecification);
+        });
+        product.setCategories(categories);
+        product.setSpecifications(specifications);
         product.setImages(imagesList);
+        product.setGeneralRating(5);
         return repository.save(product);
     }
 

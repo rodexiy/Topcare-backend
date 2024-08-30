@@ -31,4 +31,9 @@ public class ProductOrderServiceImpl implements ProductOrderServiceInt {
         productOrder.setProduct(product);
         return repository.save(productOrder);
     }
+
+    @Override
+    public List<ProductOrder> getProductOrderByProducts(Long productId) {
+        return repository.getTopByProduct_IdOrderByProductDesc(productId);
+    }
 }

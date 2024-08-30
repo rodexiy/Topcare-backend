@@ -45,7 +45,7 @@ public class Product {
     private List<ProductSpecification> specifications = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Image> images = new ArrayList<>();

@@ -33,6 +33,10 @@ public class Category {
         BeanUtils.copyProperties(dto, this);
     }
 
+    public Category(CategoryGetDTO category) {
+        BeanUtils.copyProperties(category, this);
+    }
+
     public CategoryGetDTO toGetDTO(){
         return new CategoryGetDTO(
                 this.id,

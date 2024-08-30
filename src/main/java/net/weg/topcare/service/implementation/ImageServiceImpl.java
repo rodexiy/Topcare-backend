@@ -19,4 +19,10 @@ public class ImageServiceImpl implements ImageServiceInt {
     public List<Image> getAllImagesByProductId(Long productId) {
         return repository.getAllByProduct_Id(productId);
     }
+
+    @Override
+    public Boolean deleteImageById(Long imageId) {
+        repository.deleteById(imageId);
+        return true;
+    }
 }

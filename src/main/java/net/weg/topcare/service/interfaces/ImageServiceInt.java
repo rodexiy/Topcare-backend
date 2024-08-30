@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ImageServiceInt {
     List<Image> getAllImagesByProductId(Long productId);
+    Boolean deleteImageById(Long imageId);
 }

@@ -34,6 +34,10 @@ public class ProductSpecification {
         BeanUtils.copyProperties(dto, this);
     }
 
+    public ProductSpecification(ProductSpecificationGetDTO specification) {
+        BeanUtils.copyProperties(specification, this);
+    }
+
     public ProductSpecificationGetDTO toGetDTO() {
         return new ProductSpecificationGetDTO(this.id, this.name, this.value);
     }

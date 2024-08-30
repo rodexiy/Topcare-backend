@@ -8,4 +8,5 @@ import java.util.List;
 public interface ProductOrderServiceInt {
     List<ProductOrder> getAllByProductOrder();
     ProductOrder postProductOrder(ProductOrderPostDTO dto);
+    List<ProductOrder> getProductOrderByProducts(Long productId);
 }
