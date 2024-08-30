@@ -7,18 +7,18 @@
 package net.weg.topcare.service.implementation;
 
 import lombok.AllArgsConstructor;
-import net.weg.topcare.controller.dto.cartorder.CartOrderMaximalGetDTO;
-import net.weg.topcare.controller.dto.cartorder.CartOrderGetAllDTO;
-import net.weg.topcare.controller.dto.cartorder.CartOrderMinimalGetDTO;
-import net.weg.topcare.controller.dto.cartorder.CartOrderPostDTO;
+import net.weg.topcare.controller.dto.cartorder.*;
+import net.weg.topcare.entity.Address;
 import net.weg.topcare.entity.CartOrder;
 import net.weg.topcare.entity.Client;
 import net.weg.topcare.enums.OrderStatusEnum;
+import net.weg.topcare.repository.AddressRepository;
 import net.weg.topcare.repository.CartOrderRepository;
 import net.weg.topcare.repository.ClientRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -46,6 +46,8 @@ public class OrdersServiceImpl {
      */
     private CartOrderRepository cartOrderRepository;
 
+    private AddressRepository addressRepository;
+
     /**
      * Adiciona um pedido ao histórico de pedidos de um cliente.
      *
@@ -61,6 +63,33 @@ public class OrdersServiceImpl {
 
             cliente.addCartOrderToOrders(cartsOrder);
             clientRepository.save(cliente);
+        }
+    }
+
+    public void createCartOrderToOrders(@RequestBody OrderCartPostDTO dto) {
+        Optional<Client> client = clientRepository.findById(dto.clientId());
+
+        if (client.isPresent()) {
+            Client cliente = client.get();
+            CartOrder cartOrder = new CartOrder();
+
+            Optional<Address> address = addressRepository.findById(dto.addressId());
+            if (address.isPresent()) {
+                cartOrder.setAddress(address.get());
+            } else {
+                throw new IllegalArgumentException("Invalid addressId");
+            }
+
+            cartOrder.setDiscount(Double.valueOf(dto.discount()));
+            cartOrder.setProductsTotal(Double.valueOf(dto.quantity()));
+            cartOrder.setFreight(dto.freight());
+            cartOrder.setNumberOrder(Math.toIntExact(dto.numberOrder()));
+            cartOrder.setDateOrderFinished(dto.dateOrderFinished().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+
+            cliente.addCartOrderToOrders(cartOrder);
+            clientRepository.save(cliente);
+        } else {
+            throw new IllegalArgumentException("Invalid clientId");
         }
     }
 
