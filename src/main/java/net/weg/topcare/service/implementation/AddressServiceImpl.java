@@ -1,10 +1,7 @@
 package net.weg.topcare.service.implementation;
 
 import lombok.AllArgsConstructor;
-import net.weg.topcare.controller.dto.address.AddressGetDTO;
-import net.weg.topcare.controller.dto.address.AddressPatchDTO;
-import net.weg.topcare.controller.dto.address.AddressPostDTO;
-import net.weg.topcare.controller.dto.address.AddressPutDTO;
+import net.weg.topcare.controller.dto.address.*;
 import net.weg.topcare.entity.Address;
 import net.weg.topcare.entity.Client;
 import net.weg.topcare.repository.AddressRepository;
@@ -24,8 +21,13 @@ public class AddressServiceImpl implements AddressInterface {
     public List<AddressGetDTO> getAllAddresses(Long id) {
         Client client = clientService.findOneClient(id);
         List<Address> addresses = client.getAddress();
-        System.out.println("Endereço : " + addresses);
-        return addresses.stream().map(Address::toGetDTO).toList();
+        List<AddressGetDTO> listDTO = addresses.stream().map(address -> address.toGetDTO()).toList();
+        for(AddressGetDTO a : listDTO){
+            if(a.getId() == client.getMainAddress().getId()){
+                a.setStandard(true);
+            }
+        }
+        return listDTO;
     }
 
     @Override
@@ -45,7 +47,6 @@ public class AddressServiceImpl implements AddressInterface {
         address.setStreet(addressPutDTO.street());
         Client client = clientService.findOneClient(addressPutDTO.idClient());
         List<Address> listaDeEnderecosDoCliente = client.getAddress();
-        address.setStandard(listaDeEnderecosDoCliente.isEmpty());
         for(Address a : listaDeEnderecosDoCliente){
             if(a.getId().equals(address.getId())){
                 listaDeEnderecosDoCliente.remove(a);
@@ -60,38 +61,43 @@ public class AddressServiceImpl implements AddressInterface {
     }
 
     @Override
-    public Address postAddress(AddressPostDTO addressPostDTO) {
+    public AddressGetDTO postAddress(AddressPostDTO addressPostDTO) {
         System.out.println("id ->" + addressPostDTO.idClient());
         Client client = clientService.findOneClient(addressPostDTO.idClient());
         System.out.println("Client : " + client);
         Address address = new Address(addressPostDTO);
         List<Address> listaDeEnderecosDoCliente = client.getAddress();
 
-        address.setStandard(listaDeEnderecosDoCliente.isEmpty());
-
         listaDeEnderecosDoCliente.add(address);
         client.setAddress(listaDeEnderecosDoCliente);
         address = repository.save(address);
         clientRepository.save(client);
-        return address;
+        return address.toGetDTO();
     }
 
     @Override
-    public AddressPatchDTO patchAddress(AddressPatchDTO addressPatchDTO, Long id) {
+    public Boolean patchAddress(Long idClient, Long id) {
+        Client client = clientService.findOneClient(idClient);
         Address address = repository.findById(id).get();
-        if(address.getStandard()){
-            address.setStandard(false);
+        if(client.getMainAddress() != null && client.getMainAddress().getId().equals(address.getId())){
+            client.setMainAddress(null);
+            return false;
         }else{
-            address.setStandard(true);
+            client.setMainAddress(address);
         }
         repository.save(address);
-        return address.toPatchDTO();
+        clientRepository.save(client);
+        return true;
     }
 
     @Override
     public Boolean deleteAddress(Long idClient, Long id) {
         Client client = clientService.findOneClient(idClient);
         List<Address> listaDeEnderecosDoCliente = client.getAddress();
+        Address mainAddress = client.getMainAddress();
+        if(mainAddress.getId().equals(id)){
+            client.setMainAddress(null);
+        }
         Address address = repository.findById(id).get();
         for(Address a : listaDeEnderecosDoCliente){
             if(a.getId().equals(address.getId())){

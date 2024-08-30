@@ -2,7 +2,6 @@ package net.weg.topcare.controller;
 
 import lombok.AllArgsConstructor;
 import net.weg.topcare.controller.dto.address.AddressGetDTO;
-import net.weg.topcare.controller.dto.address.AddressPatchDTO;
 import net.weg.topcare.controller.dto.address.AddressPostDTO;
 import net.weg.topcare.controller.dto.address.AddressPutDTO;
 import net.weg.topcare.entity.Address;
@@ -24,16 +23,16 @@ public class AddressController {
         return new ResponseEntity<>(service.getAllAddresses(id), HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<Address> postAddress(@RequestBody AddressPostDTO dto){
+    public ResponseEntity<AddressGetDTO> postAddress(@RequestBody AddressPostDTO dto){
         return new ResponseEntity<>(service.postAddress(dto), HttpStatus.CREATED);
     }
     @PutMapping
     public ResponseEntity<Address> putAddress(@RequestBody AddressPutDTO dto){
         return new ResponseEntity<>(service.putAddress(dto), HttpStatus.OK);
     }
-    @PatchMapping("/{id}")
-    public ResponseEntity<AddressPatchDTO> patchAddress(@RequestBody AddressPatchDTO dto, @PathVariable Long id){
-        return new ResponseEntity<>(service.patchAddress(dto, id), HttpStatus.OK);
+    @PatchMapping("/{idClient}/{id}")
+    public ResponseEntity<Boolean> patchAddress(@PathVariable Long idClient, @PathVariable Long id){
+        return new ResponseEntity<>(service.patchAddress(idClient, id), HttpStatus.OK);
     }
     @DeleteMapping("/{idClient}/{id}")
     public ResponseEntity<Boolean> deleteAddress(@PathVariable Long idClient, @PathVariable Long id){

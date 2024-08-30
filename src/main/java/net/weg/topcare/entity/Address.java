@@ -5,10 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.weg.topcare.controller.dto.address.AddressGetDTO;
-import net.weg.topcare.controller.dto.address.AddressPatchDTO;
-import net.weg.topcare.controller.dto.address.AddressPostDTO;
-import net.weg.topcare.controller.dto.address.AddressPutDTO;
+import net.weg.topcare.controller.dto.address.*;
 import net.weg.topcare.enums.FederativeUnit;
 
 @Entity
@@ -43,11 +40,11 @@ public class Address {
     private String complement;
     @Column(length = 50)
     private String identification;
-    @Column
-    private Boolean standard;
 
     public AddressGetDTO toGetDTO() {
-        return new AddressGetDTO(id, identification, standard, street, number, complement, cep, city, federativeUnit);
+        return new AddressGetDTO(this.id, this.identification,
+                this.street, this.number, this.complement, this.cep,
+                this.city, this.federativeUnit, this.district, false);
     }
     public Address(AddressPutDTO dto){
         this.setCep(dto.cep());
@@ -71,7 +68,4 @@ public class Address {
         this.setStreet(dto.street());
     }
 
-    public AddressPatchDTO toPatchDTO() {
-        return new AddressPatchDTO(standard);
-    }
 }
