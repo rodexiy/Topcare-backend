@@ -6,9 +6,11 @@
  */
 package net.weg.topcare.controller;
 
+import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import net.weg.topcare.controller.dto.cartorder.*;
 import net.weg.topcare.service.implementation.OrdersServiceImpl;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -79,5 +81,10 @@ public class CartOrderController {
     @GetMapping("/descriptionOder")
     public List<CartOrderMaximalGetDTO> getDescriptionOrder(@RequestBody CartOrderGetAllDTO dto) {
         return ordersService.getDescriptionOrders(dto);
+    }
+
+    @GetMapping("/clientOrders/{id}")
+    public Page<CartOrderMinimalGetDTO> getDescriptionOrder(@PathVariable Long id, @RequestParam int page, @RequestParam String sorter) {
+        return ordersService.getClientOrders(id, page, sorter);
     }
 }
