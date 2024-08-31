@@ -57,7 +57,7 @@ public class ClientServiceImpl implements ClientServiceInt {
     @Override
     public Boolean changePassword(ClientPatchDTO dto, Long id) {
         Client client = findOneClient(id);
-        if (client.getPassword().equals(dto.confirmPassword())) {
+        if (dto.newPassword().equals(dto.confirmPassword())) {
             client.setPassword(dto.newPassword());
             repository.save(client);
             return true;

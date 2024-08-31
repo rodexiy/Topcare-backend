@@ -70,24 +70,52 @@ public class AddressServiceImpl implements AddressInterface {
 
         listaDeEnderecosDoCliente.add(address);
         client.setAddress(listaDeEnderecosDoCliente);
+        if(client.getMainAddress() == null){
+            client.setMainAddress(address);
+        }
         address = repository.save(address);
         clientRepository.save(client);
         return address.toGetDTO();
     }
 
+    public AddressGetDTO setMainAddressTrue(Client client, Address address) {
+        List<AddressGetDTO> addresses = client.getAddress().stream().map(address1 -> address1.toGetDTO()).toList();
+        for (AddressGetDTO a : addresses) {
+            if (a.getId().equals(address.getId())) {
+                client.setMainAddress(new Address(a));
+                repository.save(client.getMainAddress());
+                clientRepository.save(client);
+                return a;
+            }
+        }
+        return null;
+    }
+
+    public AddressGetDTO setMainAddressFalse(Client client, Address address) {
+        List<AddressGetDTO> addresses = client.getAddress().stream().map(address1 -> address1.toGetDTO()).toList();
+        if (client.getMainAddress().getId().equals(address.getId())) {
+            client.setMainAddress(null);
+            for (AddressGetDTO a : addresses) {
+                if (a.getId().equals(address.getId())) {
+                    a.setStandard(false);
+                    repository.deleteById(a.getId());
+                    clientRepository.save(client);
+                    return a;
+                }
+            }
+        }
+        return null;
+    }
+
     @Override
-    public Boolean patchAddress(Long idClient, Long id) {
+    public AddressGetDTO patchAddress(Long idClient, Long id) {
         Client client = clientService.findOneClient(idClient);
         Address address = repository.findById(id).get();
-        if(client.getMainAddress() != null && client.getMainAddress().getId().equals(address.getId())){
-            client.setMainAddress(null);
-            return false;
-        }else{
-            client.setMainAddress(address);
+        AddressGetDTO result = setMainAddressTrue(client, address);
+        if (result != null) {
+            return result;
         }
-        repository.save(address);
-        clientRepository.save(client);
-        return true;
+        return setMainAddressFalse(client, address);
     }
 
     @Override

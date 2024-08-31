@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 
 public class Client extends People {
-    @OneToOne(orphanRemoval = true)
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.PERSIST)
     private Address mainAddress;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)

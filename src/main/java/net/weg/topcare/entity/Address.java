@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.weg.topcare.controller.dto.address.*;
 import net.weg.topcare.enums.FederativeUnit;
+import org.springframework.beans.BeanUtils;
 
 @Entity
 @AllArgsConstructor
@@ -45,6 +46,10 @@ public class Address {
         return new AddressGetDTO(this.id, this.identification,
                 this.street, this.number, this.complement, this.cep,
                 this.city, this.federativeUnit, this.district, false);
+    }
+
+    public Address(AddressGetDTO dto){
+        BeanUtils.copyProperties(dto, this);
     }
     public Address(AddressPutDTO dto){
         this.setCep(dto.cep());

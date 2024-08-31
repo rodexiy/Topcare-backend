@@ -31,7 +31,7 @@ public class AddressController {
         return new ResponseEntity<>(service.putAddress(dto), HttpStatus.OK);
     }
     @PatchMapping("/{idClient}/{id}")
-    public ResponseEntity<Boolean> patchAddress(@PathVariable Long idClient, @PathVariable Long id){
+    public ResponseEntity<AddressGetDTO> patchAddress(@PathVariable Long idClient, @PathVariable Long id){
         return new ResponseEntity<>(service.patchAddress(idClient, id), HttpStatus.OK);
     }
     @DeleteMapping("/{idClient}/{id}")

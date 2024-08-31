@@ -68,5 +68,9 @@ public class ClientController {
     public ResponseEntity<Boolean> checkToken(@RequestBody ClientTokenDTO dto){
         return ResponseEntity.ok(service.checkToken(dto));
     }
+    @PatchMapping("/changePassword/{id}")
+    public ResponseEntity<Boolean> changePassword(@RequestBody ClientPatchDTO dto, @PathVariable Long id){
+        return ResponseEntity.ok(service.changePassword(dto, id));
+    }
 
 }
