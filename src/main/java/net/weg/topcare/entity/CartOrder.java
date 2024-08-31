@@ -39,7 +39,7 @@ public class CartOrder {
     @CreationTimestamp
     private LocalDate orderCreated;
 
-    @OneToMany(mappedBy = "cartOrder")
+    @OneToMany(mappedBy = "cartOrder", cascade = CascadeType.ALL)
     private List<ProductOrder> products = new ArrayList<>();
 
     @Column(nullable = false)
