@@ -22,7 +22,7 @@ public class Cart {
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     private List<ProductCart> productsInCart = new ArrayList<>();
 
-    @OneToOne()
+    @OneToOne
     @JsonIgnore
     @ToString.Exclude
     private Client client;
