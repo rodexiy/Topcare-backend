@@ -38,15 +38,6 @@ public class CartOrderController {
      *
      * @param dto Pedido a ser adicionado.
      */
-    @PostMapping
-    public void addCartOrderToOrders(@RequestBody CartOrderPostDTO dto) {
-        ordersService.addCartOrderToOrders(dto);
-    }
-
-    @PostMapping("/create")
-    public void createCarOder(@RequestBody OrderCartPostDTO dto) {
-        ordersService.createCartOrderToOrders(dto);
-    }
 
     /**
      * Retorna uma lista de pedidos concluídos.

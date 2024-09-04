@@ -9,10 +9,7 @@ package net.weg.topcare.service.implementation;
 import lombok.AllArgsConstructor;
 import net.weg.topcare.controller.dto.cartorder.*;
 import net.weg.topcare.controller.dto.product.ProductMinimalGetDTO;
-import net.weg.topcare.entity.Address;
-import net.weg.topcare.entity.CartOrder;
-import net.weg.topcare.entity.Client;
-import net.weg.topcare.entity.Product;
+import net.weg.topcare.entity.*;
 import net.weg.topcare.enums.OrderStatusEnum;
 import net.weg.topcare.repository.AddressRepository;
 import net.weg.topcare.repository.CartOrderRepository;
@@ -71,31 +68,21 @@ public class OrdersServiceImpl {
         }
     }
 
-    public void createCartOrderToOrders(@RequestBody OrderCartPostDTO dto) {
-        Optional<Client> client = clientRepository.findById(dto.clientId());
+    public void crateCartOrderFromCart(Client client) {
+        Cart cart = client.getCart();
+        CartOrder cartOrder = new CartOrder();
 
-        if (client.isPresent()) {
-            Client cliente = client.get();
-            CartOrder cartOrder = new CartOrder();
+        Address address = cart.getSelectedAddress();
 
-            Optional<Address> address = addressRepository.findById(dto.addressId());
-            if (address.isPresent()) {
-                cartOrder.setAddress(address.get());
-            } else {
-                throw new IllegalArgumentException("Invalid addressId");
-            }
+        cartOrder.setAddress(address);
+        cartOrder.setDiscount(cart.getCartTotalDiscountAmount());
+        cartOrder.setProductsTotal(cart.getCartTotalNotDiscounted());
+        cartOrder.setFreight(Math.random() * 10);
+        cartOrder.setNumberOrder(1);
 
-            cartOrder.setDiscount(Double.valueOf(dto.discount()));
-            cartOrder.setProductsTotal(Double.valueOf(dto.quantity()));
-            cartOrder.setFreight(dto.freight());
-            cartOrder.setNumberOrder(Math.toIntExact(dto.numberOrder()));
-            cartOrder.setDateOrderFinished(dto.dateOrderFinished().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        client.addCartOrderToOrders(cartOrder);
+        clientRepository.save(client);
 
-            cliente.addCartOrderToOrders(cartOrder);
-            clientRepository.save(cliente);
-        } else {
-            throw new IllegalArgumentException("Invalid clientId");
-        }
     }
 
     /**

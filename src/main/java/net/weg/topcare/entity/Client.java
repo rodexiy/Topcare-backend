@@ -25,7 +25,7 @@ public class Client extends People {
 
 
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<CartOrder> orders = new ArrayList<>();
 
     @OneToMany(mappedBy = "client")
