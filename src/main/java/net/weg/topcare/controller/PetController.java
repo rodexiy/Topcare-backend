@@ -10,6 +10,7 @@ import net.weg.topcare.service.implementation.PetServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,9 +20,9 @@ import java.util.List;
 @CrossOrigin("*")
 public class PetController {
     private final PetServiceImpl service; //todios os fnals é required
-    @PostMapping
-    public ResponseEntity<PetGetRequestDTO> postPet(@RequestBody PetPostRequestDTO dto){
-        return ResponseEntity.ok(service.postPet(dto));
+    @PostMapping(consumes = {"multipart/form-data", "application/json"})
+    public ResponseEntity<PetGetRequestDTO> postPet(@RequestPart PetPostRequestDTO dto, @RequestPart MultipartFile picture){
+        return ResponseEntity.ok(service.postPet(dto, picture));
 
     }
     @GetMapping("{id}")

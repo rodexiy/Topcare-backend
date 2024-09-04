@@ -27,7 +27,7 @@ public class Pet {
     @ToString.Exclude
     private Client client;
 
-    @OneToOne
+    @OneToOne()
     private Image picture;
 
     @Column(nullable = false, length = 75)

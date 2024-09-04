@@ -23,14 +23,33 @@ public class Image {
     @Lob
     private byte[] bytes;
 
+    @OneToOne(mappedBy = "profilePicture")
+    @ToString.Exclude
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude
+    private Client clientProfilePicture;
+
+    @OneToOne(mappedBy = "banner")
+    @ToString.Exclude
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude
+    private Client clientBanner;
+
     private String contentType;
     private String originalFileName;
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn()
     @ToString.Exclude
     @JsonIgnore
     @EqualsAndHashCode.Exclude
     private Product product;
+
+    @OneToOne(mappedBy = "picture")
+    @ToString.Exclude
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude
+    @JoinColumn()
+    private Pet pet;
 
     public Image(MultipartFile file) throws IOException {
         this.bytes = file.getBytes();

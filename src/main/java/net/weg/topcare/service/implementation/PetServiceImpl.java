@@ -5,11 +5,14 @@ import net.weg.topcare.controller.dto.pet.PetGetRequestDTO;
 import net.weg.topcare.controller.dto.pet.PetPostRequestDTO;
 import net.weg.topcare.controller.dto.pet.PetPatchRequestDTO;
 import net.weg.topcare.entity.Client;
+import net.weg.topcare.entity.Image;
 import net.weg.topcare.entity.Pet;
 import net.weg.topcare.repository.ClientRepository;
+import net.weg.topcare.repository.ImageRepository;
 import net.weg.topcare.repository.PetRepository;
 import net.weg.topcare.service.interfaces.PetServiceInt;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,14 +21,22 @@ import java.util.Optional;
 @AllArgsConstructor
 public class PetServiceImpl implements PetServiceInt {
     private final PetRepository repository;
+    private final ImageRepository imageRepository;
     @Override
-    public PetGetRequestDTO postPet(PetPostRequestDTO dto) {
+    public PetGetRequestDTO postPet(PetPostRequestDTO dto, MultipartFile picture) {
         System.out.printf("dto: " + dto);
         Pet pet = new Pet(dto);
         Client client = new Client();
         client.setId(dto.idClient());
         pet.setClient(client);
         System.out.println("Pet: " + pet);
+        try {
+            Image img = new Image(picture);
+            imageRepository.save(img);
+            pet.setPicture(img);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return repository.save(pet).toDto();
     }
 
