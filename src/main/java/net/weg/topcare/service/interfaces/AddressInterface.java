@@ -6,10 +6,12 @@ import net.weg.topcare.entity.Address;
 import java.util.List;
 
 public interface AddressInterface {
-    List<AddressGetDTO> getAllAddresses(Long id);
+    List<Address> getAllAddresses(Long id);
     Address putAddress(AddressPutDTO addressPutDTO);
     AddressGetDTO postAddress(AddressPostDTO addressPostDTO);
-    AddressGetDTO patchAddress(Long idClient, Long id);
+
+    Long patchMainAddress(Long idClient, AddressIdDTO dto);
+
     Boolean deleteAddress(Long idClient, Long id);
 
 }

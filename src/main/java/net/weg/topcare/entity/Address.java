@@ -42,10 +42,10 @@ public class Address {
     @Column(length = 50)
     private String identification;
 
-    public AddressGetDTO toGetDTO() {
-        return new AddressGetDTO(this.id, this.identification,
+    public AddressGetDTO toGetDTO(Long idMainAddress) {
+        return new AddressGetDTO(this.id, idMainAddress, this.identification,
                 this.street, this.number, this.complement, this.cep,
-                this.city, this.federativeUnit, this.district, false);
+                this.city, this.federativeUnit, this.district);
     }
 
     public Address(AddressGetDTO dto){

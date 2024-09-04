@@ -18,16 +18,10 @@ public class AddressServiceImpl implements AddressInterface {
     private final ClientServiceImpl clientService;
     private final ClientRepository clientRepository;
     @Override
-    public List<AddressGetDTO> getAllAddresses(Long id) {
+    public List<Address> getAllAddresses(Long id) {
         Client client = clientService.findOneClient(id);
-        List<Address> addresses = client.getAddress();
-        List<AddressGetDTO> listDTO = addresses.stream().map(address -> address.toGetDTO()).toList();
-        for(AddressGetDTO a : listDTO){
-            if(a.getId() == client.getMainAddress().getId()){
-                a.setStandard(true);
-            }
-        }
-        return listDTO;
+        System.out.println("Client : " + client.getAddress());
+        return client.getAddress();
     }
 
     @Override
@@ -75,47 +69,20 @@ public class AddressServiceImpl implements AddressInterface {
         }
         address = repository.save(address);
         clientRepository.save(client);
-        return address.toGetDTO();
-    }
-
-    public AddressGetDTO setMainAddressTrue(Client client, Address address) {
-        List<AddressGetDTO> addresses = client.getAddress().stream().map(address1 -> address1.toGetDTO()).toList();
-        for (AddressGetDTO a : addresses) {
-            if (a.getId().equals(address.getId())) {
-                client.setMainAddress(new Address(a));
-                repository.save(client.getMainAddress());
-                clientRepository.save(client);
-                return a;
-            }
-        }
-        return null;
-    }
-
-    public AddressGetDTO setMainAddressFalse(Client client, Address address) {
-        List<AddressGetDTO> addresses = client.getAddress().stream().map(address1 -> address1.toGetDTO()).toList();
-        if (client.getMainAddress().getId().equals(address.getId())) {
-            client.setMainAddress(null);
-            for (AddressGetDTO a : addresses) {
-                if (a.getId().equals(address.getId())) {
-                    a.setStandard(false);
-                    repository.deleteById(a.getId());
-                    clientRepository.save(client);
-                    return a;
-                }
-            }
-        }
-        return null;
+        return address.toGetDTO(client.getMainAddress().getId());
     }
 
     @Override
-    public AddressGetDTO patchAddress(Long idClient, Long id) {
+    public Long patchMainAddress(Long idClient, AddressIdDTO dto) {
         Client client = clientService.findOneClient(idClient);
-        Address address = repository.findById(id).get();
-        AddressGetDTO result = setMainAddressTrue(client, address);
-        if (result != null) {
-            return result;
+        if(client.getMainAddress().getId() == dto.id()){
+            return 0L;
         }
-        return setMainAddressFalse(client, address);
+        Address address = new Address();
+        address.setId(dto.id());
+        client.setMainAddress(address);
+        clientRepository.save(client);
+        return address.getId();
     }
 
     @Override
@@ -138,5 +105,14 @@ public class AddressServiceImpl implements AddressInterface {
         repository.deleteById(id);
         return true;
 
+    }
+
+    public Long getMainAddressId(Long idClient) {
+        Client client = clientService.findOneClient(idClient);
+        Address mainAddress = client.getMainAddress();
+        if(mainAddress == null){
+            return null;
+        }
+        return mainAddress.getId();
     }
 }

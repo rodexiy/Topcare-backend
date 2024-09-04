@@ -1,4 +1,7 @@
 package net.weg.topcare.controller.dto.product;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import net.weg.topcare.controller.dto.category.CategoryGetDTO;
 import net.weg.topcare.controller.dto.productSpecification.ProductSpecificationGetDTO;
 import net.weg.topcare.controller.dto.rating.GeneralRatingGetDTO;
@@ -17,6 +20,7 @@ public record ProductGetDTO(
         Double price,
         List<Category> categories,
         GeneralRatingGetDTO generalRating,
+        @PositiveOrZero @NotNull
         Integer discount,
         String description,
         List<ProductSpecificationGetDTO> specifications,

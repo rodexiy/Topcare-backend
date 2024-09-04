@@ -17,10 +17,10 @@ import java.util.List;
 @Entity
 
 public class Client extends People {
-    @OneToOne(orphanRemoval = true, cascade = CascadeType.PERSIST)
+    @OneToOne
     private Address mainAddress;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Address> address = new ArrayList<>();
 
     @OneToMany(mappedBy = "client")

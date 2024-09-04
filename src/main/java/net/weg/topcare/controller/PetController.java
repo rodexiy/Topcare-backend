@@ -1,7 +1,9 @@
 package net.weg.topcare.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import net.weg.topcare.controller.dto.pet.PetGetRequestDTO;
 import net.weg.topcare.controller.dto.pet.PetPatchRequestDTO;
 import net.weg.topcare.controller.dto.pet.PetPostRequestDTO;
@@ -20,7 +22,7 @@ import java.util.List;
 public class PetController {
     private final PetServiceImpl service; //todos os finals é required
     @PostMapping
-    public ResponseEntity<PetGetRequestDTO> postPet(@RequestBody PetPostRequestDTO dto){
+    public ResponseEntity<PetGetRequestDTO> postPet(@Valid @RequestBody PetPostRequestDTO dto){
         return ResponseEntity.ok(service.postPet(dto));
 
     }

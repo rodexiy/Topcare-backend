@@ -7,6 +7,7 @@ import net.weg.topcare.enums.FederativeUnit;
 @AllArgsConstructor
 public class AddressGetDTO {
     Long id;
+    Long idMainAddress;
     String identification;
     String street;
     Integer number;
@@ -15,5 +16,4 @@ public class AddressGetDTO {
     String city;
     FederativeUnit federativeUnit;
     String district;
-    Boolean standard;
 }
