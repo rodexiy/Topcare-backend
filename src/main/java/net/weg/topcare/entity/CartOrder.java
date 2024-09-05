@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import net.weg.topcare.controller.dto.cartorder.CartOrderMaximalGetDTO;
 import net.weg.topcare.controller.dto.cartorder.CartOrderMinimalGetDTO;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,6 +36,9 @@ public class CartOrder {
     @JoinColumn(nullable = false)
     private Address address;
 
+    @CreationTimestamp
+    private LocalDate orderCreated;
+
     @OneToMany(mappedBy = "cartOrder")
     private List<ProductOrder> products = new ArrayList<>();
 
@@ -54,10 +58,11 @@ public class CartOrder {
 
     public CartOrderMinimalGetDTO convertToMinimalGetDTO() {
         return new CartOrderMinimalGetDTO(
+                this.id,
                 this.getClient().getName(),
                 this.getOrderStatuses().stream().map(status -> status.getOrderStatus().getNome()).collect(Collectors.joining(", ")),
                 (long) this.getNumberOrder(),
-                this.getDateOrderFinished()
+                this.getOrderCreated()
         );
     }
 
@@ -67,7 +72,7 @@ public class CartOrder {
                 this.getAddress(),
                 this.getOrderStatuses().stream().map(status -> status.getOrderStatus().getNome()).collect(Collectors.joining(", ")),
                 (long) this.getNumberOrder(),
-                this.getDateOrderFinished(),
+                this.getOrderCreated(),
                 this.getProducts()
         );
     }

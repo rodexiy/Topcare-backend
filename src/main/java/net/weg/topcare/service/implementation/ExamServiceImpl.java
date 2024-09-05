@@ -27,6 +27,7 @@ public class ExamServiceImpl {
      */
     private SchedulingRepository schedulingRepository;
 
+
     /**
      * Repositório de clientes.
      */
@@ -85,7 +86,6 @@ public class ExamServiceImpl {
         return schedulingRepository.findById(id).get();
     }
 
-    // New method to get all exams by client ID
     public List<Scheduling> getExamsByClientId(ClientGetIdDTO clientGetIdDTO) {
         return schedulingRepository.findByClientId(clientGetIdDTO.id());
     }
@@ -94,5 +94,8 @@ public class ExamServiceImpl {
         return schedulingRepository.findBySchedulingNumber(schedulingNumber);
     }
 
+    public List<net.weg.topcare.entity.Service> getServicesByPetId(Long petId) {
+        return schedulingRepository.findServicesByPetId(petId);
+    }
 
 }

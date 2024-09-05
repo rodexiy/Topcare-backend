@@ -1,5 +1,6 @@
 package net.weg.topcare.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import net.weg.topcare.controller.dto.client.*;
 import net.weg.topcare.entity.Client;
@@ -10,6 +11,7 @@ import net.weg.topcare.exceptions.CPFAlreadyBeingUsedException;
 import net.weg.topcare.service.implementation.ClientServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +25,7 @@ public class ClientController {
     private ClientServiceImpl service;
 
     @PostMapping
-    public ResponseEntity<Long> register(@RequestBody ClientPostDTO client) {
+    public ResponseEntity<Long> register(@Valid @RequestBody ClientPostDTO client) {
         try {
             return ResponseEntity.ok(service.register(client));
 

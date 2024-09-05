@@ -8,8 +8,6 @@ import net.weg.topcare.controller.dto.rating.GeneralRatingGetDTO;
 import net.weg.topcare.entity.Brand;
 import net.weg.topcare.entity.Category;
 import net.weg.topcare.entity.Image;
-import net.weg.topcare.entity.ProductSpecification;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 

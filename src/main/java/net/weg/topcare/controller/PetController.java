@@ -26,18 +26,22 @@ public class PetController {
         return ResponseEntity.ok(service.postPet(dto));
 
     }
+
     @GetMapping("{id}")
     public ResponseEntity<List<Pet>> getPetsByClient(@PathVariable Long id){
         return new ResponseEntity<>(service.getAllPetsByClient(id), HttpStatus.OK);
     }
+
     @GetMapping
     public ResponseEntity<List<PetGetRequestDTO>> getPets(){
         return ResponseEntity.ok(service.getPets());
     }
+
     @PatchMapping("{id}")
     public ResponseEntity<Pet> patchPet(@RequestBody PetPatchRequestDTO dto, @PathVariable Long id){
         return ResponseEntity.ok(service.patchPet(dto, id));
     }
+
     @DeleteMapping("{id}")
     public ResponseEntity<String> deletePet(@PathVariable Long id){
         return ResponseEntity.ok(service.deletePet(id));
