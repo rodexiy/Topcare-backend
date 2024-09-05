@@ -28,7 +28,7 @@ public class AddressController {
         return new ResponseEntity<>(service.getMainAddressId(idClient), HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<AddressGetDTO> postAddress(@RequestBody AddressPostDTO dto){
+    public ResponseEntity<Address> postAddress(@RequestBody AddressPostDTO dto){
         return new ResponseEntity<>(service.postAddress(dto), HttpStatus.CREATED);
     }
     @PutMapping

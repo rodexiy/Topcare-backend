@@ -55,7 +55,7 @@ public class AddressServiceImpl implements AddressInterface {
     }
 
     @Override
-    public AddressGetDTO postAddress(AddressPostDTO addressPostDTO) {
+    public Address postAddress(AddressPostDTO addressPostDTO) {
         System.out.println("id ->" + addressPostDTO.idClient());
         Client client = clientService.findOneClient(addressPostDTO.idClient());
         System.out.println("Client : " + client);
@@ -69,7 +69,8 @@ public class AddressServiceImpl implements AddressInterface {
         }
         address = repository.save(address);
         clientRepository.save(client);
-        return address.toGetDTO(client.getMainAddress().getId());
+//        return address.toGetDTO(client.getMainAddress().getId());
+        return address;
     }
 
     @Override

@@ -8,7 +8,7 @@ import java.util.List;
 public interface AddressInterface {
     List<Address> getAllAddresses(Long id);
     Address putAddress(AddressPutDTO addressPutDTO);
-    AddressGetDTO postAddress(AddressPostDTO addressPostDTO);
+    Address postAddress(AddressPostDTO addressPostDTO);
 
     Long patchMainAddress(Long idClient, AddressIdDTO dto);
 
