@@ -23,6 +23,10 @@ public class AddressController {
     public ResponseEntity<List<Address>> getAllAddress(@PathVariable Long id){
         return new ResponseEntity<>(service.getAllAddresses(id), HttpStatus.OK);
     }
+    @GetMapping("/main/{idClient}")
+    public ResponseEntity<Long> getMainAddressId(@PathVariable Long idClient){
+        return new ResponseEntity<>(service.getMainAddressId(idClient), HttpStatus.OK);
+    }
     @PostMapping
     public ResponseEntity<AddressGetDTO> postAddress(@RequestBody AddressPostDTO dto){
         return new ResponseEntity<>(service.postAddress(dto), HttpStatus.CREATED);
@@ -40,8 +44,5 @@ public class AddressController {
     public ResponseEntity<Boolean> deleteAddress(@PathVariable Long idClient, @PathVariable Long id){
         return new ResponseEntity<>(service.deleteAddress(idClient, id), HttpStatus.OK);
     }
-    @GetMapping("/{idClient}")
-    public ResponseEntity<Long> getMainAddressId(@PathVariable Long idClient){
-        return new ResponseEntity<>(service.getMainAddressId(idClient), HttpStatus.OK);
-    }
+
 }

@@ -108,6 +108,7 @@ public class AddressServiceImpl implements AddressInterface {
     }
 
     public Long getMainAddressId(Long idClient) {
+        System.out.println("Main address chamou");
         Client client = clientService.findOneClient(idClient);
         Address mainAddress = client.getMainAddress();
         if(mainAddress == null){
