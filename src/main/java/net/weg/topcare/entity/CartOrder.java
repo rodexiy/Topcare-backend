@@ -52,7 +52,7 @@ public class CartOrder {
     private Double freight;
 
     @Column(nullable = false)
-    private Double discount;
+    private Double discount = 0.0;
 
     private LocalDate dateOrderFinished;
 

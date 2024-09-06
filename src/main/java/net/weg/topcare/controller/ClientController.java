@@ -42,10 +42,10 @@ public class ClientController {
         return ResponseEntity.ok(service.exists(email));
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<ClientGetDTO> editClientImages(@PathVariable Long id, @RequestPart(required = false) MultipartFile profilePicture, @RequestPart(required = false) MultipartFile banner) {
-        return ResponseEntity.ok(service.editClientImages(id, profilePicture, banner));
-    }
+//    @PatchMapping("/{id}")
+//    public ResponseEntity<ClientGetDTO> editClientImages(@PathVariable Long id, @RequestPart(required = false) MultipartFile profilePicture, @RequestPart(required = false) MultipartFile banner) {
+//        return ResponseEntity.ok(service.editClientImages(id, profilePicture, banner));
+//    }
 
     @GetMapping
     public ResponseEntity<List<ClientGetDTO>> findAll() {
