@@ -62,6 +62,14 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Rating> ratings;
 
+    public Double getDiscountedPrice() {
+        return this.price - this.getDiscountedAmount();
+    }
+
+    public Double getDiscountedAmount() {
+        return ((this.price * discount) / 100);
+    }
+
 
     public Product(ProductPostDTO dto){
         BeanUtils.copyProperties(dto, this);

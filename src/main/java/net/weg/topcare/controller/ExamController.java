@@ -5,7 +5,9 @@ import net.weg.topcare.controller.dto.client.ClientGetIdDTO;
 import net.weg.topcare.controller.dto.exam.ExamMaximalGetDTO;
 import net.weg.topcare.controller.dto.exam.ExamMinimalGetDTO;
 import net.weg.topcare.controller.dto.exam.ExamPostDTO;
+import net.weg.topcare.controller.dto.service.ServiceGetRequestDTO;
 import net.weg.topcare.entity.Scheduling;
+import net.weg.topcare.entity.Service;
 import net.weg.topcare.service.implementation.ExamServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -106,5 +108,15 @@ public class ExamController {
         Scheduling query = queryService.getExamBySchedulingNumber(schedulingNumber);
         return ResponseEntity.ok(query.convertToQueryMinimalGetDTO());
     }
+
+    @GetMapping("/servicesByPet/{petId}")
+    public List<ServiceGetRequestDTO> getServicesByPetId(@PathVariable Long petId) {
+        return queryService.getServicesByPetId(petId)
+                .stream()
+                .map(ServiceGetRequestDTO::new)
+                .collect(Collectors.toList());
+    }
+
+
 
 }

@@ -20,12 +20,12 @@ public class Client extends People {
     @OneToOne
     private Address mainAddress;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Address> address = new ArrayList<>();
 
 
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<CartOrder> orders = new ArrayList<>();
 
     @OneToMany(mappedBy = "client")

@@ -27,4 +27,10 @@ public class Service {
 
     @Column(nullable = false)
     private Double price;
+
+    public Service(String nome, Double price) {
+        this.nome = nome;
+        this.price = price;
+    }
+
 }

@@ -7,15 +7,11 @@
 package net.weg.topcare.service.implementation;
 
 import lombok.AllArgsConstructor;
-import net.weg.topcare.controller.dto.cartorder.CartOrderMaximalGetDTO;
-import net.weg.topcare.controller.dto.cartorder.CartOrderGetAllDTO;
-import net.weg.topcare.controller.dto.cartorder.CartOrderMinimalGetDTO;
-import net.weg.topcare.controller.dto.cartorder.CartOrderPostDTO;
+import net.weg.topcare.controller.dto.cartorder.*;
 import net.weg.topcare.controller.dto.product.ProductMinimalGetDTO;
-import net.weg.topcare.entity.CartOrder;
-import net.weg.topcare.entity.Client;
-import net.weg.topcare.entity.Product;
+import net.weg.topcare.entity.*;
 import net.weg.topcare.enums.OrderStatusEnum;
+import net.weg.topcare.repository.AddressRepository;
 import net.weg.topcare.repository.CartOrderRepository;
 import net.weg.topcare.repository.ClientRepository;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
@@ -26,6 +22,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -51,6 +48,8 @@ public class OrdersServiceImpl {
      */
     private CartOrderRepository cartOrderRepository;
 
+    private AddressRepository addressRepository;
+
     /**
      * Adiciona um pedido ao histórico de pedidos de um cliente.
      *
@@ -67,6 +66,23 @@ public class OrdersServiceImpl {
             cliente.addCartOrderToOrders(cartsOrder);
             clientRepository.save(cliente);
         }
+    }
+
+    public void crateCartOrderFromCart(Client client) {
+        Cart cart = client.getCart();
+        CartOrder cartOrder = new CartOrder();
+
+        Address address = cart.getSelectedAddress();
+
+        cartOrder.setAddress(address);
+        cartOrder.setDiscount(cart.getCartTotalDiscountAmount());
+        cartOrder.setProductsTotal(cart.getCartTotalNotDiscounted());
+        cartOrder.setFreight(Math.random() * 10);
+        cartOrder.setNumberOrder(1);
+
+        client.addCartOrderToOrders(cartOrder);
+        clientRepository.save(client);
+
     }
 
     /**

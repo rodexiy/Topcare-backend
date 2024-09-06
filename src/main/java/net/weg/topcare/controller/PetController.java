@@ -1,7 +1,9 @@
 package net.weg.topcare.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import net.weg.topcare.controller.dto.pet.PetGetRequestDTO;
 import net.weg.topcare.controller.dto.pet.PetPatchRequestDTO;
 import net.weg.topcare.controller.dto.pet.PetPostRequestDTO;
@@ -23,20 +25,23 @@ public class PetController {
     @PostMapping(consumes = {"multipart/form-data", "application/json"})
     public ResponseEntity<PetGetRequestDTO> postPet(@RequestPart PetPostRequestDTO dto, @RequestPart MultipartFile picture){
         return ResponseEntity.ok(service.postPet(dto, picture));
-
     }
+
     @GetMapping("{id}")
     public ResponseEntity<List<Pet>> getPetsByClient(@PathVariable Long id){
         return new ResponseEntity<>(service.getAllPetsByClient(id), HttpStatus.OK);
     }
+
     @GetMapping
     public ResponseEntity<List<PetGetRequestDTO>> getPets(){
         return ResponseEntity.ok(service.getPets());
     }
+
     @PatchMapping("{id}")
     public ResponseEntity<Pet> patchPet(@RequestBody PetPatchRequestDTO dto, @PathVariable Long id){
         return ResponseEntity.ok(service.patchPet(dto, id));
     }
+
     @DeleteMapping("{id}")
     public ResponseEntity<String> deletePet(@PathVariable Long id){
         return ResponseEntity.ok(service.deletePet(id));

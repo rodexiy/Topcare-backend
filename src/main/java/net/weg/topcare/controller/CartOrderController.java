@@ -8,10 +8,7 @@ package net.weg.topcare.controller;
 
 import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
-import net.weg.topcare.controller.dto.cartorder.CartOrderMaximalGetDTO;
-import net.weg.topcare.controller.dto.cartorder.CartOrderGetAllDTO;
-import net.weg.topcare.controller.dto.cartorder.CartOrderMinimalGetDTO;
-import net.weg.topcare.controller.dto.cartorder.CartOrderPostDTO;
+import net.weg.topcare.controller.dto.cartorder.*;
 import net.weg.topcare.service.implementation.OrdersServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -41,10 +38,6 @@ public class CartOrderController {
      *
      * @param dto Pedido a ser adicionado.
      */
-    @PostMapping
-    public void addCartOrderToOrders(@RequestBody CartOrderPostDTO dto) {
-        ordersService.addCartOrderToOrders(dto);
-    }
 
     /**
      * Retorna uma lista de pedidos concluídos.
