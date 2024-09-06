@@ -6,13 +6,10 @@ import net.weg.topcare.controller.dto.client.*;
 import net.weg.topcare.entity.Client;
 import net.weg.topcare.controller.dto.client.ClientGetDTO;
 import net.weg.topcare.controller.dto.client.ClientPostDTO;
-import net.weg.topcare.controller.dto.client.LoginDTO;
 import net.weg.topcare.exceptions.CPFAlreadyBeingUsedException;
 import net.weg.topcare.service.implementation.ClientServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,7 +39,7 @@ public class ClientController {
         return ResponseEntity.ok(service.exists(email));
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/images/{id}")
     public ResponseEntity<ClientGetDTO> editClientImages(@PathVariable Long id, @RequestPart(required = false) MultipartFile profilePicture, @RequestPart(required = false) MultipartFile banner) {
         return ResponseEntity.ok(service.editClientImages(id, profilePicture, banner));
     }
