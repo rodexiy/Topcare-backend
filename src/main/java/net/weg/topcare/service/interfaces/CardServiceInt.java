@@ -2,6 +2,8 @@ package net.weg.topcare.service.interfaces;
 
 import net.weg.topcare.controller.dto.card.CardGetRequestDTO;
 import net.weg.topcare.controller.dto.card.CardPostRequestDTO;
+import net.weg.topcare.entity.Card;
+import net.weg.topcare.entity.Cart;
 import net.weg.topcare.exceptions.CardNotFoundException;
 import org.springframework.stereotype.Service;
 

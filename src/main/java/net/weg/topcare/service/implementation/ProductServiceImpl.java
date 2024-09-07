@@ -152,5 +152,10 @@ public class ProductServiceImpl implements ProductServiceInt {
         return product.toGetDTO();
     }
 
+    @Override
+    public Product getProductById(Long id) {
+        return repository.findById(id).get();
+    }
+
 
 }
