@@ -30,7 +30,7 @@ public class CartController {
         return new ResponseEntity<>(service.getCartTotalPriceNotDiscounted(idClient), HttpStatus.OK);
     }
     @GetMapping("/totalDiscounted/{idClient}")
-    public ResponseEntity<Double> gettotalDiscounted(@PathVariable Long idClient){
+    public ResponseEntity<Double> getTotalDiscounted(@PathVariable Long idClient){
         return new ResponseEntity<>(service.getCartTotalDiscount(idClient), HttpStatus.OK);
     }
 }
