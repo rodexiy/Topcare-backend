@@ -138,7 +138,6 @@ public class ExamController {
         Scheduling query = queryService.getExamBySchedulingNumber(schedulingNumber);
         return ResponseEntity.ok(query.convertToQueryMinimalGetDTO());
     }
-
     @GetMapping("/servicesByPet/{petId}")
     public List<ServiceGetRequestDTO> getServicesByPetId(@PathVariable Long petId) {
         return queryService.getServicesByPetId(petId)
