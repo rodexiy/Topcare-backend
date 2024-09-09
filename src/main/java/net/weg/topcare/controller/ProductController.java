@@ -56,7 +56,7 @@ public class ProductController {
     }
 
     @GetMapping("orderBySale")
-    public ResponseEntity<List<Product>> getAllBySale(){
+    public ResponseEntity<List<ProductMinimalGetDTO>> getAllBySale(){
         return new ResponseEntity<>(service.findAllProductBySale(), HttpStatus.OK);
     }
 

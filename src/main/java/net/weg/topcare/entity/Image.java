@@ -51,6 +51,15 @@ public class Image {
     @JoinColumn()
     private Pet pet;
 
+    @OneToOne(mappedBy = "image")
+    @ToString.Exclude
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude
+    private Brand brand;
+
+
+
+
     public Image(MultipartFile file) throws IOException {
         this.bytes = file.getBytes();
         this.contentType = file.getContentType();

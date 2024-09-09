@@ -1,5 +1,6 @@
 package net.weg.topcare.controller.dto.product;
 
+import net.weg.topcare.controller.dto.brand.BrandGetIdDTO;
 import net.weg.topcare.controller.dto.category.CategoryGetDTO;
 import net.weg.topcare.controller.dto.productSpecification.ProductSpecificationGetDTO;
 import net.weg.topcare.entity.*;
@@ -7,7 +8,7 @@ import net.weg.topcare.entity.*;
 import java.util.List;
 
 public record ProductPutDTO(
-        Brand brand,
+        BrandGetIdDTO brand,
         String name,
         String description,
         Integer generalRating,

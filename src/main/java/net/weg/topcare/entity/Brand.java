@@ -25,6 +25,9 @@ public class Brand {
     @JsonIgnore
     @ToString.Exclude
     private List<Product> products = new ArrayList<>();
+    @OneToOne
+    @ToString.Exclude
+    private Image image;
     public Brand(BrandPostDTO dto){
         BeanUtils.copyProperties(dto, this);
     }

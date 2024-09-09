@@ -9,6 +9,7 @@ import net.weg.topcare.service.implementation.BrandServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -24,8 +25,8 @@ public class BrandController {
     }
 
     @PostMapping
-    public ResponseEntity<Brand> postBrand(@RequestBody BrandPostDTO dto) {
-        return new ResponseEntity<>(service.addBrand(dto), HttpStatus.CREATED);
+    public ResponseEntity<Brand> postBrand(@RequestPart BrandPostDTO dto, @RequestPart MultipartFile image) {
+        return new ResponseEntity<>(service.addBrand(dto, image), HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")

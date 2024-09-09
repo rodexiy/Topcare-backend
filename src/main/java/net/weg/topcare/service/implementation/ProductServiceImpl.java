@@ -39,6 +39,7 @@ public class ProductServiceImpl implements ProductServiceInt {
         Product product = new Product(dto);
         Product saved = repository.save(product);
         saved.setGeneralRating(5);
+        saved.setBrand(new Brand(dto.brand().id()));
         List<ProductSpecification> specifications = new ArrayList<>();
         dto.specifications().forEach(specification -> {
             ProductSpecification productSpecification = new ProductSpecification(specification);
@@ -61,12 +62,12 @@ public class ProductServiceImpl implements ProductServiceInt {
     }
 
     @Override
-    public List<Product> findAllProductBySale() {
+    public List<ProductMinimalGetDTO> findAllProductBySale() {
        List<ProductOrder> productOrders = productOrderService.getAllByProductOrder();
-       List<Product> products = new ArrayList<>();
+       List<ProductMinimalGetDTO> products = new ArrayList<>();
         ListIterator<ProductOrder> iterator = productOrders.listIterator();
         iterator.forEachRemaining(productOrder -> {
-            products.add(productOrder.getProduct());
+            products.add(productOrder.getProduct().toMinimalGetDTO());
         });
        return products;
     }
