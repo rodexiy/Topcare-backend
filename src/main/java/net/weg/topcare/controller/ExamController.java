@@ -8,6 +8,7 @@ import net.weg.topcare.controller.dto.exam.ExamPostDTO;
 import net.weg.topcare.controller.dto.service.ServiceGetRequestDTO;
 import net.weg.topcare.entity.Scheduling;
 import net.weg.topcare.entity.Service;
+import net.weg.topcare.enums.ServiceArea;
 import net.weg.topcare.service.implementation.ExamServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,11 +43,6 @@ public class ExamController {
         queryService.addExam(dto);
     }
 
-    /**
-     * Retorna as próximas consultas agendadas.
-     *
-     * @return Lista de objetos de transferência de dados das consultas.
-     */
     @GetMapping("/nextExam/{clientId}")
     public List<ExamMinimalGetDTO> getNextExam(@PathVariable Long clientId) {
         ClientGetIdDTO clientGetIdDTO = new ClientGetIdDTO(clientId);
@@ -56,11 +52,24 @@ public class ExamController {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Retorna todas as consultas agendadas.
-     *
-     * @return Lista de objetos de transferência de dados das consultas.
-     */
+    @GetMapping("/nextExam/{clientId}/veterinaria")
+    public List<ExamMinimalGetDTO> getNextExamVeterinaria(@PathVariable Long clientId) {
+        ClientGetIdDTO clientGetIdDTO = new ClientGetIdDTO(clientId);
+        List<Scheduling> nextQueries = queryService.getNextExamByServiceArea(clientGetIdDTO, ServiceArea.VETERINARIA);
+        return nextQueries.stream()
+                .map(Scheduling::convertToQueryMinimalGetDTO)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/nextExam/{clientId}/servico")
+    public List<ExamMinimalGetDTO> getNextExamServico(@PathVariable Long clientId) {
+        ClientGetIdDTO clientGetIdDTO = new ClientGetIdDTO(clientId);
+        List<Scheduling> nextQueries = queryService.getNextExamByServiceArea(clientGetIdDTO, ServiceArea.SERVICO);
+        return nextQueries.stream()
+                .map(Scheduling::convertToQueryMinimalGetDTO)
+                .collect(Collectors.toList());
+    }
+
     @GetMapping("/allExam")
     public List<ExamMinimalGetDTO> getAllExam() {
         List<Scheduling> exams = queryService.getAllExam();
@@ -69,29 +78,50 @@ public class ExamController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/allExam/veterinaria")
+    public List<ExamMinimalGetDTO> getAllExamVeterinaria() {
+        List<Scheduling> exams = queryService.getAllExamByServiceArea(ServiceArea.VETERINARIA);
+        return exams.stream()
+                .map(Scheduling::convertToQueryMinimalGetDTO)
+                .collect(Collectors.toList());
+    }
 
+    @GetMapping("/allExam/servico")
+    public List<ExamMinimalGetDTO> getAllExamServico() {
+        List<Scheduling> exams = queryService.getAllExamByServiceArea(ServiceArea.SERVICO);
+        return exams.stream()
+                .map(Scheduling::convertToQueryMinimalGetDTO)
+                .collect(Collectors.toList());
+    }
 
-    /**
-     * Retorna todas as consultas agendadas.
-     *
-     * @return Lista de objetos de transferência de dados das consultas.
-     */
     @GetMapping("/{examID}")
     public ResponseEntity<ExamMaximalGetDTO> getExamByID(@PathVariable Long examID) {
         Scheduling query = queryService.getExamByID(examID);
         return ResponseEntity.ok(query.convertToQueryMaximalGetDTO());
     }
 
-    /**
-     * Retorna todas as consultas de um cliente específico.
-     *
-     * @param clientId ID do cliente.
-     * @return Lista de objetos de transferência de dados das consultas.
-     */
     @GetMapping("/allExam/{clientId}")
     public List<ExamMinimalGetDTO> getExamsByClientId(@PathVariable Long clientId) {
         ClientGetIdDTO clientGetIdDTO = new ClientGetIdDTO(clientId);
         List<Scheduling> exams = queryService.getExamsByClientId(clientGetIdDTO);
+        return exams.stream()
+                .map(Scheduling::convertToQueryMinimalGetDTO)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/allExam/{clientId}/veterinaria")
+    public List<ExamMinimalGetDTO> getExamsByClientIdVeterinaria(@PathVariable Long clientId) {
+        ClientGetIdDTO clientGetIdDTO = new ClientGetIdDTO(clientId);
+        List<Scheduling> exams = queryService.getExamsByClientIdAndServiceArea(clientGetIdDTO, ServiceArea.VETERINARIA);
+        return exams.stream()
+                .map(Scheduling::convertToQueryMinimalGetDTO)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/allExam/{clientId}/servico")
+    public List<ExamMinimalGetDTO> getExamsByClientIdServico(@PathVariable Long clientId) {
+        ClientGetIdDTO clientGetIdDTO = new ClientGetIdDTO(clientId);
+        List<Scheduling> exams = queryService.getExamsByClientIdAndServiceArea(clientGetIdDTO, ServiceArea.SERVICO);
         return exams.stream()
                 .map(Scheduling::convertToQueryMinimalGetDTO)
                 .collect(Collectors.toList());

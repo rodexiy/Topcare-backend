@@ -5,6 +5,7 @@ import net.weg.topcare.controller.dto.client.ClientGetIdDTO;
 import net.weg.topcare.controller.dto.exam.ExamPostDTO;
 import net.weg.topcare.entity.Client;
 import net.weg.topcare.entity.Scheduling;
+import net.weg.topcare.enums.ServiceArea;
 import net.weg.topcare.repository.ClientRepository;
 import net.weg.topcare.repository.SchedulingRepository;
 import org.springframework.stereotype.Service;
@@ -22,22 +23,9 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ExamServiceImpl {
 
-    /**
-     * Repositório de agendamentos.
-     */
     private SchedulingRepository schedulingRepository;
-
-
-    /**
-     * Repositório de clientes.
-     */
     private ClientRepository clientRepository;
 
-    /**
-     * Adiciona uma nova consulta.
-     *
-     * @param dto Objeto de transferência de dados da consulta.
-     */
     public void addExam(ExamPostDTO dto) {
         Optional<Client> clientOptional = clientRepository.findById(dto.clientId());
 
@@ -56,38 +44,34 @@ public class ExamServiceImpl {
         }
     }
 
-    /**
-     * Retorna as próximas consultas agendadas.
-     *
-     * @return Lista de agendamentos.
-     */
     public List<Scheduling> getNextExam(ClientGetIdDTO clientGetIdDTO) {
         LocalDateTime now = LocalDateTime.now();
         return schedulingRepository.findByClientIdAndScheduledDateAfter(clientGetIdDTO.id(), now);
     }
 
-    /**
-     * Retorna todas as consultas agendadas.
-     *
-     * @return Lista de agendamentos.
-     */
+    public List<Scheduling> getNextExamByServiceArea(ClientGetIdDTO clientGetIdDTO, ServiceArea serviceArea) {
+        LocalDateTime now = LocalDateTime.now();
+        return schedulingRepository.findByClientIdAndScheduledDateAfterAndServiceArea(clientGetIdDTO.id(), now, serviceArea);
+    }
+
     public List<Scheduling> getAllExam() {
         return schedulingRepository.findAll();
     }
 
+    public List<Scheduling> getAllExamByServiceArea(ServiceArea serviceArea) {
+        return schedulingRepository.findByServiceArea(serviceArea);
+    }
 
-
-    /**
-     * Retorna a consulta agendada que foi buscada pelo ID.
-     *
-     * @return consulta.
-     */
     public Scheduling getExamByID(Long id) {
         return schedulingRepository.findById(id).get();
     }
 
     public List<Scheduling> getExamsByClientId(ClientGetIdDTO clientGetIdDTO) {
         return schedulingRepository.findByClientId(clientGetIdDTO.id());
+    }
+
+    public List<Scheduling> getExamsByClientIdAndServiceArea(ClientGetIdDTO clientGetIdDTO, ServiceArea serviceArea) {
+        return schedulingRepository.findByClientIdAndServiceArea(clientGetIdDTO.id(), serviceArea);
     }
 
     public Scheduling getExamBySchedulingNumber(String schedulingNumber) {
