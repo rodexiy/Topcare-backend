@@ -24,7 +24,7 @@ public class Product {
     @NonNull
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Brand brand;
 
     @Column(nullable = false)

@@ -6,6 +6,7 @@ import net.weg.topcare.controller.dto.product.*;
 import net.weg.topcare.entity.*;
 
 import net.weg.topcare.exceptions.ProductNotFoundException;
+import net.weg.topcare.repository.BrandRepository;
 import net.weg.topcare.repository.CategoryRepository;
 import net.weg.topcare.repository.ImageRepository;
 import net.weg.topcare.repository.ProductRepository;
@@ -33,6 +34,7 @@ public class ProductServiceImpl implements ProductServiceInt {
     private ProductOrderServiceImpl productOrderService;
     private CategoryRepository categoryRepository;
     private ImageRepository imageRepository;
+    private final BrandRepository brandRepository;
 
     @Override
     public Product register(ProductPostDTO dto, List<MultipartFile> images) {
