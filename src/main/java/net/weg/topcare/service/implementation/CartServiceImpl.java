@@ -1,6 +1,7 @@
 package net.weg.topcare.service.implementation;
 
 import lombok.AllArgsConstructor;
+import net.weg.topcare.controller.dto.cart.ProductToCartDTO;
 import net.weg.topcare.entity.Client;
 import net.weg.topcare.entity.ProductCart;
 import net.weg.topcare.repository.CartRepository;
@@ -15,9 +16,10 @@ public class CartServiceImpl implements CartServiceInt {
     private final CartRepository repository;
     private final ClientServiceImpl clientService;
     @Override
-    public List<ProductCart> getAll(Long idClient) {
+    public List<ProductToCartDTO> getAll(Long idClient) {
         Client client = clientService.findOneClient(idClient);
-        return client.getCart().getProductsInCart();
+        List<ProductToCartDTO> listProductsDto = client.getCart().getProductsInCart().stream().map(ProductCart::toDto).toList();
+        return listProductsDto;
     }
 
     @Override

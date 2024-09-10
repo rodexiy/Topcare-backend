@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/productCart")
+@CrossOrigin("*")
 public class ProductCartController {
     private final ProductCartServiceImpl service;
     @PostMapping("/{idClient}/{idProduct}")
@@ -26,8 +27,8 @@ public class ProductCartController {
     public ResponseEntity<Boolean> updateProductAmount(@PathVariable Long idClient, @PathVariable Long idProduct, @RequestBody ProductCartGetDTO dto){
         return new ResponseEntity<>(service.updateProductAmount(idProduct, dto.amount(), idClient), HttpStatus.OK);
     }
-    @PatchMapping("/select/{idClient}/{idProduct}")
-    public ResponseEntity<Boolean> selectProduct(@PathVariable Long idClient, @PathVariable Long idProduct){
-        return new ResponseEntity<>(service.selectProduct(idProduct, idClient), HttpStatus.OK);
+    @PatchMapping("/select/{idProduct}")
+    public ResponseEntity<Boolean> selectProduct(@PathVariable Long idProduct){
+        return new ResponseEntity<>(service.selectProduct(idProduct), HttpStatus.OK);
     }
 }

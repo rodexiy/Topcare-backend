@@ -9,6 +9,6 @@ public interface ProductCartServiceInt {
     ProductToCartDTO addProductToCart(Long idProduct, Integer amount, Long idClient);
     Boolean removeProductFromCart(Long idProduct, Long idClient);
     Boolean updateProductAmount(Long idProduct, Integer amount, Long idClient);
-    Boolean selectProduct(Long idProduct, Long idClient);
 
+    Boolean selectProduct(Long idProduct);
 }
