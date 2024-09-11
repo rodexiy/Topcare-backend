@@ -156,8 +156,8 @@ public class ProductServiceImpl implements ProductServiceInt {
     }
 
     @Override
-    public Product getProductById(Long id) {
-        return repository.findById(id).get();
+    public Product getProductById(Long id) throws ProductNotFoundException {
+        return repository.findById(id).orElseThrow(ProductNotFoundException::new);
     }
 
 

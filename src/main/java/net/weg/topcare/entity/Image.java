@@ -39,9 +39,9 @@ public class Image {
     private String originalFileName;
     @ManyToOne
     @JoinColumn()
-    @ToString.Exclude
     @JsonIgnore
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Product product;
 
     @OneToOne(mappedBy = "picture")
