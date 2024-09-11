@@ -19,7 +19,7 @@ public class ProductOrderServiceImpl implements ProductOrderServiceInt {
 
     @Override
     public List<ProductOrder> getAllByProductOrder() {
-        return repository.findAllByOrderByProduct();
+        return repository.findAllByOrderByProductDesc();
     }
 
     @Override

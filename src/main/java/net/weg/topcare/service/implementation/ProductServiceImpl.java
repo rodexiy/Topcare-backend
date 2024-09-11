@@ -6,6 +6,7 @@ import net.weg.topcare.controller.dto.product.*;
 import net.weg.topcare.entity.*;
 
 import net.weg.topcare.exceptions.ProductNotFoundException;
+import net.weg.topcare.repository.BrandRepository;
 import net.weg.topcare.repository.CategoryRepository;
 import net.weg.topcare.repository.ImageRepository;
 import net.weg.topcare.repository.ProductRepository;
@@ -33,12 +34,14 @@ public class ProductServiceImpl implements ProductServiceInt {
     private ProductOrderServiceImpl productOrderService;
     private CategoryRepository categoryRepository;
     private ImageRepository imageRepository;
+    private final BrandRepository brandRepository;
 
     @Override
     public Product register(ProductPostDTO dto, List<MultipartFile> images) {
         Product product = new Product(dto);
         Product saved = repository.save(product);
         saved.setGeneralRating(5);
+        saved.setBrand(new Brand(dto.brand().id()));
         List<ProductSpecification> specifications = new ArrayList<>();
         dto.specifications().forEach(specification -> {
             ProductSpecification productSpecification = new ProductSpecification(specification);
@@ -61,12 +64,12 @@ public class ProductServiceImpl implements ProductServiceInt {
     }
 
     @Override
-    public List<Product> findAllProductBySale() {
+    public List<ProductMinimalGetDTO> findAllProductBySale() {
        List<ProductOrder> productOrders = productOrderService.getAllByProductOrder();
-       List<Product> products = new ArrayList<>();
+       List<ProductMinimalGetDTO> products = new ArrayList<>();
         ListIterator<ProductOrder> iterator = productOrders.listIterator();
         iterator.forEachRemaining(productOrder -> {
-            products.add(productOrder.getProduct());
+            products.add(productOrder.getProduct().toMinimalGetDTO());
         });
        return products;
     }
@@ -153,8 +156,8 @@ public class ProductServiceImpl implements ProductServiceInt {
     }
 
     @Override
-    public Product getProductById(Long id) {
-        return repository.findById(id).get();
+    public Product getProductById(Long id) throws ProductNotFoundException {
+        return repository.findById(id).orElseThrow(ProductNotFoundException::new);
     }
 
 

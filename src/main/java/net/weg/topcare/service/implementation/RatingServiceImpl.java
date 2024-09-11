@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import net.weg.topcare.controller.dto.product.ProductPatchRatingDTO;
 import net.weg.topcare.controller.dto.rating.GeneralRatingPostDTO;
 import net.weg.topcare.controller.dto.rating.RatingGetDTO;
+import net.weg.topcare.entity.Brand;
 import net.weg.topcare.entity.Client;
 import net.weg.topcare.entity.Product;
 import net.weg.topcare.entity.Rating;
 import net.weg.topcare.exceptions.ProductNotFoundException;
+import net.weg.topcare.repository.BrandRepository;
 import net.weg.topcare.repository.RatingRepository;
 import net.weg.topcare.service.interfaces.RatingServiceInt;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ public class RatingServiceImpl implements RatingServiceInt {
 
     private final RatingRepository repository;
     private final ProductServiceImpl productService;
+    private final BrandRepository brandRepository;
 
     @Override
     public Rating addRating(GeneralRatingPostDTO dto) throws ProductNotFoundException {
@@ -38,6 +41,9 @@ public class RatingServiceImpl implements RatingServiceInt {
             total += rating1.getRating();
         }
         product.setGeneralRating(total / ratings.size());
+        Brand brand = product.getBrand();
+        brand.setGeneralRating(product.getGeneralRating());
+        brandRepository.save(brand);
         productService.putProductRating(dto.product().id(), new ProductPatchRatingDTO(product.getGeneralRating()));
         return repository.save(rating);
     }

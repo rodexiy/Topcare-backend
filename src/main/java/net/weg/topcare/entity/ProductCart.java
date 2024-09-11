@@ -2,10 +2,7 @@ package net.weg.topcare.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import net.weg.topcare.controller.dto.cart.ProductToCartDTO;
 
 //
@@ -21,6 +18,9 @@ public class ProductCart {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Product product;
 
     private Boolean selected;
@@ -33,6 +33,11 @@ public class ProductCart {
     @ToString.Exclude
     @JoinColumn(nullable = false)
     private Cart cart;
+
+    @OneToOne
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Image image;
 
     public ProductToCartDTO toDto() {
         return new ProductToCartDTO(

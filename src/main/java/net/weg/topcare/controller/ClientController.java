@@ -23,7 +23,7 @@ public class ClientController {
     private ClientServiceImpl service;
 
     @PostMapping
-    public ResponseEntity<Long> register(@Valid @RequestBody ClientPostDTO client) {
+    public ResponseEntity<Long> register(@RequestBody ClientPostDTO client) {
         try {
             return ResponseEntity.ok(service.register(client));
 
