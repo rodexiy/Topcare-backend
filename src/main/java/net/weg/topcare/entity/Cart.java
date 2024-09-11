@@ -40,6 +40,6 @@ public class Cart {
     }
 
     public Double getCartTotalNotDiscounted() {
-        return this.productsInCart.stream().mapToDouble(productCart -> productCart.getProduct().getPrice()).sum();
+        return this.productsInCart.stream().mapToDouble(productCart -> productCart.getProduct().getPrice() * productCart.getAmount()).sum();
     }
 }
