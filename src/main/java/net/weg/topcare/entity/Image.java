@@ -57,6 +57,12 @@ public class Image {
     @EqualsAndHashCode.Exclude
     private Brand brand;
 
+    @OneToOne(mappedBy = "image")
+    @ToString.Exclude
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude
+    private ProductCart productCart;
+
 
 
 

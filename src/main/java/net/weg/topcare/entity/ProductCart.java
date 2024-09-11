@@ -28,4 +28,7 @@ public class ProductCart {
     @ManyToOne()
     @JoinColumn(nullable = false)
     private Cart cart;
+
+    @OneToOne
+    private Image image;
 }
