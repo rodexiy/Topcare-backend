@@ -10,6 +10,8 @@ import lombok.ToString;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Double.sum;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -40,6 +42,12 @@ public class Cart {
     }
 
     public Double getCartTotalNotDiscounted() {
-        return this.productsInCart.stream().mapToDouble(productCart -> productCart.getProduct().getPrice() * productCart.getAmount()).sum();
+        double total = 0;
+        for(ProductCart productCart : this.productsInCart){
+            if(productCart.getSelected()){
+                total += productCart.getProduct().getPrice() * productCart.getAmount();
+            }
+        }
+        return total;
     }
 }

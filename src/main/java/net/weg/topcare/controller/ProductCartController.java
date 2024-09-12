@@ -2,6 +2,7 @@ package net.weg.topcare.controller;
 
 import lombok.AllArgsConstructor;
 import net.weg.topcare.controller.dto.cart.ProductCartGetDTO;
+import net.weg.topcare.controller.dto.cart.ProductCartSelectDto;
 import net.weg.topcare.controller.dto.cart.ProductToCartDTO;
 import net.weg.topcare.service.implementation.ProductCartServiceImpl;
 import net.weg.topcare.service.implementation.ProductServiceImpl;
@@ -28,7 +29,7 @@ public class ProductCartController {
         return new ResponseEntity<>(service.updateProductAmount(idProduct, dto.amount(), idClient), HttpStatus.OK);
     }
     @PatchMapping("/select/{idProduct}")
-    public ResponseEntity<Boolean> selectProduct(@PathVariable Long idProduct){
-        return new ResponseEntity<>(service.selectProduct(idProduct), HttpStatus.OK);
+    public ResponseEntity<Boolean> selectProduct(@PathVariable Long idProduct, @RequestBody ProductCartSelectDto dto){
+        return new ResponseEntity<>(service.selectProduct(idProduct, dto), HttpStatus.OK);
     }
 }

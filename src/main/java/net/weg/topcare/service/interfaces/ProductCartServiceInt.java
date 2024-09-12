@@ -1,5 +1,6 @@
 package net.weg.topcare.service.interfaces;
 
+import net.weg.topcare.controller.dto.cart.ProductCartSelectDto;
 import net.weg.topcare.controller.dto.cart.ProductToCartDTO;
 import net.weg.topcare.entity.Product;
 import org.springframework.stereotype.Service;
@@ -10,5 +11,5 @@ public interface ProductCartServiceInt {
     Boolean removeProductFromCart(Long idProduct, Long idClient);
     Boolean updateProductAmount(Long idProduct, Integer amount, Long idClient);
 
-    Boolean selectProduct(Long idProduct);
+    Boolean selectProduct(Long idProduct, ProductCartSelectDto dto);
 }

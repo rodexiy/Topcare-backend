@@ -2,6 +2,7 @@ package net.weg.topcare.service.implementation;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import net.weg.topcare.controller.dto.cart.ProductCartSelectDto;
 import net.weg.topcare.controller.dto.cart.ProductToCartDTO;
 import net.weg.topcare.entity.Cart;
 import net.weg.topcare.entity.Client;
@@ -78,13 +79,14 @@ public class ProductCartServiceImpl implements ProductCartServiceInt {
     }
 
     @Override
-    public Boolean selectProduct(Long idProduct) {
+    public Boolean selectProduct(Long idProduct, ProductCartSelectDto dto) {
         ProductCart productCart = productCartRepository.findById(idProduct).get();
         if(productCart != null){
-            productCart.setSelected(!productCart.getSelected());
+            productCart.setSelected(dto.select());
             productCartRepository.save(productCart);
             return productCart.getSelected();
         }
         return null;
     }
+
 }
