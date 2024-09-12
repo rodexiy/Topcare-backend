@@ -1,15 +1,13 @@
 package net.weg.topcare.service.implementation;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 import net.weg.topcare.controller.dto.product.*;
 import net.weg.topcare.entity.*;
 
 import net.weg.topcare.exceptions.ProductNotFoundException;
-import net.weg.topcare.repository.BrandRepository;
-import net.weg.topcare.repository.CategoryRepository;
-import net.weg.topcare.repository.ImageRepository;
-import net.weg.topcare.repository.ProductRepository;
+import net.weg.topcare.repository.*;
 import net.weg.topcare.service.interfaces.ProductServiceInt;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -28,13 +26,14 @@ import java.util.ListIterator;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class ProductServiceImpl implements ProductServiceInt {
 
     private ProductRepository repository;
     private ProductOrderServiceImpl productOrderService;
     private CategoryRepository categoryRepository;
     private ImageRepository imageRepository;
-    private final BrandRepository brandRepository;
+    private ProductCartRepository productCartRepository;
 
     @Override
     public Product register(ProductPostDTO dto, List<MultipartFile> images) {
@@ -81,8 +80,8 @@ public class ProductServiceImpl implements ProductServiceInt {
 
     @Override
     public Boolean deleteProduct(Long id) throws ProductNotFoundException {
-        Product product = repository.findById(id).orElseThrow(ProductNotFoundException::new);
-        repository.delete(product);
+        productCartRepository.deleteByProduct_Id(id);
+        repository.deleteById(id);
         return true;
     }
 
@@ -91,6 +90,7 @@ public class ProductServiceImpl implements ProductServiceInt {
         Product product = repository.findById(id).orElseThrow(ProductNotFoundException::new);
         BeanUtils.copyProperties(dto, product);
         List<Image> imagesList = imageRepository.getAllByProduct_Id(product.getId());
+        imagesList.forEach(image -> imageRepository.deleteById(image.getId()));
         constructImage(images, product, imagesList);
         List<Category> categories = product.getCategories();
         List<ProductSpecification> specifications = product.getSpecifications();

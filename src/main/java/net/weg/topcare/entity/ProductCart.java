@@ -16,7 +16,7 @@ public class ProductCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     @JsonIgnore
     @EqualsAndHashCode.Exclude
