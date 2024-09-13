@@ -1,6 +1,7 @@
 package net.weg.topcare.service.implementation;
 
 import lombok.AllArgsConstructor;
+import net.weg.topcare.controller.dto.address.AddressPostDTO;
 import net.weg.topcare.controller.dto.client.*;
 import net.weg.topcare.entity.Client;
 import net.weg.topcare.entity.Address;
@@ -120,6 +121,12 @@ public class ClientServiceImpl implements ClientServiceInt {
     @Override
     public Boolean checkToken(ClientTokenDTO dto) {
         return dto.token().equals(dto.clientToken());
+    }
+
+    @Override
+    public Address getMainAddress(Long id) {
+        Client client = repository.findById(id).get();
+        return client.getMainAddress();
     }
 
     @Override
