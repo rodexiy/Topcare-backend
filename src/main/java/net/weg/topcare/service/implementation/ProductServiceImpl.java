@@ -3,6 +3,8 @@ package net.weg.topcare.service.implementation;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
+import net.weg.topcare.controller.dto.category.CategoryGetDTO;
+import net.weg.topcare.controller.dto.category.CategoryPostDTO;
 import net.weg.topcare.controller.dto.product.*;
 import net.weg.topcare.entity.*;
 
@@ -92,20 +94,14 @@ public class ProductServiceImpl implements ProductServiceInt {
         List<Image> imagesList = imageRepository.getAllByProduct_Id(product.getId());
         imagesList.forEach(image -> imageRepository.deleteById(image.getId()));
         constructImage(images, product, imagesList);
-        List<Category> categories = product.getCategories();
+        List<Category> categories = new ArrayList<>();
         List<ProductSpecification> specifications = product.getSpecifications();
-        for (Category category : categories){
-            dto.categories().forEach(categoryDTO -> {
-                if (categoryDTO.name().equals(category.getName())) {
-                    return;
-                } else {
-                    Category category1 = new Category(categoryDTO);
+            for (CategoryGetDTO categoryGetDTO: dto.categories()) {
+                    Category category1 = new Category(categoryGetDTO);
                     category1.getProductsInCategory().add(product);
-                    categoryRepository.save(category1);
                     categories.add(category1);
-                }
-            });
-        }
+                    categoryRepository.save(category1);
+            }
         dto.specifications().forEach(specification -> {
             ProductSpecification productSpecification = new ProductSpecification(specification);
             productSpecification.setProduct(product);
