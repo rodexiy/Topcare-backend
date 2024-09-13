@@ -24,7 +24,7 @@ public class Product {
     @NonNull
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     private Brand brand;
 
     @Column(nullable = false)
@@ -45,7 +45,7 @@ public class Product {
     private List<ProductSpecification> specifications = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product")
     private List<Image> images = new ArrayList<>();
 
     @Column
