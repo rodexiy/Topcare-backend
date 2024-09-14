@@ -18,7 +18,7 @@ public class ProductCartController {
     private final ProductCartServiceImpl service;
     @PostMapping("/{idClient}/{idProduct}")
     public ResponseEntity<ProductToCartDTO> addProductToCart(@PathVariable Long idClient, @PathVariable Long idProduct, @RequestBody ProductCartGetDTO dto){
-        return new ResponseEntity<>(service.addProductToCart(idProduct, dto.amount(), idClient), HttpStatus.OK);
+        return new ResponseEntity<>(service.addProductToCart(idProduct, dto, idClient), HttpStatus.OK);
     }
     @DeleteMapping("/{idClient}/{idProduct}")
     public ResponseEntity<Boolean> removeProductFromCart(@PathVariable Long idClient, @PathVariable Long idProduct){
