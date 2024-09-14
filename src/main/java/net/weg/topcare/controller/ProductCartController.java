@@ -2,6 +2,7 @@ package net.weg.topcare.controller;
 
 import lombok.AllArgsConstructor;
 import net.weg.topcare.controller.dto.cart.ProductCartGetDTO;
+import net.weg.topcare.controller.dto.cart.ProductCartSelectDto;
 import net.weg.topcare.controller.dto.cart.ProductToCartDTO;
 import net.weg.topcare.exceptions.ProductNotFoundException;
 import net.weg.topcare.service.implementation.ProductCartServiceImpl;
@@ -19,7 +20,7 @@ public class ProductCartController {
     @PostMapping("/{idClient}/{idProduct}")
     public ResponseEntity<ProductToCartDTO> addProductToCart(@PathVariable Long idClient, @PathVariable Long idProduct, @RequestBody ProductCartGetDTO dto){
         try {
-            return new ResponseEntity<>(service.addProductToCart(idProduct, dto.amount(), idClient), HttpStatus.OK);
+            return new ResponseEntity<>(service.addProductToCart(idProduct, dto, idClient), HttpStatus.OK);
         } catch (ProductNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -33,7 +34,7 @@ public class ProductCartController {
         return new ResponseEntity<>(service.updateProductAmount(idProduct, dto.amount(), idClient), HttpStatus.OK);
     }
     @PatchMapping("/select/{idProduct}")
-    public ResponseEntity<Boolean> selectProduct(@PathVariable Long idProduct){
-        return new ResponseEntity<>(service.selectProduct(idProduct), HttpStatus.OK);
+    public ResponseEntity<Boolean> selectProduct(@PathVariable Long idProduct, @RequestBody ProductCartSelectDto dto){
+        return new ResponseEntity<>(service.selectProduct(idProduct, dto), HttpStatus.OK);
     }
 }

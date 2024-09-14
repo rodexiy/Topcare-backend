@@ -2,6 +2,8 @@ package net.weg.topcare.service.implementation;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import net.weg.topcare.controller.dto.cart.ProductCartGetDTO;
+import net.weg.topcare.controller.dto.cart.ProductCartSelectDto;
 import net.weg.topcare.controller.dto.cart.ProductToCartDTO;
 import net.weg.topcare.entity.Cart;
 import net.weg.topcare.entity.Client;
@@ -26,7 +28,7 @@ public class ProductCartServiceImpl implements ProductCartServiceInt {
     private final CartRepository cartRepository;
 
     @Override
-    public ProductToCartDTO addProductToCart(Long idProduct, Integer amount, Long idClient) throws ProductNotFoundException {
+    public ProductToCartDTO addProductToCart(Long idProduct, ProductCartGetDTO dto, Long idClient) throws ProductNotFoundException {
         Product product = productService.getProductById(idProduct);
         Client client = clientService.findOneClient(idClient);
         ProductCart productCart = new ProductCart();
@@ -34,12 +36,12 @@ public class ProductCartServiceImpl implements ProductCartServiceInt {
         Cart cart = client.getCart();
         cart.getProductsInCart().add(productCart);
         productCart.setCart(cart);
-        productCart.setAmount(amount);
-        productCart.setSelected(false);
-        System.out.println(product.getImages());
+        productCart.setAmount(dto.amount());
+        productCart.setSelected(dto.select());
+
         ProductToCartDTO productToCartDTO = new ProductToCartDTO(
                 product.getId(),
-                amount,
+                dto.amount(),
                 product.getImages().get(0),
                 product.getName(),
                 product.getPrice(),
@@ -80,13 +82,14 @@ public class ProductCartServiceImpl implements ProductCartServiceInt {
     }
 
     @Override
-    public Boolean selectProduct(Long idProduct) {
+    public Boolean selectProduct(Long idProduct, ProductCartSelectDto dto) {
         ProductCart productCart = productCartRepository.findById(idProduct).get();
         if(productCart != null){
-            productCart.setSelected(!productCart.getSelected());
+            productCart.setSelected(dto.select());
             productCartRepository.save(productCart);
             return productCart.getSelected();
         }
         return null;
     }
+
 }
