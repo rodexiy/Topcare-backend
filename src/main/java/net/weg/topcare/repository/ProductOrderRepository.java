@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface ProductOrderRepository extends JpaRepository<ProductOrder, Long> {
     List<ProductOrder> getTopByProduct_IdOrderByProductDesc(Long id);
-    List<ProductOrder> findAllByOrderByProduct();
+    List<ProductOrder> findAllByOrderByProductDesc();
 }

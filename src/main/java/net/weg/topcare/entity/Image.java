@@ -39,9 +39,9 @@ public class Image {
     private String originalFileName;
     @ManyToOne
     @JoinColumn()
-    @ToString.Exclude
     @JsonIgnore
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Product product;
 
     @OneToOne(mappedBy = "picture")
@@ -50,6 +50,21 @@ public class Image {
     @EqualsAndHashCode.Exclude
     @JoinColumn()
     private Pet pet;
+
+    @OneToOne(mappedBy = "image")
+    @ToString.Exclude
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude
+    private Brand brand;
+
+    @OneToOne(mappedBy = "image")
+    @ToString.Exclude
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude
+    private ProductCart productCart;
+
+
+
 
     public Image(MultipartFile file) throws IOException {
         this.bytes = file.getBytes();

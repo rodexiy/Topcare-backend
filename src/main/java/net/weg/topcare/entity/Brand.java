@@ -19,12 +19,15 @@ public class Brand {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NonNull
     private Long id;
-    @Column(nullable = false, length = 30)
+    @Column(length = 30)
     private String name;
     @OneToMany(mappedBy = "brand")
     @JsonIgnore
     @ToString.Exclude
     private List<Product> products = new ArrayList<>();
+    @OneToOne
+    private Image image;
+    private Integer generalRating;
     public Brand(BrandPostDTO dto){
         BeanUtils.copyProperties(dto, this);
     }

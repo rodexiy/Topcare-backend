@@ -9,6 +9,7 @@ import net.weg.topcare.entity.Cart;
 import net.weg.topcare.entity.Client;
 import net.weg.topcare.entity.Product;
 import net.weg.topcare.entity.ProductCart;
+import net.weg.topcare.exceptions.ProductNotFoundException;
 import net.weg.topcare.repository.CartRepository;
 import net.weg.topcare.repository.ClientRepository;
 import net.weg.topcare.repository.ProductCartRepository;
@@ -27,7 +28,7 @@ public class ProductCartServiceImpl implements ProductCartServiceInt {
     private final CartRepository cartRepository;
 
     @Override
-    public ProductToCartDTO addProductToCart(Long idProduct, ProductCartGetDTO dto, Long idClient) {
+    public ProductToCartDTO addProductToCart(Long idProduct, ProductCartGetDTO dto, Long idClient) throws ProductNotFoundException {
         Product product = productService.getProductById(idProduct);
         Client client = clientService.findOneClient(idClient);
         ProductCart productCart = new ProductCart();
