@@ -23,4 +23,7 @@ public class OrderStatus {
 
     @CreationTimestamp
     private LocalDateTime changedTime;
+
+    @ManyToOne
+    private CartOrder cartOrder;
 }
