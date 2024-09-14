@@ -68,4 +68,9 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/orderByDiscount")
+    public ResponseEntity<List<ProductMinimalGetDTO>> getAllProductsByDiscount(){
+        return new ResponseEntity<>(service.orderAllByDiscount(), HttpStatus.OK);
+    }
 }

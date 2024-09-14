@@ -76,6 +76,11 @@ public class ProductServiceImpl implements ProductServiceInt {
     }
 
     @Override
+    public List<ProductMinimalGetDTO> orderAllByDiscount() {
+        return repository.findAllByOrderByDiscountDesc().stream().map(Product::toMinimalGetDTO).toList();
+    }
+
+    @Override
     public List<Product> findByIds(List<Long> ids){
         return repository.findAllById(ids);
     }
