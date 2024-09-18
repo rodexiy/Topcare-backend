@@ -1,6 +1,8 @@
 package net.weg.topcare.service.interfaces;
 
+import net.weg.topcare.controller.dto.address.AddressPostDTO;
 import net.weg.topcare.controller.dto.client.*;
+import net.weg.topcare.entity.Address;
 import net.weg.topcare.entity.Client;
 import net.weg.topcare.controller.dto.client.ClientGetDTO;
 import net.weg.topcare.controller.dto.client.ClientPostDTO;
@@ -24,5 +26,6 @@ public interface ClientServiceInt {
     Boolean deleteAccount(Long id);
     Integer checkEmailAndCreateToken(ClientEmailDTO email, Long id);
     Boolean checkToken(ClientTokenDTO dto);
+    Address getMainAddress(Long id);
 
 }

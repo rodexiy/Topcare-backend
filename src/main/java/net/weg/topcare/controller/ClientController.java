@@ -3,6 +3,7 @@ package net.weg.topcare.controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import net.weg.topcare.controller.dto.client.*;
+import net.weg.topcare.entity.Address;
 import net.weg.topcare.entity.Client;
 import net.weg.topcare.controller.dto.client.ClientGetDTO;
 import net.weg.topcare.controller.dto.client.ClientPostDTO;
@@ -44,6 +45,7 @@ public class ClientController {
         return ResponseEntity.ok(service.editClientImages(id, profilePicture, banner));
     }
 
+
     @GetMapping
     public ResponseEntity<List<ClientGetDTO>> findAll() {
         return ResponseEntity.ok(service.findAll());
@@ -76,6 +78,10 @@ public class ClientController {
     @PatchMapping("/changePassword/{id}")
     public ResponseEntity<Boolean> changePassword(@RequestBody ClientPatchDTO dto, @PathVariable Long id){
         return ResponseEntity.ok(service.changePassword(dto, id));
+    }
+    @GetMapping("/mainAddress/{id}")
+    public ResponseEntity<Address> getMainAddress(@PathVariable Long id){
+        return ResponseEntity.ok(service.getMainAddress(id));
     }
 
 }

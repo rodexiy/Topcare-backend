@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import net.weg.topcare.controller.dto.cartorder.*;
 import net.weg.topcare.service.implementation.OrdersServiceImpl;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -77,5 +78,10 @@ public class CartOrderController {
     @GetMapping("/clientOrders/{id}")
     public Page<CartOrderMinimalGetDTO> getDescriptionOrder(@PathVariable Long id, @RequestParam int page, @RequestParam String sorter) {
         return ordersService.getClientOrders(id, page, sorter);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CartOrderMaximalGetDTO> getDescriptionOrder(@PathVariable Long id) {
+        return ResponseEntity.ok(ordersService.getOrder(id));
     }
 }
