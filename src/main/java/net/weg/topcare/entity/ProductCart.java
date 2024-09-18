@@ -16,7 +16,7 @@ public class ProductCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(nullable = false)
     @JsonIgnore
     @EqualsAndHashCode.Exclude
@@ -34,7 +34,7 @@ public class ProductCart {
     @JoinColumn(nullable = false)
     private Cart cart;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Image image;
