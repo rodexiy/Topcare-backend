@@ -2,10 +2,14 @@ package net.weg.topcare.dataLoader;
 
 import jakarta.persistence.criteria.Order;
 import net.weg.topcare.entity.*;
+<<<<<<< Updated upstream
 import net.weg.topcare.enums.EmployeeRole;
 import net.weg.topcare.enums.FederativeUnit;
 import net.weg.topcare.enums.OrderStatusEnum;
 import net.weg.topcare.enums.PaymentMethod;
+=======
+import net.weg.topcare.enums.*;
+>>>>>>> Stashed changes
 import net.weg.topcare.repository.*;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.boot.CommandLineRunner;
@@ -43,6 +47,7 @@ public class DataLoader implements CommandLineRunner {
     @Autowired
     private ImageRepository imageRepository;
     @Autowired
+<<<<<<< Updated upstream
     private CartOrderRepository cartOrderRepository;
     @Autowired
     private OrderStatusRepository orderStatusRepository;
@@ -69,6 +74,21 @@ public class DataLoader implements CommandLineRunner {
             });
         } catch (IOException ignored) {
         }
+=======
+    private PetRepository petRepository;
+    @Autowired
+    private ServiceRepository serviceRepository;
+    private ServiceArea serviceArea;
+    @Autowired
+    private SubsidiaryRepository subsidiaryRepository;
+    @Autowired
+    private SchedulingRepository schedulingRepository;
+    @Autowired
+    private PetSchedulingRepository petSchedulingRepository;
+
+    @Override
+    public void run(String... args) throws Exception {
+>>>>>>> Stashed changes
 
         Address address = new Address();
         address.setCep("89258070");
@@ -85,6 +105,7 @@ public class DataLoader implements CommandLineRunner {
 
         }
 
+        Address firstAddress = addressRepository.findAll().stream().findFirst().orElse(null);
         Client cliente = new Client();
         cliente.setName("Correa");
         cliente.setEmail("correa@gmail.com");
@@ -92,7 +113,7 @@ public class DataLoader implements CommandLineRunner {
         cliente.setPhone("123456789");
         cliente.setCpf("12345678901");
         cliente.setBirthdate(LocalDate.of(1999, 12, 12));
-        cliente.setMainAddress(address);
+        cliente.setMainAddress(firstAddress);
         try {
             cliente = clientRepository.save(cliente);
         } catch (Exception ignored) {
@@ -115,12 +136,18 @@ public class DataLoader implements CommandLineRunner {
             brand.setName(brandNames[i]);
             brand.setGeneralRating(i + 1);
             try {
+<<<<<<< Updated upstream
 //                // Create and set image for brand
 //                MultipartFile file = new MockMultipartFile("brandImage" + i, "brandImage" + i + ".jpg", "image/jpeg", ("brand image content " + i).getBytes());
 //                Image image = new Image(file);
 //                imageRepository.save(image);
                 Image image = new Image();
                 image.setId(generateRandomLong(6));
+=======
+                MultipartFile file = new MockMultipartFile("brandImage" + i, "brandImage" + i + ".jpg", "image/jpeg", ("brand image content " + i).getBytes());
+                Image image = new Image(file);
+                imageRepository.save(image);
+>>>>>>> Stashed changes
                 brand.setImage(image);
 
                 brandRepository.save(brand);
@@ -151,10 +178,16 @@ public class DataLoader implements CommandLineRunner {
             product.setGeneralRating(4);
             product.setBrand(brands.get(i % brands.size()));
             try {
+<<<<<<< Updated upstream
                 // Create and set image for product
 //                MultipartFile file = new MockMultipartFile("productImage" + i, "productImage" + i + ".jpg", "image/jpeg", ("product image content " + i).getBytes());
                 Image image = new Image();
                 image.setId(generateRandomLong(6));
+=======
+                MultipartFile file = new MockMultipartFile("productImage" + i, "productImage" + i + ".jpg", "image/jpeg", ("product image content " + i).getBytes());
+                Image image = new Image(file);
+                imageRepository.save(image);
+>>>>>>> Stashed changes
                 product.getImages().add(image);
 
                 productRepository.save(product);
@@ -162,6 +195,7 @@ public class DataLoader implements CommandLineRunner {
             }
         }
 
+<<<<<<< Updated upstream
 
 
         CartOrder cartOrder = new CartOrder();
@@ -196,5 +230,134 @@ public class DataLoader implements CommandLineRunner {
 
         }
 
+=======
+        String[] petNames = {
+                "Buddy",
+                "Max",
+                "Bella",
+                "Charlie",
+                "Lucy",
+                "Cooper",
+                "Daisy",
+                "Milo",
+                "Luna",
+                "Rocky"
+        };
+        String[] petBreeds = {
+                "Labrador",
+                "Poodle",
+                "Bulldog",
+                "Beagle",
+                "Rottweiler",
+                "German Shepherd",
+                "Golden Retriever",
+                "Chihuahua",
+                "Boxer",
+                "Dachshund"
+        };
+        AnimalSize[] petSizes = {AnimalSize.PEQUENO, AnimalSize.MEDIO, AnimalSize.GRANDE};
+        PetGender[] petGenders = {PetGender.MALE, PetGender.FEMALE};
+        for (int i = 0; i < petNames.length; i++) {
+            Pet pet = new Pet();
+            pet.setName(petNames[i]);
+            pet.setBreed(petBreeds[i]);
+            pet.setSize(petSizes[i % petSizes.length]);
+            pet.setGender(petGenders[i % petGenders.length]);
+            pet.setWeight(ThreadLocalRandom.current().nextDouble(5.0, 30.0));
+            pet.setBirthdate(LocalDate.of(2020, ThreadLocalRandom.current().nextInt(1, 13), ThreadLocalRandom.current().nextInt(1, 29)));
+            pet.setAble(true);
+            pet.setClient(cliente);
+            try {
+                MultipartFile file = new MockMultipartFile("petImage" + i, "petImage" + i + ".jpg", "image/jpeg", ("pet image content " + i).getBytes());
+                Image image = new Image(file);
+                imageRepository.save(image);
+                pet.setPicture(image);
+
+                petRepository.save(pet);
+            } catch (Exception ignored) {
+            }
+        }
+
+
+        List<Service> services = List.of(
+                new Service(0L, ServiceArea.VETERINARIA, "Catração", "catração de pet", 10.0),
+                new Service(1L, ServiceArea.SERVICO, "Banho Completo", "Banho completo", 15.0)
+        );
+
+        for (Service service : services) {
+            try {
+                serviceRepository.save(service);
+            } catch (Exception ignored) {
+            }
+        }
+
+        List<Subsidiary> subsidiaries = List.of(
+                new Subsidiary(0L, address, "123456789"),
+                new Subsidiary(1L, address, "987654321")
+        );
+        for (Subsidiary subsidiary : subsidiaries) {
+            try {
+                subsidiaryRepository.save(subsidiary);
+            } catch (Exception ignored) {
+            }
+        }
+
+        Client client = clientRepository.findAll().stream().findFirst().orElse(null);
+        Subsidiary subsidiary = subsidiaryRepository.findAll().stream().findFirst().orElse(null);
+        List<Pet> pets = petRepository.findAll();
+
+        if (client != null && subsidiary != null && !pets.isEmpty()) {
+            createScheduling(ServiceArea.VETERINARIA, "VET001", LocalDateTime.of(2024, 9, 19, 10, 0), client, subsidiary, pets);
+            createScheduling(ServiceArea.VETERINARIA, "VET002", LocalDateTime.of(2024, 10, 19, 10, 0), client, subsidiary, pets);
+            createScheduling(ServiceArea.VETERINARIA, "VET003", LocalDateTime.of(2024, 8, 19, 10, 0), client, subsidiary, pets);
+
+            createScheduling(ServiceArea.SERVICO, "SER001", LocalDateTime.of(2024, 9, 19, 10, 0), client, subsidiary, pets);
+            createScheduling(ServiceArea.SERVICO, "SER002", LocalDateTime.of(2024, 10, 19, 10, 0), client, subsidiary, pets);
+            createScheduling(ServiceArea.SERVICO, "SER003", LocalDateTime.of(2024, 8, 19, 10, 0), client, subsidiary, pets);
+        }
+
+        List<Pet> pet = petRepository.findAll();
+        List<Service> service = serviceRepository.findAll();
+
+        if (!pet.isEmpty() && !service.isEmpty()) {
+            if (pet.size() > 2) {
+                createPetScheduling(pet.get(0), service);
+                createPetScheduling(pet.get(1), service);
+                createPetScheduling(pet.get(2), service);
+            } else {
+                System.out.println("Não há animais de estimação suficientes disponíveis para agendamento.");
+            }
+        }
+
+
+
+    }
+
+    private void createScheduling(ServiceArea serviceArea, String schedulingNumber, LocalDateTime date, Client client, Subsidiary subsidiary, List<Pet> pets) {
+        Scheduling scheduling = new Scheduling();
+        scheduling.setSchedulingNumber(schedulingNumber);
+        scheduling.setServiceArea(serviceArea);
+        scheduling.setScheduledDate(date);
+        scheduling.setClient(client);
+        scheduling.setSubsidiary(subsidiary);
+        scheduling.setPets(pets.stream().map(pet -> new PetScheduling()).toList());
+
+        try {
+            schedulingRepository.save(scheduling);
+        } catch (Exception ignored) {
+        }
+
+    }
+
+    private void createPetScheduling(Pet pet, List<Service> services) {
+        PetScheduling petScheduling = new PetScheduling();
+        petScheduling.setPet(pet);
+        petScheduling.setServicesSelected(services);
+
+        try {
+            petSchedulingRepository.save(petScheduling);
+        } catch (Exception ignored) {
+        }
+>>>>>>> Stashed changes
     }
 }
