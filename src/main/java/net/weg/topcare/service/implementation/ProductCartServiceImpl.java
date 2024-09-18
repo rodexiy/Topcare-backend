@@ -12,6 +12,7 @@ import net.weg.topcare.entity.ProductCart;
 import net.weg.topcare.exceptions.ProductNotFoundException;
 import net.weg.topcare.repository.CartRepository;
 import net.weg.topcare.repository.ClientRepository;
+import net.weg.topcare.repository.ImageRepository;
 import net.weg.topcare.repository.ProductCartRepository;
 import net.weg.topcare.service.interfaces.ProductCartServiceInt;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class ProductCartServiceImpl implements ProductCartServiceInt {
     private final ClientServiceImpl clientService;
     private final ClientRepository clientRepository;
     private final CartRepository cartRepository;
+    private final ImageRepository imageRepository;
 
     @Override
     public ProductToCartDTO addProductToCart(Long idProduct, ProductCartGetDTO dto, Long idClient) throws ProductNotFoundException {
@@ -33,6 +35,7 @@ public class ProductCartServiceImpl implements ProductCartServiceInt {
         Client client = clientService.findOneClient(idClient);
         ProductCart productCart = new ProductCart();
         productCart.setProduct(product);
+        productCart.setImage(product.getImages().get(0));
         Cart cart = client.getCart();
         cart.getProductsInCart().add(productCart);
         productCart.setCart(cart);

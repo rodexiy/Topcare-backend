@@ -36,8 +36,11 @@ public class PetServiceImpl implements PetServiceInt {
             pet.setPicture(img);
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            repository.save(pet);
+
         }
-        return repository.save(pet).toDto();
+        return pet.toDto();
     }
 
     @Override
@@ -57,7 +60,8 @@ public class PetServiceImpl implements PetServiceInt {
     }
 
     @Override
-    public Pet patchPet(PetPatchRequestDTO dto, Long id) {
+    public Pet patchPet(PetPatchRequestDTO dto, Long id, MultipartFile file) {
+        System.out.println(file);
         if(repository.existsById(id)){
             Pet pet = repository.findById(id).get();
 
@@ -66,6 +70,13 @@ public class PetServiceImpl implements PetServiceInt {
                 pet.setSize(dto.size());
                 pet.setBirthdate(dto.birthdate());
                 pet.setWeight(dto.weight());
+                try {
+                    Image img = new Image(file);
+                    imageRepository.save(img);
+                    pet.setPicture(img);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 return repository.save(pet);
             }
             throw new RuntimeException("Pet deletado");

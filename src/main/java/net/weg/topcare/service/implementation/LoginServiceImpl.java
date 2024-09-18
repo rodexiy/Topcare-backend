@@ -21,13 +21,19 @@ public class LoginServiceImpl implements LoginServiceInt {
         Client employee = clientRepository.findByEmail(loginDTO.email());
 
         if (client != null) {
-            if (client.getPassword().equals(loginDTO.password())) {
-                return client.getId();
+            if(client.getEnabled()){
+                if (client.getPassword().equals(loginDTO.password())) {
+                    return client.getId();
+                }
             }
+
         }else if (employee != null) {
-            if (employee.getPassword().equals(loginDTO.password())) {
-                return employee.getId();
+            if(employee.getEnabled()){
+                if (employee.getPassword().equals(loginDTO.password())) {
+                    return employee.getId();
+                }
             }
+
         }
 
         return null;
