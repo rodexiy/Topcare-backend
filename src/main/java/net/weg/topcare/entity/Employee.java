@@ -5,7 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import net.weg.topcare.controller.dto.employee.GetEmployeeDto;
+import net.weg.topcare.controller.dto.employee.PostEmployeeDto;
 import net.weg.topcare.enums.EmployeeRole;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDate;
 
@@ -15,7 +18,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-
 public class Employee extends People {
     @Column(nullable = false, length = 5)
     private String register;
@@ -26,4 +28,20 @@ public class Employee extends People {
 
     @OneToOne
     private Image profilePicture;
+
+    public Employee(PostEmployeeDto dto){
+        BeanUtils.copyProperties(dto, this);
+    }
+
+    public GetEmployeeDto toGetDTO(){
+        return new GetEmployeeDto(
+                this.getId(),
+                this.register,
+                this.getName(),
+                this.getBirthdate(),
+                this.getEmail(),
+                this.getPassword(),
+                this.role
+        );
+    }
 }
