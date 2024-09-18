@@ -23,8 +23,6 @@ public class Client extends People {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Address> address = new ArrayList<>();
 
-
-
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<CartOrder> orders = new ArrayList<>();
 
@@ -120,4 +118,5 @@ public class Client extends People {
     public void addQuery(Scheduling scheduling) {
         schedules.add(scheduling);
     }
+
 }
