@@ -34,7 +34,7 @@ public class ProductCart {
     @JoinColumn(nullable = false)
     private Cart cart;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Image image;
