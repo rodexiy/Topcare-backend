@@ -168,4 +168,15 @@ public class OrdersServiceImpl {
     public CartOrderMaximalGetDTO getOrder(Long id) {
         return cartOrderRepository.findById(id).get().convertToMaximalGetDTO();
     }
+
+    public CartOrderMinimalGetDTO getLastOrder(Long id) {
+        List<CartOrder> orders = cartOrderRepository.findAllByClient_Id(id);
+        try {
+
+            CartOrder last = orders.get(orders.size() - 1);
+            return last.convertToMinimalGetDTO();
+        }catch (Exception e) {
+            return null;
+        }
+    }
 }

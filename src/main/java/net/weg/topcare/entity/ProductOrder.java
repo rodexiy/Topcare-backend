@@ -27,9 +27,12 @@ public class ProductOrder {
     @Column(nullable = false)
     private Double unitPrice;
 
+    @Column(nullable = false)
+    private Integer units;
+
+
     @ManyToOne
-    @JoinColumn()
-    private Image picture;
+    private Image image;
 
     @ManyToOne
     @JsonIgnore

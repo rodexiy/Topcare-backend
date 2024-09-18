@@ -12,4 +12,5 @@ import java.util.List;
 @Repository
 public interface CartOrderRepository extends JpaRepository<CartOrder, Long> {
     Page<CartOrder> findAllByClient_Id(Long clientId, Pageable pageable);
+    List<CartOrder> findAllByClient_Id(Long clientId);
 }

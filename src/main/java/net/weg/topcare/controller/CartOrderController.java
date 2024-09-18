@@ -84,4 +84,9 @@ public class CartOrderController {
     public ResponseEntity<CartOrderMaximalGetDTO> getDescriptionOrder(@PathVariable Long id) {
         return ResponseEntity.ok(ordersService.getOrder(id));
     }
+
+    @GetMapping("/lastOrder/{id}")
+    public ResponseEntity<CartOrderMinimalGetDTO> getLastOrder(@PathVariable Long id) {
+        return ResponseEntity.ok(ordersService.getLastOrder(id));
+    }
 }
