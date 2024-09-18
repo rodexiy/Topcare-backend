@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/funcionarios")
+@RequestMapping("/api/funcionarios")
 @RequiredArgsConstructor
 public class EmployeeController {
     private final EmployeeServiceImpl service;
