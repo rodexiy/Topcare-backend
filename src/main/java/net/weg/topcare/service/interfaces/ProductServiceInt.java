@@ -12,8 +12,10 @@ import java.util.List;
 public interface ProductServiceInt {
 
     Product register(ProductPostDTO dto, List<MultipartFile> images);
-    List<Product> findAllProductBySale();
+    List<ProductMinimalGetDTO> findAllProductBySale();
+    List<ProductMinimalGetDTO> orderAllByDiscount();
     ProductGetDTO getProduct(Long id) throws ProductNotFoundException;
+    Product getProductById(Long id) throws ProductNotFoundException;
     Product putProduct(ProductPutDTO dto, List<MultipartFile> images, Long id) throws ProductNotFoundException;
     List<Product> findByIds(List<Long> ids);
     Boolean deleteProduct(Long id) throws ProductNotFoundException;

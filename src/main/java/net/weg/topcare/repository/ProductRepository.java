@@ -23,6 +23,7 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> getProductsByBrand_Id(@NonNull Long brand_id);
     List<Product> findAllByOrderByRatingsDesc();
+    List<Product> findAllByOrderByDiscountDesc();
 
     @Query("SELECT p FROM Product p "
             + "WHERE p.name LIKE %:query% "

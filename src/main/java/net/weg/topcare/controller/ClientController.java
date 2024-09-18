@@ -3,16 +3,14 @@ package net.weg.topcare.controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import net.weg.topcare.controller.dto.client.*;
+import net.weg.topcare.entity.Address;
 import net.weg.topcare.entity.Client;
 import net.weg.topcare.controller.dto.client.ClientGetDTO;
 import net.weg.topcare.controller.dto.client.ClientPostDTO;
-import net.weg.topcare.controller.dto.client.LoginDTO;
 import net.weg.topcare.exceptions.CPFAlreadyBeingUsedException;
 import net.weg.topcare.service.implementation.ClientServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,7 +24,7 @@ public class ClientController {
     private ClientServiceImpl service;
 
     @PostMapping
-    public ResponseEntity<Long> register(@Valid @RequestBody ClientPostDTO client) {
+    public ResponseEntity<Long> register(@RequestBody ClientPostDTO client) {
         try {
             return ResponseEntity.ok(service.register(client));
 
@@ -42,10 +40,11 @@ public class ClientController {
         return ResponseEntity.ok(service.exists(email));
     }
 
-//    @PatchMapping("/{id}")
-//    public ResponseEntity<ClientGetDTO> editClientImages(@PathVariable Long id, @RequestPart(required = false) MultipartFile profilePicture, @RequestPart(required = false) MultipartFile banner) {
-//        return ResponseEntity.ok(service.editClientImages(id, profilePicture, banner));
-//    }
+    @PatchMapping("/images/{id}")
+    public ResponseEntity<ClientGetDTO> editClientImages(@PathVariable Long id, @RequestPart(required = false) MultipartFile profilePicture, @RequestPart(required = false) MultipartFile banner) {
+        return ResponseEntity.ok(service.editClientImages(id, profilePicture, banner));
+    }
+
 
     @GetMapping
     public ResponseEntity<List<ClientGetDTO>> findAll() {
@@ -79,6 +78,10 @@ public class ClientController {
     @PatchMapping("/changePassword/{id}")
     public ResponseEntity<Boolean> changePassword(@RequestBody ClientPatchDTO dto, @PathVariable Long id){
         return ResponseEntity.ok(service.changePassword(dto, id));
+    }
+    @GetMapping("/mainAddress/{id}")
+    public ResponseEntity<Address> getMainAddress(@PathVariable Long id){
+        return ResponseEntity.ok(service.getMainAddress(id));
     }
 
 }

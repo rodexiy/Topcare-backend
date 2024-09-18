@@ -2,6 +2,7 @@ package net.weg.topcare.repository;
 
 import net.weg.topcare.entity.Scheduling;
 import net.weg.topcare.entity.Service;
+import net.weg.topcare.enums.ServiceArea;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,16 +16,18 @@ public interface SchedulingRepository extends JpaRepository<Scheduling, Long> {
 
     List<Scheduling> findByScheduledDateAfter(LocalDateTime date);
 
-
     List<Scheduling> findByClientId(Long clientId);
 
-
     List<Scheduling> findByClientIdAndScheduledDateAfter(Long id, LocalDateTime now);
-
 
     Scheduling findBySchedulingNumber(String schedulingNumber);
 
     @Query("SELECT s FROM Scheduling sch JOIN sch.pets p JOIN p.servicesSelected s WHERE p.id = :petId")
     List<Service> findServicesByPetId(@Param("petId") Long petId);
 
+    List<Scheduling> findByClientIdAndScheduledDateAfterAndServiceArea(Long id, LocalDateTime now, ServiceArea serviceArea);
+
+    List<Scheduling> findByServiceArea(ServiceArea serviceArea);
+
+    List<Scheduling> findByClientIdAndServiceArea(Long id, ServiceArea serviceArea);
 }
