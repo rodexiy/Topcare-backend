@@ -105,12 +105,18 @@ public class Product {
     }
 
     public ProductMinimalGetDTO toMinimalGetDTO(){
+        Image image;
+        if (!this.images.isEmpty()) {
+            image = this.images.get(0);
+        }else {
+            image = new Image();
+        }
         return new ProductMinimalGetDTO(
             this.id,
             this.name,
             this.price,
             this.discount,
-            this.images.get(0),
+            image,
             new GeneralRatingGetDTO(this.generalRating, (long) this.ratings.size()),
                 this.categories.stream().map(Category::getName).toList()
         );

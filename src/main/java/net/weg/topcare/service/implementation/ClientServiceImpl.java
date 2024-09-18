@@ -132,7 +132,7 @@ public class ClientServiceImpl implements ClientServiceInt {
     @Override
     public ClientGetDTO findOne(Long id) {
         Optional<Client> client = repository.findById(id);
-        return client.map(Client::toGetDTO).orElse(null);
+        return client.get().toGetDTO();
     }
 
     @Override

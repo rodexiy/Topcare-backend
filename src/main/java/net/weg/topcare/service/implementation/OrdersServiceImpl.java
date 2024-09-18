@@ -165,4 +165,7 @@ public class OrdersServiceImpl {
         return new PageImpl<>(dtos, pageRequest, orders.getTotalElements());
     }
 
+    public CartOrderMaximalGetDTO getOrder(Long id) {
+        return cartOrderRepository.findById(id).get().convertToMaximalGetDTO();
+    }
 }

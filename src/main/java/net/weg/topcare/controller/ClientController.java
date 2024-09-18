@@ -45,6 +45,7 @@ public class ClientController {
         return ResponseEntity.ok(service.editClientImages(id, profilePicture, banner));
     }
 
+
     @GetMapping
     public ResponseEntity<List<ClientGetDTO>> findAll() {
         return ResponseEntity.ok(service.findAll());
