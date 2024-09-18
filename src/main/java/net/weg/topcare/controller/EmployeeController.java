@@ -6,10 +6,8 @@ import net.weg.topcare.controller.dto.employee.PostEmployeeDto;
 import net.weg.topcare.service.implementation.EmployeeServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/funcionarios")
@@ -17,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmployeeController {
     private final EmployeeServiceImpl service;
     @PostMapping
-    public ResponseEntity<GetEmployeeDto> postEmployee(@RequestBody PostEmployeeDto dto){
-        return new ResponseEntity<>(service.register(dto), HttpStatus.OK);
+    public ResponseEntity<GetEmployeeDto> postEmployee(@RequestPart PostEmployeeDto dto, @RequestPart MultipartFile file){
+        return new ResponseEntity<>(service.register(dto, file), HttpStatus.OK);
 
     }
 
