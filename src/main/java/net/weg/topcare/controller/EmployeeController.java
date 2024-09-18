@@ -17,7 +17,11 @@ public class EmployeeController {
     @PostMapping
     public ResponseEntity<GetEmployeeDto> postEmployee(@RequestPart PostEmployeeDto dto, @RequestPart MultipartFile file){
         return new ResponseEntity<>(service.register(dto, file), HttpStatus.OK);
+    }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<GetEmployeeDto> getEmployee(@PathVariable Long id){
+        return new ResponseEntity<>(service.getEmployee(id), HttpStatus.OK);
     }
 
 }

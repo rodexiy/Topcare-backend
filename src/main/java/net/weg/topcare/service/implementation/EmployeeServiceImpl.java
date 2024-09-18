@@ -28,4 +28,8 @@ public class EmployeeServiceImpl {
         }
         return repository.save(newEmployee).toGetDTO();
     }
+
+    public GetEmployeeDto getEmployee(Long id) {
+        return repository.findById(id).get().toGetDTO();
+    }
 }
