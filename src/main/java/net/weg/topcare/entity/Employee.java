@@ -40,8 +40,8 @@ public class Employee extends People {
                 this.getName(),
                 this.getBirthdate(),
                 this.getEmail(),
-                this.getPassword(),
-                this.role
+                this.role,
+                this.profilePicture
         );
     }
 }
