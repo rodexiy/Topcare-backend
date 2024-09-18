@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -23,7 +24,7 @@ import java.util.List;
 public class PetController {
     private final PetServiceImpl service; //todios os fnals é required
     @PostMapping(consumes = {"multipart/form-data", "application/json"})
-    public ResponseEntity<PetGetRequestDTO> postPet(@RequestPart PetPostRequestDTO dto, @RequestPart MultipartFile picture){
+    public ResponseEntity<PetGetRequestDTO> postPet(@RequestPart PetPostRequestDTO dto, @RequestPart(required = false) MultipartFile picture) throws IOException {
         return ResponseEntity.ok(service.postPet(dto, picture));
     }
 
@@ -37,9 +38,9 @@ public class PetController {
         return ResponseEntity.ok(service.getPets());
     }
 
-    @PatchMapping("{id}")
-    public ResponseEntity<Pet> patchPet(@RequestBody PetPatchRequestDTO dto, @PathVariable Long id){
-        return ResponseEntity.ok(service.patchPet(dto, id));
+    @PatchMapping(value = "{id}", consumes = {"multipart/form-data", "application/json"})
+    public ResponseEntity<Pet> patchPet(@RequestPart PetPatchRequestDTO dto, @PathVariable Long id, @RequestPart(required = false) MultipartFile file){
+        return ResponseEntity.ok(service.patchPet(dto, id, file));
     }
 
     @DeleteMapping("{id}")

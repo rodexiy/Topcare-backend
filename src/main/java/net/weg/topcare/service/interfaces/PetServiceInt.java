@@ -12,7 +12,7 @@ public interface PetServiceInt {
     PetGetRequestDTO postPet(PetPostRequestDTO dto, MultipartFile image);
     PetGetRequestDTO getOnePet(Long id);
     List<PetGetRequestDTO> getPets();
-    Pet patchPet(PetPatchRequestDTO dto, Long id);
+    Pet patchPet(PetPatchRequestDTO dto, Long id, MultipartFile file);
     String deletePet(Long id);
 
 }

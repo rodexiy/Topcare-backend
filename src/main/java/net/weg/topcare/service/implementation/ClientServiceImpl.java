@@ -97,6 +97,7 @@ public class ClientServiceImpl implements ClientServiceInt {
     @Override
     public Boolean deleteAccount(Long id) {
         Client client = findOneClient(id);
+        System.out.println(client);
         if(client == null) return false;
         client.setEnabled(false);
         repository.save(client);
@@ -142,6 +143,6 @@ public class ClientServiceImpl implements ClientServiceInt {
 
     @Override
     public List<ClientGetDTO> findAll() {
-        return repository.findAll().stream().map(Client::toGetDTO).toList();
+        return repository.findAll().stream().filter(People::getEnabled).map(Client::toGetDTO).toList();
     }
 }
