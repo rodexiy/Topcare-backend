@@ -2,14 +2,11 @@ package net.weg.topcare.dataLoader;
 
 import jakarta.persistence.criteria.Order;
 import net.weg.topcare.entity.*;
-<<<<<<< Updated upstream
 import net.weg.topcare.enums.EmployeeRole;
 import net.weg.topcare.enums.FederativeUnit;
 import net.weg.topcare.enums.OrderStatusEnum;
 import net.weg.topcare.enums.PaymentMethod;
-=======
 import net.weg.topcare.enums.*;
->>>>>>> Stashed changes
 import net.weg.topcare.repository.*;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.boot.CommandLineRunner;
@@ -47,14 +44,25 @@ public class DataLoader implements CommandLineRunner {
     @Autowired
     private ImageRepository imageRepository;
     @Autowired
-<<<<<<< Updated upstream
     private CartOrderRepository cartOrderRepository;
     @Autowired
     private OrderStatusRepository orderStatusRepository;
+    @Autowired
+    private PetRepository petRepository;
+    @Autowired
+    private ServiceRepository serviceRepository;
+    
+    private ServiceArea serviceArea;
+    @Autowired
+    private SubsidiaryRepository subsidiaryRepository;
+    @Autowired
+    private SchedulingRepository schedulingRepository;
+    @Autowired
+    private PetSchedulingRepository petSchedulingRepository;
 
     public static long generateRandomLong(long x) {
         Random random = new Random();
-        return 1 + random.nextLong(x - 1); // Generates a long between 1 and x
+        return 1 + random.nextLong(x - 1);
     }
 
     @Override
@@ -74,21 +82,6 @@ public class DataLoader implements CommandLineRunner {
             });
         } catch (IOException ignored) {
         }
-=======
-    private PetRepository petRepository;
-    @Autowired
-    private ServiceRepository serviceRepository;
-    private ServiceArea serviceArea;
-    @Autowired
-    private SubsidiaryRepository subsidiaryRepository;
-    @Autowired
-    private SchedulingRepository schedulingRepository;
-    @Autowired
-    private PetSchedulingRepository petSchedulingRepository;
-
-    @Override
-    public void run(String... args) throws Exception {
->>>>>>> Stashed changes
 
         Address address = new Address();
         address.setCep("89258070");
@@ -136,20 +129,16 @@ public class DataLoader implements CommandLineRunner {
             brand.setName(brandNames[i]);
             brand.setGeneralRating(i + 1);
             try {
-<<<<<<< Updated upstream
 //                // Create and set image for brand
 //                MultipartFile file = new MockMultipartFile("brandImage" + i, "brandImage" + i + ".jpg", "image/jpeg", ("brand image content " + i).getBytes());
 //                Image image = new Image(file);
 //                imageRepository.save(image);
-                Image image = new Image();
-                image.setId(generateRandomLong(6));
-=======
+//                Image image = new Image();
+//                image.setId(generateRandomLong(6));
                 MultipartFile file = new MockMultipartFile("brandImage" + i, "brandImage" + i + ".jpg", "image/jpeg", ("brand image content " + i).getBytes());
                 Image image = new Image(file);
                 imageRepository.save(image);
->>>>>>> Stashed changes
                 brand.setImage(image);
-
                 brandRepository.save(brand);
             } catch (Exception ignored) {
             }
@@ -178,25 +167,19 @@ public class DataLoader implements CommandLineRunner {
             product.setGeneralRating(4);
             product.setBrand(brands.get(i % brands.size()));
             try {
-<<<<<<< Updated upstream
                 // Create and set image for product
 //                MultipartFile file = new MockMultipartFile("productImage" + i, "productImage" + i + ".jpg", "image/jpeg", ("product image content " + i).getBytes());
-                Image image = new Image();
-                image.setId(generateRandomLong(6));
-=======
+//                Image image = new Image();
+//                image.setId(generateRandomLong(6));
                 MultipartFile file = new MockMultipartFile("productImage" + i, "productImage" + i + ".jpg", "image/jpeg", ("product image content " + i).getBytes());
                 Image image = new Image(file);
                 imageRepository.save(image);
->>>>>>> Stashed changes
                 product.getImages().add(image);
 
                 productRepository.save(product);
             } catch (Exception ignored) {
             }
         }
-
-<<<<<<< Updated upstream
-
 
         CartOrder cartOrder = new CartOrder();
         cartOrder.setAddress(address);
@@ -230,7 +213,6 @@ public class DataLoader implements CommandLineRunner {
 
         }
 
-=======
         String[] petNames = {
                 "Buddy",
                 "Max",
@@ -302,51 +284,75 @@ public class DataLoader implements CommandLineRunner {
             }
         }
 
-        Client client = clientRepository.findAll().stream().findFirst().orElse(null);
-        Subsidiary subsidiary = subsidiaryRepository.findAll().stream().findFirst().orElse(null);
-        List<Pet> pets = petRepository.findAll();
+        List<Service> servicos = List.of(
+                new Service(null, ServiceArea.SERVICO, "Banho Completo", "Banho completo para pets", 50.0),
+                new Service(null, ServiceArea.SERVICO, "Tosa", "Tosa de pets", 40.0),
+                new Service(null, ServiceArea.SERVICO, "Hidratação", "Hidratação de pelagem", 30.0)
+        );
+        List<Service> consultas = List.of(
+                new Service(null, ServiceArea.VETERINARIA, "Consulta Rotina", "Consulta veterinária de rotina", 150.0),
+                new Service(null, ServiceArea.VETERINARIA, "Vacinação", "Vacinação de pets", 100.0),
+                new Service(null, ServiceArea.VETERINARIA, "Exame de Sangue", "Exame de sangue para pets", 200.0)
+        );
 
-        if (client != null && subsidiary != null && !pets.isEmpty()) {
-            createScheduling(ServiceArea.VETERINARIA, "VET001", LocalDateTime.of(2024, 9, 19, 10, 0), client, subsidiary, pets);
-            createScheduling(ServiceArea.VETERINARIA, "VET002", LocalDateTime.of(2024, 10, 19, 10, 0), client, subsidiary, pets);
-            createScheduling(ServiceArea.VETERINARIA, "VET003", LocalDateTime.of(2024, 8, 19, 10, 0), client, subsidiary, pets);
-
-            createScheduling(ServiceArea.SERVICO, "SER001", LocalDateTime.of(2024, 9, 19, 10, 0), client, subsidiary, pets);
-            createScheduling(ServiceArea.SERVICO, "SER002", LocalDateTime.of(2024, 10, 19, 10, 0), client, subsidiary, pets);
-            createScheduling(ServiceArea.SERVICO, "SER003", LocalDateTime.of(2024, 8, 19, 10, 0), client, subsidiary, pets);
-        }
-
-        List<Pet> pet = petRepository.findAll();
-        List<Service> service = serviceRepository.findAll();
-
-        if (!pet.isEmpty() && !service.isEmpty()) {
-            if (pet.size() > 2) {
-                createPetScheduling(pet.get(0), service);
-                createPetScheduling(pet.get(1), service);
-                createPetScheduling(pet.get(2), service);
-            } else {
-                System.out.println("Não há animais de estimação suficientes disponíveis para agendamento.");
+        // Salvando os serviços no banco de dados
+        servicos.forEach(service -> {
+            try {
+                serviceRepository.save(service);
+            } catch (Exception ignored) {
             }
-        }
+        });
 
+        consultas.forEach(service -> {
+            try {
+                serviceRepository.save(service);
+            } catch (Exception ignored) {
+            }
+        });
 
+        // Recuperando subsidiária
+        Subsidiary subsidiary = subsidiaryRepository.findAll().get(0);  // Pegando a primeira subsidiária
 
+        // Recuperando pets
+        List<Pet> pets = petRepository.findAll().subList(0, 2);  // Selecionando 2 pets
+
+        // Criando agendamento para serviços da área SERVICO
+        createScheduling(ServiceArea.SERVICO, "SCHED001", LocalDateTime.now().plusDays(1), cliente, subsidiary, pets, servicos);
+
+        // Criando agendamento para consultas da área VETERINARIA
+        createScheduling(ServiceArea.VETERINARIA, "SCHED002", LocalDateTime.now().plusDays(2), cliente, subsidiary, pets, consultas);
     }
 
-    private void createScheduling(ServiceArea serviceArea, String schedulingNumber, LocalDateTime date, Client client, Subsidiary subsidiary, List<Pet> pets) {
+    private void createScheduling(ServiceArea serviceArea, String schedulingNumber, LocalDateTime date, Client client, Subsidiary subsidiary, List<Pet> pets, List<Service> services) {
         Scheduling scheduling = new Scheduling();
         scheduling.setSchedulingNumber(schedulingNumber);
         scheduling.setServiceArea(serviceArea);
         scheduling.setScheduledDate(date);
         scheduling.setClient(client);
         scheduling.setSubsidiary(subsidiary);
-        scheduling.setPets(pets.stream().map(pet -> new PetScheduling()).toList());
+
+        // Para cada pet, crie um PetScheduling e associe os serviços
+        List<PetScheduling> petSchedulings = pets.stream().map(pet -> {
+            PetScheduling petScheduling = new PetScheduling();
+            petScheduling.setPet(pet);
+            petScheduling.setServicesSelected(services);  // Associa os serviços ao pet
+            return petScheduling;
+        }).toList();
+
+        scheduling.setPets(petSchedulings);  // Associa os PetSchedulings ao agendamento
 
         try {
             schedulingRepository.save(scheduling);
         } catch (Exception ignored) {
         }
 
+        // Salvando os PetSchedulings
+        petSchedulings.forEach(petScheduling -> {
+            try {
+                petSchedulingRepository.save(petScheduling);
+            } catch (Exception ignored) {
+            }
+        });
     }
 
     private void createPetScheduling(Pet pet, List<Service> services) {
@@ -358,6 +364,5 @@ public class DataLoader implements CommandLineRunner {
             petSchedulingRepository.save(petScheduling);
         } catch (Exception ignored) {
         }
->>>>>>> Stashed changes
     }
 }
