@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/funcionarios")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class EmployeeController {
     private final EmployeeServiceImpl service;
     @PostMapping
