@@ -54,6 +54,8 @@ public class DataLoader implements CommandLineRunner {
     private ServiceRepository serviceRepository;
     @Autowired
     private ProductOrderRepository productOrderRepository;
+    @Autowired
+    private ProductSpecificationRepository productSpecificationRepository;
     
     private ServiceArea serviceArea;
     @Autowired
@@ -170,6 +172,19 @@ public class DataLoader implements CommandLineRunner {
             product.setDiscount(i);
             product.setGeneralRating(4);
             product.setBrand(brands.get(i % brands.size()));
+
+            String[] specificacao = {
+                    "Tamanho",
+                    "Cor",
+                    "Peso",
+            };
+
+            String[] specificacaoValor = {
+                    "Médio",
+                    "Vermelho",
+                    "2kg",
+            };
+
             try {
                 Path imagePath = path;
                 Stream<Path> paths = Files.walk(imagePath);
@@ -183,9 +198,19 @@ public class DataLoader implements CommandLineRunner {
                     throw new RuntimeException(e);
                 }
 
+                for (int j = 0; j < 3; j++) {
+                    ProductSpecification productSpecification = new ProductSpecification();
+                    productSpecification.setProduct(product);
+                    productSpecification.setName(specificacao[j]);
+                    productSpecification.setValue(specificacaoValor[j]);
+                    product.getSpecifications().add(productSpecification);
+                }
+
                 product =  productRepository.save(product);
                 imagem.setProduct(product);
                 imageRepository.save(imagem);
+
+
 
             } catch (Exception ignored) {
             }
