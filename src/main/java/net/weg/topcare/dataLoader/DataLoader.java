@@ -202,9 +202,7 @@ public class DataLoader implements CommandLineRunner {
         cartOrder.setDiscount(5.0);
         try {
             cartOrder = cartOrderRepository.save(cartOrder);
-        }catch (Exception ignored) {
-
-        }
+        }catch (Exception ignored) {}
 
         OrderStatus orderStatus = new OrderStatus();
         orderStatus.setChangedTime(LocalDateTime.now());
