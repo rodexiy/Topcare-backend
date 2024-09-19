@@ -406,4 +406,12 @@ public class DataLoader implements CommandLineRunner {
         } catch (Exception ignored) {
         }
     }
+
+//    use topcare;
+//
+//    insert into pet_scheduling (pet_id, pets_id)
+//    values (1,1), (2,1), (3,2), (4,1);
+//
+//    insert into pet_scheduling_services_selected (pet_scheduling_id, services_selected_id)
+//    values (1,1),(1,2),(2,3),(3,4),(3,5),(4,6),(4,7)
 }
