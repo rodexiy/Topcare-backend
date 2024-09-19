@@ -51,6 +51,8 @@ public class DataLoader implements CommandLineRunner {
     private PetRepository petRepository;
     @Autowired
     private ServiceRepository serviceRepository;
+    @Autowired
+    private ProductOrderRepository productOrderRepository;
     
     private ServiceArea serviceArea;
     @Autowired
@@ -189,6 +191,7 @@ public class DataLoader implements CommandLineRunner {
         cartOrder.setNumberOrder(1);
         cartOrder.setProductsTotal(200.0);
         cartOrder.setPaymentMethod(PaymentMethod.PIX);
+        cartOrder.setDiscount(5.0);
         try {
             cartOrder = cartOrderRepository.save(cartOrder);
         }catch (Exception ignored) {
@@ -199,6 +202,38 @@ public class DataLoader implements CommandLineRunner {
         orderStatus.setChangedTime(LocalDateTime.now());
         orderStatus.setOrderStatus(OrderStatusEnum.PEDIDO_RECEBIDO);
         orderStatus.setCartOrder(cartOrder);
+
+        ProductOrder productOrder = new ProductOrder();
+        productOrder.setProduct(new Product(1L));
+
+        Path imagePath = Paths.get("src/main/resources/images");
+        Stream<Path> paths = Files.walk(imagePath);
+        CartOrder finalCartOrder = cartOrder;
+        paths.filter(Files::isRegularFile).forEach(filePath -> {
+            try {
+                Image imagem = new Image();
+                imagem.setOriginalFileName("image");
+                imagem.setContentType("image/jpeg");
+                imagem.setBytes(Files.readAllBytes(filePath));
+                imageRepository.save(imagem);
+
+                productOrder.setImage(imagem);
+                productOrder.setUnitPrice(99.99);
+                productOrder.setUnits(2);
+                productOrder.setName("Produto pedido");
+                productOrder.setCartOrder(finalCartOrder);
+            } catch (IOException ignored) {
+            }
+        });
+
+
+
+        try {
+            productOrderRepository.save(productOrder);
+        }catch (Exception ignored) {}
+
+
+
 
         try {
             orderStatusRepository.save(orderStatus);
