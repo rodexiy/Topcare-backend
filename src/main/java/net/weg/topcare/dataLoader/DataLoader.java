@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -69,8 +70,9 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        Path path = Paths.get("src/main/resources/images");
         try {
-            Path imagePath = Paths.get("src/main/resources/images");
+            Path imagePath = path;
             Stream<Path> paths = Files.walk(imagePath);
             paths.filter(Files::isRegularFile).forEach(filePath -> {
                 try {
@@ -169,16 +171,22 @@ public class DataLoader implements CommandLineRunner {
             product.setGeneralRating(4);
             product.setBrand(brands.get(i % brands.size()));
             try {
-                // Create and set image for product
-//                MultipartFile file = new MockMultipartFile("productImage" + i, "productImage" + i + ".jpg", "image/jpeg", ("product image content " + i).getBytes());
-//                Image image = new Image();
-//                image.setId(generateRandomLong(6));
-                MultipartFile file = new MockMultipartFile("productImage" + i, "productImage" + i + ".jpg", "image/jpeg", ("product image content " + i).getBytes());
-                Image image = new Image(file);
-                imageRepository.save(image);
-                product.getImages().add(image);
+                Path imagePath = path;
+                Stream<Path> paths = Files.walk(imagePath);
+                Path filePath = paths.filter(Files::isRegularFile).toList().get(i);
+                Image imagem = new Image();
+                imagem.setOriginalFileName("image");
+                imagem.setContentType("image/jpeg");
+                try {
+                    imagem.setBytes(Files.readAllBytes(filePath));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
-                productRepository.save(product);
+                product =  productRepository.save(product);
+                imagem.setProduct(product);
+                imageRepository.save(imagem);
+
             } catch (Exception ignored) {
             }
         }
@@ -206,7 +214,7 @@ public class DataLoader implements CommandLineRunner {
         ProductOrder productOrder = new ProductOrder();
         productOrder.setProduct(new Product(1L));
 
-        Path imagePath = Paths.get("src/main/resources/images");
+        Path imagePath = path;
         Stream<Path> paths = Files.walk(imagePath);
         CartOrder finalCartOrder = cartOrder;
         paths.filter(Files::isRegularFile).forEach(filePath -> {
