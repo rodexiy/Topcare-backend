@@ -382,11 +382,13 @@ public class DataLoader implements CommandLineRunner {
         // Recuperando pets
         List<Pet> pets = petRepository.findAll().subList(0, 2);  // Selecionando 2 pets
 
-        // Criando agendamento para serviços da área SERVICO
         createScheduling(ServiceArea.SERVICO, "SCHED001", LocalDateTime.now().plusDays(1), cliente, subsidiary, pets, servicos);
+        createScheduling(ServiceArea.SERVICO, "SCHED003", LocalDateTime.of(2024, 9, 19, 10, 0), cliente, subsidiary, pets, servicos);
+        createScheduling(ServiceArea.SERVICO, "SCHED004", LocalDateTime.now().minusDays(1), cliente, subsidiary, pets, servicos);
 
-        // Criando agendamento para consultas da área VETERINARIA
         createScheduling(ServiceArea.VETERINARIA, "SCHED002", LocalDateTime.now().plusDays(2), cliente, subsidiary, pets, consultas);
+        createScheduling(ServiceArea.VETERINARIA, "SCHED005", LocalDateTime.of(2024, 9, 19, 10, 0), cliente, subsidiary, pets, consultas);
+        createScheduling(ServiceArea.VETERINARIA, "SCHED006", LocalDateTime.now().minusDays(1), cliente, subsidiary, pets, consultas);
     }
 
     private void createScheduling(ServiceArea serviceArea, String schedulingNumber, LocalDateTime date, Client client, Subsidiary subsidiary, List<Pet> pets, List<Service> services) {
@@ -435,8 +437,8 @@ public class DataLoader implements CommandLineRunner {
 //    use topcare;
 //
 //    insert into pet_scheduling (pet_id, pets_id)
-//    values (1,1), (2,1), (3,2), (4,1);
+//    values (1,1), (2,1), (3,2), (4,2), (4,3), (5,4), (6,6), (6,5);
 //
 //    insert into pet_scheduling_services_selected (pet_scheduling_id, services_selected_id)
-//    values (1,1),(1,2),(2,3),(3,4),(3,5),(4,6),(4,7)
+//    values (1,1),(1,2),(1,3),(1,4),(1,5),(2,3),(3,4),(3,5),(4,6),(4,7),(5,1),(5,2),(6,3),(7,4),(8,5)
 }
